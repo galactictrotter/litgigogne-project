@@ -1,0 +1,27 @@
+{{/* Test content inheritance from Le Lit Gigogne */}}
+
+<div class="inheritance-test">
+  <h3>Testing Content Inheritance</h3>
+  
+  {{/* Try to access inherited content */}}
+  {{ $gigogne_histoire := .Site.GetPage "/shared/heritage/_index" }}
+  {{ $gigogne_charte := .Site.GetPage "/shared/heritage/charte-engagement-environnemental" }}
+  {{ $gigogne_philosophie := .Site.GetPage "/shared/heritage/philosophie-heritage-artisanat" }}
+  
+  <div class="test-results">
+    <p><strong>Histoire page found:</strong> {{ if $gigogne_histoire }}✅ YES{{ else }}❌ NO{{ end }}</p>
+    <p><strong>Charte page found:</strong> {{ if $gigogne_charte }}✅ YES{{ else }}❌ NO{{ end }}</p>
+    <p><strong>Philosophie page found:</strong> {{ if $gigogne_philosophie }}✅ YES{{ else }}❌ NO{{ end }}</p>
+    
+    {{ if $gigogne_histoire }}
+      <div class="content-preview">
+        <h4>Histoire Content Preview (first 200 chars):</h4>
+        <p>{{ $gigogne_histoire.Content | truncate 200 }}</p>
+        
+        <h4>Transformed Content Preview:</h4>
+        {{ $transformed := partial "transform-for-storage" $gigogne_histoire.Content }}
+        <p>{{ $transformed | truncate 200 }}</p>
+      </div>
+    {{ end }}
+  </div>
+</div>

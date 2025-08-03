@@ -1,0 +1,32 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const elements = {
+    overlay: document.getElementById('colorModalOverlay'),
+    container: document.querySelector('.modal-container'),
+    closeBtn: document.querySelector('.modal-close-btn'),
+    mainTabs: document.querySelectorAll('.main-tab')
+  };
+  
+  console.log('Modal elements check:', elements);
+  
+  window.testModal = function() {
+    const overlay = document.getElementById('colorModalOverlay');
+    const container = document.querySelector('.modal-container');
+    
+    if (overlay) {
+      overlay.style.display = 'block';
+      overlay.classList.add('active');
+      console.log('Overlay display:', window.getComputedStyle(overlay).display);
+      console.log('Overlay z-index:', window.getComputedStyle(overlay).zIndex);
+    }
+    
+    if (container) {
+      container.style.display = 'flex';
+      console.log('Container display:', window.getComputedStyle(container).display);
+      console.log('Container z-index:', window.getComputedStyle(container).zIndex);
+    }
+  };
+  
+  console.log('Type testModal() in console to manually show modal');
+});
+</script>

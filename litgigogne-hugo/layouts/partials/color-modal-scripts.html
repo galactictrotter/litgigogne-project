@@ -1,0 +1,243 @@
+<!-- layouts/partials/color-modal-scripts.html -->
+<script>
+// Ensure functions are in global scope
+window.openColorModal = function() {
+  console.log('openColorModal called');
+  
+  const overlay = document.getElementById('colorModalOverlay');
+  if (!overlay) {
+    console.error('Modal overlay not found!');
+    return;
+  }
+  
+  // Alberta modal pattern - use CSS transitions
+  overlay.classList.add('active');
+  document.body.classList.add('modal-open');
+  document.body.style.overflow = 'hidden';
+  
+  // Initialize modal if needed
+  if (window.colorModal && !window.colorModal.initialized) {
+    window.colorModal.init();
+  }
+  
+  console.log('Modal should be visible now');
+};
+
+window.closeColorModal = function() {
+  console.log('closeColorModal called');
+  
+  const overlay = document.getElementById('colorModalOverlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+  }
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = 'auto';
+};
+
+// Color Modal Controller
+window.colorModal = {
+  overlay: null,
+  initialized: false,
+  
+  init() {
+    console.log('Initializing color modal...');
+    
+    if (this.initialized) {
+      console.log('Already initialized');
+      return;
+    }
+    
+    this.overlay = document.getElementById('colorModalOverlay');
+    if (!this.overlay) {
+      console.error('Color modal overlay not found during init');
+      return;
+    }
+    
+    this.bindEvents();
+    this.showTab('finishesTab');
+    this.initialized = true;
+    
+    console.log('Color modal initialized successfully');
+  },
+
+  bindEvents() {
+    console.log('Binding events...');
+    
+    // Tab navigation
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const tabId = e.currentTarget.dataset.tab;
+        console.log('Tab clicked:', tabId);
+        this.showTab(tabId);
+      });
+    });
+    
+    // Close on overlay click
+    if (this.overlay) {
+      this.overlay.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          console.log('Overlay clicked, closing modal');
+          window.closeColorModal();
+        }
+      });
+    }
+    
+    // Close button
+    const closeBtn = document.querySelector('.modal-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Close button clicked');
+        window.closeColorModal();
+      });
+    }
+    
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.overlay && this.overlay.classList.contains('active')) {
+        window.closeColorModal();
+      }
+    });
+  },
+
+  showTab(tabId) {
+    console.log('Showing tab:', tabId);
+    
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Show selected tab
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+      selectedTab.classList.add('active');
+      console.log('Tab activated:', tabId);
+    } else {
+      console.error('Tab not found:', tabId);
+    }
+    
+    // Update active tab state in navigation
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.classList.remove('active');
+      if (tab.dataset.tab === tabId) {
+        tab.classList.add('active');
+      }
+    });
+  }
+};
+
+// Color selection handler
+window.selectColor = function(colorId, colorName, colorType) {
+  console.log('Color selected:', { colorId, colorName, colorType });
+  
+  // Visual feedback
+  document.querySelectorAll('.color-item').forEach(item => {
+    item.classList.remove('selected');
+  });
+  
+  if (event && event.currentTarget) {
+    event.currentTarget.classList.add('selected');
+  }
+};
+
+// Search functionality
+window.searchColors = function(query) {
+  const searchTerm = query.toLowerCase();
+  const colorItems = document.querySelectorAll('.color-item');
+  
+  colorItems.forEach(item => {
+    const name = item.querySelector('h4')?.textContent.toLowerCase() || '';
+    const code = item.querySelector('p')?.textContent.toLowerCase() || '';
+    
+    if (name.includes(searchTerm) || code.includes(searchTerm)) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+};
+
+// RAL filter function
+window.filterRAL = function(family) {
+  const items = document.querySelectorAll('.ral-item');
+  const buttons = document.querySelectorAll('.filter-btn');
+  
+  // Update active button
+  buttons.forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Find and activate the clicked button
+  if (event && event.currentTarget) {
+    event.currentTarget.classList.add('active');
+  }
+  
+  // Filter items based on RAL family number
+  items.forEach(item => {
+    if (family === 'all') {
+      item.style.display = 'block';
+    } else {
+      // Extract family number from RAL code (e.g., "RAL 1000" -> "1")
+      const ralCode = item.dataset.code || '';
+      const familyNumber = ralCode.replace('RAL ', '').charAt(0);
+      
+      if (familyNumber === family) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    }
+  });
+  
+  console.log('RAL filter applied:', family);
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing color modal system...');
+  
+  // Initialize the modal system
+  window.colorModal.init();
+  
+  // Ensure trigger button works
+  const trigger = document.querySelector('.color-modal-trigger');
+  if (trigger) {
+    console.log('Found trigger button, ensuring click handler...');
+    // Remove any existing onclick and add our handler
+    trigger.removeAttribute('onclick');
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Trigger button clicked via event listener');
+      window.openColorModal();
+    });
+  } else {
+    console.warn('Trigger button not found during initialization');
+  }
+  
+  // Debug info
+  const elements = {
+    trigger: !!document.querySelector('.color-modal-trigger'),
+    overlay: !!document.getElementById('colorModalOverlay'),
+    modal: !!document.querySelector('.color-modal'),
+    tabs: document.querySelectorAll('.main-tab').length,
+    tabContents: document.querySelectorAll('.tab-content').length
+  };
+  
+  console.log('Color Modal Elements Status:', elements);
+});
+
+// Also try to initialize immediately in case DOMContentLoaded already fired
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(() => {
+    if (window.colorModal && !window.colorModal.initialized) {
+      console.log('Late initialization attempt...');
+      window.colorModal.init();
+    }
+  }, 100);
+}
+</script>

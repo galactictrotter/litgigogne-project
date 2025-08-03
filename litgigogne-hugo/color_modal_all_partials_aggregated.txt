@@ -1,0 +1,1106 @@
+========================================
+COLOR MODAL PARTIALS AGGREGATE REPORT
+Generated on: Thu Jul 31 19:01:06 CEST 2025
+========================================
+
+Searching for color modal partials...
+
+
+========================================
+FILE: color-modal.html
+PATH: layouts/partials/color-modal.html
+========================================
+SIZE:      885 bytes
+LINES:       26 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<!-- layouts/partials/color-modal.html -->
+<div id="colorModalOverlay" class="color-modal-overlay">
+  <div class="color-modal">
+    <button class="modal-close-btn" onclick="closeColorModal()">×</button>
+    
+    <div class="modal-content">
+      <div class="modal-sidebar">
+        {{ partial "color-modal-sidebar.html" . }}
+      </div>
+      
+      <div class="modal-main">
+        <div class="tab-content" id="finishesTab">
+          {{ partial "color-modal-finishes.html" . }}
+        </div>
+        <div class="tab-content" id="waterTintsTab">
+          {{ partial "color-modal-water-tints.html" . }}
+        </div>
+        <div class="tab-content" id="ralTab">
+          {{ partial "color-modal-ral.html" . }}
+        </div>
+        <div class="tab-content" id="guideTab">
+          {{ partial "color-modal-guide.html" . }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+======================================== END OF color-modal.html
+
+
+========================================
+FILE: color-modal-styles.html
+PATH: layouts/partials/color-modal-styles.html
+========================================
+SIZE:     3238 bytes
+LINES:      183 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<style>
+/* Color Modal Base Styles */
+.color-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-modal-overlay.active {
+  display: flex;
+}
+
+.color-modal {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  background: var(--primary-cream, #FAF7F0);
+  border-radius: 4px;
+  padding: 2rem;
+  margin: 2rem auto;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+}
+
+.modal-content {
+  display: flex;
+  gap: 2rem;
+  min-height: 500px;
+}
+
+.modal-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-main {
+  flex-grow: 1;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 4px;
+  min-height: 400px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--deep-charcoal, #2C2C2C);
+  padding: 0.5rem;
+  transition: transform 0.2s ease;
+  z-index: 10;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  margin-bottom: 1.5rem;
+}
+
+.main-tab {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--primary-cream, #FAF7F0);
+  cursor: pointer;
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  color: var(--deep-charcoal, #2C2C2C);
+  transition: all 0.3s ease;
+}
+
+.main-tab:hover {
+  background: var(--primary-cream, #FAF7F0);
+  padding-left: 1.5rem;
+}
+
+.main-tab.active {
+  background: var(--bronze-accent, #B08D57);
+  color: white;
+  font-weight: 500;
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Color Grid */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.color-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.color-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--bronze-accent, #B08D57);
+}
+
+.color-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+
+.color-item h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0.25rem;
+  color: var(--deep-charcoal, #2C2C2C);
+}
+
+.color-item p {
+  font-size: 0.75rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Trigger Button - Already styled in color-modal-trigger.html */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column;
+  }
+  
+  .modal-sidebar {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .color-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+</style>
+======================================== END OF color-modal-styles.html
+
+
+========================================
+FILE: color-modal-scripts.html
+PATH: layouts/partials/color-modal-scripts.html
+========================================
+SIZE:     6468 bytes
+LINES:      230 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<!-- layouts/partials/color-modal-scripts.html -->
+<script>
+// Ensure functions are in global scope
+window.openColorModal = function() {
+  console.log('openColorModal called');
+  
+  const overlay = document.getElementById('colorModalOverlay');
+  if (!overlay) {
+    console.error('Modal overlay not found!');
+    return;
+  }
+  
+  // Force display
+  overlay.style.display = 'flex';
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Initialize modal if needed
+  if (window.colorModal && !window.colorModal.initialized) {
+    window.colorModal.init();
+  }
+  
+  console.log('Modal should be visible now');
+};
+
+window.closeColorModal = function() {
+  console.log('closeColorModal called');
+  
+  const overlay = document.getElementById('colorModalOverlay');
+  if (overlay) {
+    overlay.style.display = 'none';
+    overlay.classList.remove('active');
+  }
+  document.body.style.overflow = 'auto';
+};
+
+// Color Modal Controller
+window.colorModal = {
+  overlay: null,
+  initialized: false,
+  
+  init() {
+    console.log('Initializing color modal...');
+    
+    if (this.initialized) {
+      console.log('Already initialized');
+      return;
+    }
+    
+    this.overlay = document.getElementById('colorModalOverlay');
+    if (!this.overlay) {
+      console.error('Color modal overlay not found during init');
+      return;
+    }
+    
+    this.bindEvents();
+    this.showTab('finishesTab');
+    this.initialized = true;
+    
+    console.log('Color modal initialized successfully');
+  },
+
+  bindEvents() {
+    console.log('Binding events...');
+    
+    // Tab navigation
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const tabId = e.currentTarget.dataset.tab;
+        console.log('Tab clicked:', tabId);
+        this.showTab(tabId);
+      });
+    });
+    
+    // Close on overlay click
+    if (this.overlay) {
+      this.overlay.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          console.log('Overlay clicked, closing modal');
+          window.closeColorModal();
+        }
+      });
+    }
+    
+    // Close button
+    const closeBtn = document.querySelector('.modal-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Close button clicked');
+        window.closeColorModal();
+      });
+    }
+    
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.overlay && this.overlay.classList.contains('active')) {
+        window.closeColorModal();
+      }
+    });
+  },
+
+  showTab(tabId) {
+    console.log('Showing tab:', tabId);
+    
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Show selected tab
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+      selectedTab.classList.add('active');
+      console.log('Tab activated:', tabId);
+    } else {
+      console.error('Tab not found:', tabId);
+    }
+    
+    // Update active tab state in navigation
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.classList.remove('active');
+      if (tab.dataset.tab === tabId) {
+        tab.classList.add('active');
+      }
+    });
+  }
+};
+
+// Color selection handler
+window.selectColor = function(colorId, colorName, colorType) {
+  console.log('Color selected:', { colorId, colorName, colorType });
+  
+  // Visual feedback
+  document.querySelectorAll('.color-item').forEach(item => {
+    item.classList.remove('selected');
+  });
+  
+  if (event && event.currentTarget) {
+    event.currentTarget.classList.add('selected');
+  }
+};
+
+// Search functionality
+window.searchColors = function(query) {
+  const searchTerm = query.toLowerCase();
+  const colorItems = document.querySelectorAll('.color-item');
+  
+  colorItems.forEach(item => {
+    const name = item.querySelector('h4')?.textContent.toLowerCase() || '';
+    const code = item.querySelector('p')?.textContent.toLowerCase() || '';
+    
+    if (name.includes(searchTerm) || code.includes(searchTerm)) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+};
+
+// RAL filter function
+window.filterRAL = function(category) {
+  const items = document.querySelectorAll('.ral-item');
+  const buttons = document.querySelectorAll('.ral-category');
+  
+  // Update active button
+  buttons.forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Find and activate the clicked button
+  event.currentTarget.classList.add('active');
+  
+  // Filter items
+  items.forEach(item => {
+    if (category === 'all' || item.dataset.category === category) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing color modal system...');
+  
+  // Initialize the modal system
+  window.colorModal.init();
+  
+  // Ensure trigger button works
+  const trigger = document.querySelector('.color-modal-trigger');
+  if (trigger) {
+    console.log('Found trigger button, ensuring click handler...');
+    // Remove any existing onclick and add our handler
+    trigger.removeAttribute('onclick');
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Trigger button clicked via event listener');
+      window.openColorModal();
+    });
+  } else {
+    console.warn('Trigger button not found during initialization');
+  }
+  
+  // Debug info
+  const elements = {
+    trigger: !!document.querySelector('.color-modal-trigger'),
+    overlay: !!document.getElementById('colorModalOverlay'),
+    modal: !!document.querySelector('.color-modal'),
+    tabs: document.querySelectorAll('.main-tab').length,
+    tabContents: document.querySelectorAll('.tab-content').length
+  };
+  
+  console.log('Color Modal Elements Status:', elements);
+});
+
+// Also try to initialize immediately in case DOMContentLoaded already fired
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(() => {
+    if (window.colorModal && !window.colorModal.initialized) {
+      console.log('Late initialization attempt...');
+      window.colorModal.init();
+    }
+  }, 100);
+}
+</script>
+======================================== END OF color-modal-scripts.html
+
+
+========================================
+FILE: color-modal-trigger.html
+PATH: layouts/partials/color-modal-trigger.html
+========================================
+SIZE:     2003 bytes
+LINES:       81 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<!-- layouts/partials/color-modal-trigger.html -->
+<button class="color-modal-trigger" id="colorModalTrigger" aria-label="Personnaliser les couleurs">
+  <span class="trigger-icon">🎨</span>
+  <span class="trigger-text">Personnaliser les Couleurs</span>
+</button>
+
+<style>
+.color-modal-trigger {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--bronze-accent, #B08D57);
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(176, 141, 87, 0.3);
+}
+
+.color-modal-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(176, 141, 87, 0.4);
+  background: #9A7A58;
+}
+
+.trigger-icon {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .color-modal-trigger {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .trigger-text {
+    display: none;
+  }
+  
+  .trigger-icon {
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+<script>
+// Inline script to ensure button works immediately
+document.addEventListener('DOMContentLoaded', function() {
+  const triggerBtn = document.getElementById('colorModalTrigger');
+  if (triggerBtn) {
+    triggerBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Color modal trigger clicked');
+      
+      // Try to call the function
+      if (typeof window.openColorModal === 'function') {
+        window.openColorModal();
+      } else {
+        // Fallback: manually show modal
+        console.log('Fallback: manually showing modal');
+        const overlay = document.getElementById('colorModalOverlay');
+        if (overlay) {
+          overlay.style.display = 'flex';
+          overlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    });
+  }
+});
+</script>
+======================================== END OF color-modal-trigger.html
+
+
+========================================
+FILE: color-modal-sidebar.html
+PATH: layouts/partials/color-modal-sidebar.html
+========================================
+SIZE:     1203 bytes
+LINES:       64 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<style>
+:root {
+  --modal-bg: var(--primary-cream);
+  --modal-text: var(--deep-charcoal);
+  --modal-border: var(--bronze-accent);
+  --modal-hover: var(--warm-sand);
+}
+
+.color-modal-trigger {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--bronze-accent);
+  color: var(--pure-white);
+  border: none;
+  padding: 15px 25px;
+  border-radius: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(176, 141, 87, 0.4);
+  transition: all 0.3s ease;
+}
+
+.color-modal-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--deep-charcoal);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.color-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--modal-bg);
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Additional styles... */
+</style>
+======================================== END OF color-modal-sidebar.html
+
+
+========================================
+FILE: color-modal-finishes.html
+PATH: layouts/partials/color-modal-finishes.html
+========================================
+SIZE:     1203 bytes
+LINES:       64 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<style>
+:root {
+  --modal-bg: var(--primary-cream);
+  --modal-text: var(--deep-charcoal);
+  --modal-border: var(--bronze-accent);
+  --modal-hover: var(--warm-sand);
+}
+
+.color-modal-trigger {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--bronze-accent);
+  color: var(--pure-white);
+  border: none;
+  padding: 15px 25px;
+  border-radius: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(176, 141, 87, 0.4);
+  transition: all 0.3s ease;
+}
+
+.color-modal-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--deep-charcoal);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.color-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--modal-bg);
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Additional styles... */
+</style>
+======================================== END OF color-modal-finishes.html
+
+
+========================================
+FILE: color-modal-water-tints.html
+PATH: layouts/partials/color-modal-water-tints.html
+========================================
+SIZE:     1203 bytes
+LINES:       64 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<style>
+:root {
+  --modal-bg: var(--primary-cream);
+  --modal-text: var(--deep-charcoal);
+  --modal-border: var(--bronze-accent);
+  --modal-hover: var(--warm-sand);
+}
+
+.color-modal-trigger {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--bronze-accent);
+  color: var(--pure-white);
+  border: none;
+  padding: 15px 25px;
+  border-radius: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(176, 141, 87, 0.4);
+  transition: all 0.3s ease;
+}
+
+.color-modal-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--deep-charcoal);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.color-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--modal-bg);
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Additional styles... */
+</style>
+======================================== END OF color-modal-water-tints.html
+
+
+========================================
+FILE: color-modal-ral.html
+PATH: layouts/partials/color-modal-ral.html
+========================================
+SIZE:     1203 bytes
+LINES:       64 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<style>
+:root {
+  --modal-bg: var(--primary-cream);
+  --modal-text: var(--deep-charcoal);
+  --modal-border: var(--bronze-accent);
+  --modal-hover: var(--warm-sand);
+}
+
+.color-modal-trigger {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--bronze-accent);
+  color: var(--pure-white);
+  border: none;
+  padding: 15px 25px;
+  border-radius: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(176, 141, 87, 0.4);
+  transition: all 0.3s ease;
+}
+
+.color-modal-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--deep-charcoal);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.color-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--modal-bg);
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Additional styles... */
+</style>
+======================================== END OF color-modal-ral.html
+
+
+========================================
+FILE: color-modal-guide.html
+PATH: layouts/partials/color-modal-guide.html
+========================================
+SIZE:     1203 bytes
+LINES:       64 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<style>
+:root {
+  --modal-bg: var(--primary-cream);
+  --modal-text: var(--deep-charcoal);
+  --modal-border: var(--bronze-accent);
+  --modal-hover: var(--warm-sand);
+}
+
+.color-modal-trigger {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--bronze-accent);
+  color: var(--pure-white);
+  border: none;
+  padding: 15px 25px;
+  border-radius: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(176, 141, 87, 0.4);
+  transition: all 0.3s ease;
+}
+
+.color-modal-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--deep-charcoal);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.color-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--modal-bg);
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Additional styles... */
+</style>
+======================================== END OF color-modal-guide.html
+
+
+========================================
+OTHER COLOR-MODAL FILES FOUND:
+========================================
+Found additional file: color-modal-scripts-previous.html
+
+========================================
+FILE: color-modal-scripts-previous.html
+PATH: layouts/partials/color-modal-scripts-previous.html
+========================================
+SIZE:     2164 bytes
+LINES:       89 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<script>
+const colorModal = {
+  init() {
+    console.log('Initializing color modal...');
+    this.bindEvents();
+    this.loadColorData();
+  },
+
+  bindEvents() {
+    // Close button
+    const closeBtn = document.querySelector('.modal-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.close());
+    }
+
+    // Tab navigation
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        const view = e.currentTarget.dataset.view;
+        this.switchView(view);
+      });
+    });
+
+    // Click outside to close
+    const overlay = document.getElementById('colorModalOverlay');
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          this.close();
+        }
+      });
+    }
+  },
+
+  async loadColorData() {
+    // Data is already loaded by Hugo templates, no need to fetch
+    console.log('Color data loaded via Hugo templates');
+  },
+
+  open() {
+    const overlay = document.getElementById('colorModalOverlay');
+    if (overlay) {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  },
+
+  close() {
+    const overlay = document.getElementById('colorModalOverlay');
+    if (overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  },
+
+  switchView(view) {
+    // Hide all views
+    document.querySelectorAll('.content-view').forEach(v => {
+      v.classList.remove('active');
+    });
+    
+    // Show selected view
+    const selectedView = document.getElementById(view + 'View');
+    if (selectedView) {
+      selectedView.classList.add('active');
+    }
+    
+    // Update tab states
+    document.querySelectorAll('.main-tab').forEach(t => {
+      t.classList.remove('active');
+    });
+    document.querySelector(`[data-view="${view}"]`).classList.add('active');
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  colorModal.init();
+});
+
+// Global functions for onclick handlers
+function openColorModal() {
+  colorModal.open();
+}
+
+function closeColorModal() {
+  colorModal.close();
+}
+</script>
+
+======================================== END OF color-modal-scripts-previous.html
+
+Found additional file: color-modal-trigger-previous.html
+
+========================================
+FILE: color-modal-trigger-previous.html
+PATH: layouts/partials/color-modal-trigger-previous.html
+========================================
+SIZE:      536 bytes
+LINES:       15 lines
+----------------------------------------
+CONTENT:
+----------------------------------------
+<!-- Color Modal Trigger - DEBUG MODE -->
+<button class="color-modal-trigger" data-color-modal-trigger onclick="openColorModal()">
+  <span class="icon">🎨</span>
+  <span class="text">Personnaliser les Couleurs</span>
+</button>
+<script>
+function openColorModal() {
+  document.getElementById('colorModalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeColorModal() {
+  document.getElementById('colorModalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+</script>
+
+======================================== END OF color-modal-trigger-previous.html
+
+
+========================================
+SUMMARY
+========================================
+Total color-modal files found:       10
+Output saved to: color_modal_all_partials_aggregated.txt

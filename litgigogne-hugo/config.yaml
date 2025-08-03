@@ -1,0 +1,242 @@
+baseURL: 'https://d32pb2gafsfl8j.cloudfront.net'
+languageCode: 'fr-FR'
+title: 'Le Lit Gigogne'
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  brand:
+    name: 'Le Lit Gigogne'
+    tagline: 'Mieux vivre, Mieux dormir, Mieux respirer '
+    since: 1984
+  
+  seo:
+    description: 'Artisan français depuis 1984, créateur de lits gigogne, canapés, futons et tatamis en bois massif.'
+    keywords: 
+      - 'lit gigogne'
+      - 'artisan français'
+      - 'bois massif'
+      - 'canapé convertible'
+      - 'futon'
+      - 'mobilier sur mesure'
+
+  contact:
+    modal_title: "Parlons Votre Projet"
+    modal_intro: "Partagez votre vision avec nos maîtres ébénistes. Chaque détail compte pour créer le meuble qui s'harmonisera parfaitement avec votre espace et votre identité. Que vous ayez déjà une idée précise ou que vous souhaitiez simplement explorer les possibilités, nous sommes là pour vous accompagner dans la création de votre meuble sur mesure. Utilisez notre formulaire pour nous transmettre vos inspirations, plans et besoins spécifiques. Chaque projet commence par une conversation."
+    form_action: "/contact"
+    
+    project_types:
+      - label: "Lit Gigogne Sur Mesure"
+        value: "lit-gigogne"
+      - label: "Canapé-Lit Artisanal" 
+        value: "canape-lit"
+      - label: "Futon Traditionnel"
+        value: "futon"
+      - label: "Matelas Bio"
+        value: "matelas"
+      - label: "Mobilier Personnalisé"
+        value: "mobilier-personnalise"
+      - label: "Restauration de Meuble"
+        value: "restauration"
+      - label: "Conseil & Expertise"
+        value: "conseil"
+        
+    budget_ranges:
+      - label: "1 800€ - 2 500€"
+        value: "1800-2500"
+      - label: "2 500€ - 5 000€"
+        value: "2500-5000"
+      - label: "5 000€ - 10 000€"
+        value: "5000-10000"
+      - label: "10 000€ - 20 000€"
+        value: "10000-20000"
+      - label: "Plus de 20 000€"
+        value: "20000+"
+      - label: "À discuter"
+        value: "a-discuter"
+        
+    timeline_options:
+      - label: "Pas d'urgence particulière"
+        value: "flexible"
+      - label: "Dans les 3 mois"
+        value: "3-mois"
+      - label: "Dans les 6 mois"
+        value: "6-mois"
+      - label: "Dans l'année"
+        value: "1-an"
+      - label: "Urgent (moins de 1 mois)"
+        value: "urgent"
+  
+  personalities:
+    blandyn: '#B08D57'
+    camino: '#7BA7BC'
+    nagano: '#5A6B47'
+    cuba: '#4A90A4'
+    massako: '#6B5B73'
+    camille: '#E8C4C4'
+    noemi: '#C4B5CB'
+    tessuti: '#D4AF37'
+    
+  features:
+    breadcrumbs: true
+    related_products: true
+
+menu:
+  main:
+    - name: "Collections"
+      url: "/collections/"
+      weight: 10
+      identifier: "collections"
+      
+    - name: "Toutes les Collections"
+      url: "/collections/"
+      weight: 11
+      parent: "collections"
+      identifier: "all-collections"
+      
+    - name: "Lits Gigognes"
+      url: "/lits-gigogne/"
+      weight: 12
+      parent: "collections"
+      identifier: "lits-gigogne"
+      
+    - name: "Lits à Tiroirs"
+      url: "/lits-tiroirs/"
+      weight: 13
+      parent: "collections"
+      identifier: "lits-tiroirs"
+      
+    - name: "Lits Japonais"
+      url: "/lits-japonais/"
+      weight: 14
+      parent: "collections"
+      identifier: "lits-japonais"
+      
+    - name: "Canapés"
+      url: "/canapes/"
+      weight: 15
+      parent: "collections"
+      identifier: "canapes"
+      
+    - name: "Produits"
+      url: "/produits/"
+      weight: 16
+      identifier: "produits"
+      
+    - name: "Futons et Tatamis"
+      url: "/futons-tatamis/"
+      weight: 17
+      parent: "produits"
+      identifier: "futons-tatamis"
+      
+    - name: "Matelas"
+      url: "/matelas/"
+      weight: 18
+      parent: "produits"
+      identifier: "matelas"
+      
+    - name: "Accessoires"
+      url: "/accessoires/"
+      weight: 19
+      parent: "produits"
+      identifier: "accessoires"
+      
+    - name: "À Propos"
+      url: "/a-propos/"
+      weight: 20
+      identifier: "a-propos"
+      
+    - name: "Notre Philosophie"
+      url: "/a-propos/philosophie-heritage-artisanat/"
+      weight: 21
+      parent: "a-propos"
+      identifier: "notre-philosophie"
+      
+    - name: "Charte Environnementale"
+      url: "/a-propos/charte-engagement-environnemental/"
+      weight: 22
+      parent: "a-propos"
+      identifier: "charte-environnementale"
+      
+    - name: "Contact"
+      url: "/contact/"
+      weight: 30
+      identifier: "contact"
+
+permalinks:
+  pages: "/:slug"
+
+uglyURLs: false
+
+outputs:
+  home:
+    - "HTML"
+    - "RSS"
+    - "JSON"
+  section:
+    - "HTML"
+    - "RSS"
+    - "JSON"
+
+# Build Performance Optimization
+build:
+  useResourceCacheWhen: "fallback"
+  writeStats: true
+
+# Cache Configuration
+caches:
+  getjson:
+    maxAge: "10m"
+    dir: ":cacheDir/:project"
+  getcsv:
+    maxAge: "10m"
+    dir: ":cacheDir/:project"
+  images:
+    maxAge: "24h"
+    dir: ":resourceDir/_gen"
+  assets:
+    maxAge: "24h"
+    dir: ":resourceDir/_gen"
+
+# Content Management
+related:
+  includeNewer: true
+  indices:
+  - name: "tags"
+    weight: 80
+  - name: "categories"
+    weight: 60
+  - name: "primary_category"
+    weight: 100
+  - name: "product_type"
+    weight: 90
+  threshold: 20
+  toLower: false
+
+# SEO and Performance
+sitemap:
+  changeFreq: "weekly"
+  priority: 0.5
+  filename: "sitemap.xml"
+
+# Minification
+minify:
+  disableCSS: false
+  disableHTML: false
+  disableJS: false
+  disableJSON: false
+  disableSVG: false
+  disableXML: false
+  minifyOutput: true
+  tdewolff:
+    html:
+      keepDocumentTags: true
+      keepEndTags: true
+      keepQuotes: true
+    css:
+      precision: 2
+    js:
+      precision: 2

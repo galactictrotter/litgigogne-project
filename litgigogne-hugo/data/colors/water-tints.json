@@ -1,0 +1,51 @@
+[
+  {
+    "code": "WT-01",
+    "name": "Acajou Clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/acajou%20clair%20petit%20format.png",
+    "category": "water-tints",
+    "description": "Teinte à l'eau reproduisant l'essence d'acajou dans sa variante claire et chaleureuse"
+  },
+  {
+    "code": "WT-02",
+    "name": "Acajou Foncé",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/acajou%20fonc%C3%A9%20petit%20format.png",
+    "category": "water-tints",
+    "description": "Teinte à l'eau reproduisant l'essence d'acajou dans sa variante foncée et noble"
+  },
+  {
+    "code": "WT-03",
+    "name": "Chêne Moyen",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/ch%C3%AAne%20moyen%20petit%20format.png",
+    "category": "water-tints",
+    "description": "Teinte à l'eau imitant l'essence de chêne dans sa tonalité moyenne et classique"
+  },
+  {
+    "code": "WT-04",
+    "name": "Hêtre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/h%C3%AAtre%20petit%20format.png",
+    "category": "water-tints",
+    "description": "Teinte à l'eau reproduisant la couleur naturelle et douce du hêtre"
+  },
+  {
+    "code": "WT-05",
+    "name": "Merisier",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/merisier%20fonc%C3%A9%20petit%20format.png",
+    "category": "water-tints",
+    "description": "Teinte à l'eau reproduisant les tons chauds et rougeâtres du merisier"
+  },
+  {
+    "code": "WT-06",
+    "name": "Wengé Clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/weng%C3%A9%20clair%20petit%20format.png",
+    "category": "water-tints",
+    "description": "Teinte à l'eau reproduisant l'essence exotique de wengé dans sa variante claire"
+  },
+  {
+    "code": "WT-07",
+    "name": "Wengé Foncé",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/weng%C3%A9%20fonc%C3%A9%20petit%20format.png",
+    "category": "water-tints",
+    "description": "Teinte à l'eau reproduisant l'essence exotique de wengé dans sa variante foncée et contrastée"
+  }
+]

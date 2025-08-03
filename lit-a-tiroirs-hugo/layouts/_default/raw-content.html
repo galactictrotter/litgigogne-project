@@ -1,0 +1,95 @@
+{{/* Raw Content Extraction Template - for forensic analysis */}}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raw Content Analysis: {{ .Title }}</title>
+    <style>
+        body { 
+            font-family: monospace; 
+            padding: 20px; 
+            background: #f5f5f5; 
+        }
+        .analysis-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #333;
+        }
+        .raw-content {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+        }
+        .front-matter {
+            background: #e8f4fd;
+            border: 1px solid #b3d7f7;
+            padding: 15px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Raw Content Forensic Analysis</h1>
+    
+    <div class="analysis-section">
+        <h2>Page Metadata</h2>
+        <ul>
+            <li><strong>Title:</strong> {{ .Title }}</li>
+            <li><strong>Type:</strong> {{ .Type }}</li>
+            <li><strong>Section:</strong> {{ .Section }}</li>
+            <li><strong>URL:</strong> {{ .RelPermalink }}</li>
+            <li><strong>Source File:</strong> {{ .File.Path }}</li>
+            <li><strong>Mount Source:</strong> {{ if and .File .File.Mount }}{{ .File.Mount.Source | default "N/A" }}{{ else }}N/A{{ end }}</li>
+            <li><strong>Mount Target:</strong> {{ if and .File .File.Mount }}{{ .File.Mount.Target | default "N/A" }}{{ else }}N/A{{ end }}</li>
+            <li><strong>Content Type:</strong> {{ .Params.content_type }}</li>
+            <li><strong>Primary Category:</strong> {{ .Params.primary_category }}</li>
+        </ul>
+    </div>
+
+    <div class="analysis-section">
+        <h2>Front Matter (YAML)</h2>
+        <div class="front-matter">{{ with .RawContent }}{{ $parts := split . "---" }}{{ if gt (len $parts) 2 }}{{ index $parts 1 }}{{ end }}{{ end }}</div>
+    </div>
+
+    <div class="analysis-section">
+        <h2>Raw Markdown Content (Unprocessed)</h2>
+        <div class="raw-content">{{ with .RawContent }}{{ $parts := split . "---" }}{{ if gt (len $parts) 2 }}{{ index $parts 2 }}{{ else }}{{ . }}{{ end }}{{ end }}</div>
+    </div>
+
+    <div class="analysis-section">
+        <h2>Processed HTML (.Content)</h2>
+        <div class="raw-content">{{ .Content | htmlEscape }}</div>
+    </div>
+
+    <div class="analysis-section">
+        <h2>Parameters Available</h2>
+        <ul>
+            {{ range $key, $value := .Params }}
+            <li><strong>{{ $key }}:</strong> {{ $value }}</li>
+            {{ end }}
+        </ul>
+    </div>
+
+    <div class="analysis-section">
+        <h2>Hugo Module Information</h2>
+        <ul>
+            <li><strong>Site Base URL:</strong> {{ .Site.BaseURL }}</li>
+            <li><strong>Content Source:</strong> {{ if and .File .File.Mount }}{{ .File.Mount.Source }}{{ else }}Local{{ end }}</li>
+            <li><strong>Is Module Content:</strong> {{ if and .File .File.Mount }}{{ if ne (.File.Mount.Source | default "") "" }}YES{{ else }}NO{{ end }}{{ else }}NO{{ end }}</li>
+        </ul>
+    </div>
+
+    <div class="analysis-section">
+        <h2>Content Transformation Test</h2>
+        <h3>Before Transformation:</h3>
+        <div class="raw-content">{{ .Content | htmlEscape }}</div>
+        
+        <h3>After Lit à Tiroirs Transformation:</h3>
+        <div class="raw-content">{{ partial "transform-content.html" .Content | htmlEscape }}</div>
+    </div>
+
+</body>
+</html>

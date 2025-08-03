@@ -1,0 +1,13 @@
+<div class="cta-dual-button-container">
+    {{ with .Get "heading" }}
+        <h3 class="cta-heading">{{ . }}</h3>
+    {{ end }}
+    <div class="button-wrapper">
+        <a href="{{ .Get "standard_url" | default "#" }}" class="btn btn-secondary">
+            {{ .Get "standard_text" | default "Standard Creations" }}
+        </a>
+        <a href="{{ .Get "sur_mesure_url" | default "#" }}" class="btn btn-primary">
+            {{ .Get "sur_mesure_text" | default "Projet Sur Mesure" }}
+        </a>
+    </div>
+</div>

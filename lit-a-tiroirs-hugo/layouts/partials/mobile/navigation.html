@@ -1,0 +1,24 @@
+<!-- Mobile Navigation Overlay -->
+<nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-header">
+        <button class="close-btn" onclick="toggleMobileMenu()">×</button>
+    </div>
+    <div class="mobile-nav-content">
+        <div class="nav-category">
+            <div class="nav-category-image">[Photo Catégorie 360x200]<br>Solutions Rangement</div>
+            <h2 class="nav-category-title">Lits à Tiroirs</h2>
+            <p class="nav-category-desc">Solutions de rangement innovantes</p>
+        </div>
+        <div class="nav-category">
+            <div class="nav-category-image">[Photo Catégorie 360x200]<br>Optimisation Espace</div>
+            <h2 class="nav-category-title">Espace & Rangement</h2>
+            <p class="nav-category-desc">Maximisez votre espace de vie</p>
+        </div>
+        <div class="nav-category">
+            <div class="nav-category-image">[Photo Catégorie 360x200]<br>Heritage Photography</div>
+            <h2 class="nav-category-title">Notre Histoire</h2>
+            <p class="nav-category-desc">{{ .Site.Params.brand.since }} ans d'excellence artisanale</p>
+        </div>
+        <a href="#contact" class="btn" style="width: 100%; margin-top: 20px;">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</nav>

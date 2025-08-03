@@ -1,0 +1,204 @@
+categories:
+  drawer_beds:
+    name: "Lits à Tiroirs"
+    description: "Solutions de rangement intelligentes"
+  canapes_tiroirs:
+    name: "Canapés à Tiroirs"
+    description: "Assises avec rangement intégré"
+    
+lits_tiroirs:
+  # Real Lits à Tiroirs Products
+  massako_460:
+    id: "lit-tiroir-massako-460"
+    name: "MASSAKO 460"
+    short_desc: "2-5 tiroirs par côté, 46cm height, capacity medium-high"
+    price: "1167€"
+    capacity:
+      indicator: "Medium-High"
+      type: "capacity-medium"
+      color: "capacity-orange"
+    drawer_count: "2-5"
+    features:
+      - "2-5 Tiroirs/Côté"
+      - "46cm Hauteur"
+      - "2 Étages"
+      - "Website Verified"
+    target_detail: "detail-massako-460"
+    
+  massako_690:
+    id: "lit-tiroir-massako-690"
+    name: "MASSAKO 690"
+    short_desc: "4-8 tiroirs par côté, 69cm height, haute capacité 4 étages"
+    price: "1279€"
+    capacity:
+      indicator: "Haute Capacité"
+      type: "capacity-high"
+      color: "capacity-green"
+    drawer_count: "4-8"
+    features:
+      - "4-8 Tiroirs/Côté"
+      - "69cm Hauteur"
+      - "4 Étages"
+      - "Website Verified"
+    target_detail: "detail-massako-690"
+    
+  massako_1000:
+    id: "lit-tiroir-massako-1000"
+    name: "MASSAKO 1000"
+    short_desc: "Up to 8 tiroirs, 100cm height, escalier intégré"
+    price: "2826€"
+    capacity:
+      indicator: "Maximum"
+      type: "capacity-max"
+      color: "capacity-green"
+    drawer_count: "8"
+    features:
+      - "8 Tiroirs Max"
+      - "100cm Hauteur"
+      - "Escalier Intégré"
+      - "Website Verified"
+    target_detail: "detail-massako-1000"
+    
+  massako_400:
+    id: "lit-tiroir-massako-400"
+    name: "MASSAKO 400"
+    short_desc: "2-4 tiroirs par côté, 40cm height, équilibré"
+    price: "637€"
+    capacity:
+      indicator: "Équilibré"
+      type: "capacity-medium"
+      color: "capacity-orange"
+    drawer_count: "2-4"
+    features:
+      - "2-4 Tiroirs/Côté"
+      - "40cm Hauteur"
+      - "Équilibré"
+      - "Website Verified"
+    target_detail: "detail-massako-400"
+    
+  massako_550:
+    id: "lit-tiroir-massako-550"
+    name: "MASSAKO 550"
+    short_desc: "2-6 tiroirs par côté, 55cm height, amplifiée"
+    price: "1016€"
+    capacity:
+      indicator: "Amplifiée"
+      type: "capacity-high"
+      color: "capacity-orange"
+    drawer_count: "2-6"
+    features:
+      - "2-6 Tiroirs/Côté"
+      - "55cm Hauteur"
+      - "3 Étages"
+      - "Website Verified"
+    target_detail: "detail-massako-550"
+    
+  megumi:
+    id: "lit-tiroir-megumi"
+    name: "MEGUMI"
+    short_desc: "1-2 tiroirs par côté, 30cm height, accessible"
+    price: "575€"
+    capacity:
+      indicator: "Compact"
+      type: "capacity-compact"
+      color: "storage-blue"
+    drawer_count: "1-2"
+    features:
+      - "1-2 Tiroirs/Côté"
+      - "30cm Hauteur"
+      - "Budget Friendly"
+      - "Website Verified"
+    target_detail: "detail-megumi"
+
+canapes_tiroirs:
+  # Real Canapés à Tiroirs Products  
+  massako_tiroir:
+    id: "massako-tiroir"
+    name: "MASSAKO Tiroir"
+    short_desc: "Design japonais avec rangement intégré"
+    price: "1285€"
+    capacity:
+      indicator: "Rangement Intégré"
+      type: "capacity-medium"
+      color: "storage-blue"
+    drawer_count: 1
+    features:
+      - "Tiroir Intégré"
+      - "Design Japonais"
+      - "Mécanisme Silencieux"
+      - "Artisanal"
+    target_detail: "detail-massako-tiroir"
+    
+  nagano_peigne_tiroir:
+    id: "canape-convertible-nagano-avec-tiroir"
+    name: "NAGANO Peigne Tiroir"
+    short_desc: "Design structuré avec rangement invisible"
+    price: "734€"
+    capacity:
+      indicator: "Design Fonctionnel"
+      type: "capacity-medium"
+      color: "capacity-orange"
+    drawer_count: 1
+    features:
+      - "Design Peigne"
+      - "Structure Apparente"
+      - "Rangement Intégré"
+      - "Innovation Esthétique"
+    target_detail: "detail-nagano-peigne"
+    
+  camino_tiroir:
+    id: "canape-tiroir-camino"
+    name: "CAMINO Tiroir"
+    short_desc: "Élégance française avec rangement discret"
+    price: "730€"
+    capacity:
+      indicator: "Medium"
+      type: "capacity-medium"
+      color: "capacity-orange"
+    drawer_count: "variable"
+    features:
+      - "Tiroirs Roulettes"
+      - "Variable Height"
+      - "10 Finitions"
+      - "French Elegance"
+    target_detail: "detail-camino-tiroir"
+
+# Navigation structure
+navigation:
+  main:
+    - id: "lits-tiroirs"
+      label: "Lits à Tiroirs"
+      target: "middle-lits-tiroirs"
+      active: true
+      expanded: true
+    - id: "canapes-tiroirs"
+      label: "Canapés à Tiroirs"
+      target: "middle-canapes-tiroirs"
+      active: false
+    - id: "espace-rangement"
+      label: "Espace & Rangement"
+      target: "middle-espace"
+      active: false
+    - id: "teintes-finitions"
+      label: "Teintes & Finitions"
+      target: "middle-teintes-finitions"
+      active: false
+    - id: "a-propos"
+      label: "À Propos"
+      target: "middle-a-propos"
+      active: false
+
+# Feature icons mapping
+feature_icons:
+  "4 Tiroirs": "storage-multiple"
+  "2 Tiroirs": "storage-dual"
+  "6 Tiroirs": "storage-max"
+  "Capacité Max": "capacity-indicator"
+  "Gain d'Espace": "space-optimization"
+  "Évolutif": "modular-system"
+  "Artisanal": "handcrafted"
+  "Design": "design-modern"
+  "Lit Double": "bed-double"
+  "Latéraux": "side-storage"
+  "Premium": "premium-quality"
+  "Modulaire": "modular"

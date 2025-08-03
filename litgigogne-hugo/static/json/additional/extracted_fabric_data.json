@@ -1,0 +1,102 @@
+{
+  "page_metadata": {
+    "title": "Tissu pour coussin et matelas",
+    "meta_description": "Notre gamme de tissu créateur spécial ameublement pour canapé convertible. Coussin, traversin et matelas dans un large choix de coloris. Tissu 67% coton 33% polyester, 340 g/m2.",
+    "meta_keywords": []
+  },
+  "product_info": {
+    "product_name": "Gamme ALBERTA - tissu d'ameublement",
+    "product_type_category": "Tissu créateur spécial ameublement",
+    "hero_description": "Notre gamme de tissu créateur spécial ameublement pour canapé convertible. Coussin, traversin et matelas dans un large choix de coloris. Tissu 67% coton 33% polyester, 340 g/m2.",
+    "price_per_meter": 55.0,
+    "eco_participation_per_meter": 0.02,
+    "width_cm": 280.0,
+    "grammage_gsm": 340.0,
+    "available_colors_count": 62,
+    "durability_years": 10,
+    "warranty_years": null,
+    "composition": [
+      {
+        "material": "coton",
+        "percentage": 67
+      },
+      {
+        "material": "polyester",
+        "percentage": 33
+      }
+    ]
+  },
+  "care_instructions": {
+    "general_care": "Les belles choses, bien entretenues, durent plus longtemps. Vous pouvez nettoyer les tissus ALBERTA avec un aspirateur à puissance moyenne, en secouant ou brossant doucement, pas trop fort car le tissu pourrait perdre la couleur ou s’abîmer.",
+    "stain_removal": "Dans le cas de tâches il faut agir rapidement avant que la tache pénètre trop pour éviter qu’elle ne se répande. Attention les produits chimiques abiment et décolorent les tissus !",
+    "washing_instructions": "Tous nos produits tissus d’ameublement sont accompagnés d’une fiche technique avec les instructions de lavage. Pour la gamme ALBERTA, nous recommandons un nettoyage à 30°C, de ne pas utiliser d'eau de javel ; un repassage du tissu par la face arrière à 110° maximum ; et d'éviter le séchage au sèche-linge pour préserver les couleurs de votre tissu.",
+    "care_symbols_images": [
+      {
+        "url": "http://www.lelitgigogne.fr/img/cms/A-.jpg",
+        "alt_text": "entretien tissu"
+      },
+      {
+        "url": "http://www.lelitgigogne.fr/img/cms/B-.jpg",
+        "alt_text": "entretien tissu"
+      },
+      {
+        "url": "http://www.lelitgigogne.fr/img/cms/C-.jpg",
+        "alt_text": "nettoyage tissu"
+      },
+      {
+        "url": "http://www.lelitgigogne.fr/img/cms/D-.jpg",
+        "alt_text": "nettoyage tissu"
+      }
+    ]
+  },
+  "color_harmonization_advice": {
+    "introduction": "Quelques conseils pour composer sa gamme de couleur",
+    "tips": [
+      "Nous vous proposons plus de 62 coloris dans notre gamme ALBERTA. Vous trouverez ci-après des ensembles de couleurs harmonieuses pour créer l'ambiance colorée de votre chambre ou votre salon. Pensez également à accorder les couleurs de vos tissus avec la couleur de votre meuble. Découvrez nos gammes de teintes pour bois massif .",
+      "Nous vous conseillons d'accorder votre lit et canapé avec des tissus dans une harmonie de 3 couleurs maximum . Les couleurs vives peuvent être jouées en touche sur les coussins. Privilégiez des couleurs plus neutres pour vos housses de matelas . Vous pourrez ainsi changer souvent vos coussins, et jouer différentes ambiances sans changer entièrement de canapé !"
+    ],
+    "examples": [
+      {
+        "color_family": "gris",
+        "image_url": "http://www.lelitgigogne.fr/img/cms/coloris%20fonc%C3%A9s.jpg",
+        "alt_text": "coloris foncés"
+      },
+      {
+        "color_family": "bruns",
+        "image_url": "http://www.lelitgigogne.fr/img/cms/coloris%20bruns%203.jpg",
+        "alt_text": "tissu marron"
+      },
+      {
+        "color_family": "rouges",
+        "image_url": "http://www.lelitgigogne.fr/img/cms/coloris%20rouges.jpg",
+        "alt_text": "tissu rouge"
+      },
+      {
+        "color_family": "orangés",
+        "image_url": "http://www.lelitgigogne.fr/img/cms/coloris%20orang%C3%A9s.jpg",
+        "alt_text": "tissu orange"
+      },
+      {
+        "color_family": "bleus",
+        "image_url": "http://www.lelitgigogne.fr/img/cms/coloris%20bleus%20copie.jpg",
+        "alt_text": "tissu bleu"
+      },
+      {
+        "color_family": "violets",
+        "image_url": "http://www.lelitgigogne.fr/img/cms/coloris%20violets.jpg",
+        "alt_text": "tissu violet"
+      },
+      {
+        "color_family": "verts",
+        "image_url": "http://www.lelitgigogne.fr/img/cms/coloris%20verts.jpg",
+        "alt_text": "tissu coloris vert"
+      }
+    ]
+  },
+  "gallery_images": [
+    {
+      "url": "https://www.lelitgigogne.fr/1588-thickbox_default/tissu.jpg",
+      "alt_text": "Tissu, housse et coussin de canapés"
+    }
+  ]
+}

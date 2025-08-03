@@ -1,0 +1,1186 @@
+{{ define "main" }}
+
+{{/*
+================================================================================
+  1. CONTENT TYPE DETECTION
+  - We check if the page is a "product" or "product_line".
+  - If it is, we render the detailed product layout.
+  - If not, we fall back to the original template (for contact, etc.).
+================================================================================
+*/}}
+{{ $isProductPage := or (eq .Params.content_type "product") (eq .Params.content_type "product_line") }}
+
+{{ if $isProductPage }}
+
+{{/* We are on a product or product line page. Render the product layout. */}}
+
+<!-- Custom styles for this template's specific layouts -->
+<style>
+    .product-layout-grid, .product-data-grid {
+        display: grid;
+        gap: 3rem;
+        align-items: start;
+    }
+    @media (min-width: 768px) {
+        .product-layout-grid { grid-template-columns: 2fr 1fr; }
+        .product-data-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .product-description h2, .product-description h3 { margin-top: 2.5rem; }
+    .product-description p { margin-bottom: 1rem; }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .gallery-grid img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gallery-grid img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .pricing-box {
+        background-color: var(--primary-cream);
+        padding: 2rem;
+        border-radius: 4px;
+        border-left: 4px solid var(--bronze-accent);
+    }
+    .pricing-table {
+        width: 100%;
+        margin-top: 1.5rem;
+        border-collapse: collapse;
+    }
+    .pricing-table th, .pricing-table td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--warm-sand);
+    }
+    .pricing-table th {
+        font-family: 'Playfair Display', serif;
+        color: var(--deep-charcoal);
+    }
+    .pricing-table tr:last-child td { border-bottom: none; }
+    .base-price {
+        font-size: 1.25rem;
+        font-family: 'Playfair Display', serif;
+        color: var(--olive);
+        font-weight: 400;
+        margin-top: 1rem;
+    }
+
+    /* Product Gallery-First Showcase */
+    .product-showcase {
+        padding: 3rem 0;
+        background-color: var(--pure-white);
+    }
+    
+    .product-showcase-grid {
+        display: grid;
+        gap: 1.5rem;
+        align-items: start;
+    }
+    
+    @media (min-width: 768px) {
+        .product-showcase-grid {
+            grid-template-columns: 1.5fr 1fr;
+        }
+    }
+    
+    /* Gallery Container */
+    .gallery-container {
+        position: relative;
+        background: var(--primary-cream);
+        border-radius: 2px;
+        overflow: hidden;
+        aspect-ratio: 4/3;
+        border: 1px solid var(--warm-sand);
+    }
+    
+    .gallery-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .gallery-item.active {
+        opacity: 1;
+    }
+    
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* Gallery Thumbnails */
+    .gallery-thumbnails {
+        display: flex;
+        gap: 0.25rem;
+        margin-top: 0.5rem;
+        justify-content: flex-start;
+    }
+    
+    .thumbnail {
+        border: 1px solid var(--warm-sand);
+        border-radius: 2px;
+        overflow: hidden;
+        background: none;
+        cursor: pointer;
+        transition: border-color 0.2s ease;
+        width: 50px;
+        height: 38px;
+    }
+    
+    .thumbnail:hover,
+    .thumbnail.active {
+        border-color: var(--bronze-accent);
+        border-width: 2px;
+    }
+    
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* No Gallery Fallback */
+    .no-gallery .placeholder-product {
+        aspect-ratio: 4/3;
+        background: linear-gradient(135deg, var(--primary-cream) 0%, var(--warm-sand) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        color: var(--deep-charcoal);
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    
+    /* Product Information */
+    .product-info-main {
+        padding: 0.5rem 0;
+    }
+    
+    .product-header {
+        margin-bottom: 1rem;
+    }
+    
+    .product-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        color: var(--deep-charcoal);
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+        font-weight: 400;
+    }
+    
+    .product-tagline {
+        font-family: 'Karla', sans-serif;
+        font-size: 0.9rem;
+        color: var(--bronze-accent);
+        margin-bottom: 0.75rem;
+        font-weight: 400;
+    }
+    
+    .product-description {
+        font-size: 0.95rem;
+        color: var(--soft-gray);
+        line-height: 1.4;
+        margin: 0;
+    }
+    
+    /* Product Specs Summary */
+    .product-specs-summary {
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: none;
+    }
+    
+    .product-specs-summary h3 {
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+        font-size: 1rem;
+        color: var(--deep-charcoal);
+        font-weight: 400;
+        border-bottom: 1px solid var(--warm-sand);
+        padding: 0;
+    }
+    
+    .specs-grid {
+        display: grid;
+        gap: 0;
+        margin: 0;
+    }
+    
+    .spec-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(176, 141, 87, 0.2);
+    }
+    
+    .spec-item:last-child {
+        border-bottom: none;
+    }
+    
+    .spec-label {
+        font-weight: 400;
+        color: var(--soft-gray);
+        font-size: 0.9rem;
+    }
+    
+    .spec-value {
+        font-weight: 500;
+        color: var(--deep-charcoal);
+        text-align: right;
+        font-size: 0.9rem;
+    }
+
+    /* Fabrication Label */
+    .product-fabrication-label {
+        margin: 1.5rem 0 0.25rem 0;
+        padding: 0;
+        background: none;
+        border: none;
+    }
+    
+    .product-fabrication-label h3 {
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+        font-size: 1rem;
+        color: var(--deep-charcoal);
+        font-weight: 400;
+        border-bottom: 1px solid var(--warm-sand);
+        padding: 0;
+    }
+
+    /* Subdued Pricing */
+    .product-pricing-subdued {
+        margin: 0;
+        padding: 0.75rem;
+        background: none;
+        border-radius: 2px;
+        border: none;
+    }
+    
+    .price-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .price-display {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .price-label {
+        font-size: 0.9rem;
+        color: var(--soft-gray);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .price-value {
+        font-size: 1.8rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+        color: var(--deep-charcoal);
+    }
+    
+    /* Subdued pricing overrides */
+    .product-pricing-subdued .price-label {
+        font-size: 0.8rem;
+        color: var(--soft-gray);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .product-pricing-subdued .price-value {
+        font-size: 1rem;
+        color: var(--olive);
+        font-weight: 400;
+    }
+    
+    .product-pricing-subdued .price-note {
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        font-style: italic;
+    }
+    
+    .price-note {
+        font-size: 0.9rem;
+        color: var(--soft-gray);
+        margin: 0.75rem 0 0 0;
+        font-style: italic;
+    }
+    
+    /* Product Actions */
+    .product-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    
+    .product-cta {
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        border-radius: 2px;
+        font-weight: 400;
+        text-align: center;
+        transition: all 0.2s ease;
+        font-size: 1rem;
+    }
+    
+    .product-cta.btn-primary {
+        background: var(--bronze-accent);
+        color: var(--pure-white);
+        border: 2px solid var(--bronze-accent);
+    }
+    
+    .product-cta.btn-primary:hover {
+        background: var(--olive);
+        border-color: var(--olive);
+    }
+    
+    .product-cta.btn-secondary {
+        background: var(--pure-white);
+        color: var(--deep-charcoal);
+        border: 2px solid var(--warm-sand);
+    }
+    
+    .product-cta.btn-secondary:hover {
+        background: var(--primary-cream);
+        border-color: var(--bronze-accent);
+    }
+    
+    /* Product Content Sections */
+    .product-content {
+        padding: 2rem 0 1rem 0;
+    }
+    
+    .product-description-main {
+        max-width: 800px;
+        margin: 0 auto;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--deep-charcoal);
+    }
+    
+    .product-description-main h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        color: var(--deep-charcoal);
+        margin: 2rem 0 1rem 0;
+        font-weight: 400;
+    }
+    
+    .product-description-main h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+        color: var(--deep-charcoal);
+        margin: 1.5rem 0 0.75rem 0;
+        font-weight: 400;
+    }
+    
+    .product-description-main p {
+        margin-bottom: 1rem;
+    }
+    
+    .product-key-points {
+        padding: 1.5rem 0;
+        background: var(--primary-cream);
+        border-top: 1px solid var(--warm-sand);
+        border-bottom: 1px solid var(--warm-sand);
+    }
+    
+    .key-points-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .key-points-container h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        color: var(--deep-charcoal);
+        margin-bottom: 1.25rem;
+        font-weight: 400;
+        text-align: center;
+        border-bottom: 1px solid rgba(176, 141, 87, 0.3);
+        padding-bottom: 0.75rem;
+    }
+    
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.75rem;
+    }
+    
+    .feature-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 2px;
+        border-left: 3px solid var(--bronze-accent);
+        transition: all 0.2s ease;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--deep-charcoal);
+    }
+    
+    .feature-list li:hover {
+        background: rgba(255, 255, 255, 0.8);
+        border-left-color: var(--olive);
+    }
+    
+    .feature-list li::before {
+        content: "•";
+        color: var(--bronze-accent);
+        font-weight: 600;
+        font-size: 1.5rem;
+        margin-top: 0;
+        flex-shrink: 0;
+        width: 1.2rem;
+        text-align: center;
+        line-height: 1;
+    }
+    
+    .feature-list li p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--deep-charcoal);
+    }
+    
+    /* FAQ Accordion Section */
+    .product-faq {
+        padding: 3rem 0 2rem 0;
+        background: var(--pure-white);
+        margin-top: 3rem;
+    }
+    
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .faq-container h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        color: var(--deep-charcoal);
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+        text-align: center;
+        border-bottom: 1px solid rgba(176, 141, 87, 0.3);
+        padding-bottom: 0.75rem;
+    }
+    
+    .faq-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .faq-item {
+        border-bottom: 1px solid var(--warm-sand);
+        margin-bottom: 0;
+    }
+    
+    .faq-item:last-child {
+        border-bottom: none;
+    }
+    
+    .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 1rem 0;
+        text-align: left;
+        cursor: pointer;
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: var(--deep-charcoal);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: color 0.2s ease;
+    }
+    
+    .faq-question:hover {
+        color: var(--bronze-accent);
+    }
+    
+    
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        background: none;
+    }
+    
+    .faq-item.active .faq-answer {
+        max-height: 200px;
+        padding: 0.75rem 0;
+    }
+    
+    .faq-answer p {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--soft-gray);
+    }
+    
+    /* Related Products Section */
+    .product-related {
+        padding: 2.5rem 0;
+        background: var(--primary-cream);
+        border-top: 1px solid var(--warm-sand);
+    }
+    
+    .related-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .related-container h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        color: var(--deep-charcoal);
+        margin-bottom: 2rem;
+        font-weight: 400;
+        text-align: center;
+        border-bottom: 1px solid rgba(176, 141, 87, 0.3);
+        padding-bottom: 1rem;
+    }
+    
+    .related-products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .related-product-card {
+        background: var(--pure-white);
+        border-radius: 0;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,.1);
+        transition: all .3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .related-product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,.15);
+    }
+    
+    .related-product-image {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: linear-gradient(135deg, var(--warm-sand) 0%, var(--primary-cream) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .related-product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .3s ease;
+    }
+    
+    .related-product-card:hover .related-product-image img {
+        transform: scale(1.1);
+    }
+    
+    .related-product-placeholder {
+        color: var(--soft-gray);
+        font-family: 'Playfair Display', serif;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+    
+    .related-product-info {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .related-product-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        color: var(--bronze-accent);
+        margin-bottom: 0.5rem;
+        font-weight: 400;
+        line-height: 1.3;
+    }
+    
+    .related-product-description {
+        font-size: 1.1rem;
+        color: var(--soft-gray);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+    }
+    
+    .related-product-pricing {
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid var(--bronze-accent);
+    }
+    
+    .related-product-price {
+        font-size: 1rem;
+        color: var(--olive);
+        font-weight: 400;
+        margin-bottom: 1rem;
+    }
+    
+    .related-product-link {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: var(--bronze-accent);
+        color: var(--pure-white);
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 400;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid transparent;
+    }
+    
+    .related-product-link:hover {
+        background: var(--deep-charcoal);
+        transform: translateY(-2px);
+    }
+    
+    /* Product Quote Box */
+    .product-quote-section {
+        padding: 3rem 0;
+        background: linear-gradient(135deg, var(--deep-charcoal) 0%, rgba(44, 44, 44, 0.9) 100%);
+        color: var(--pure-white);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .product-quote-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="quote-grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23B08D57" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23quote-grain)"/></svg>');
+        opacity: 0.3;
+        pointer-events: none;
+    }
+    
+    .quote-container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .quote-tag {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--bronze-accent);
+        color: var(--pure-white);
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .quote-content {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        line-height: 1.4;
+        font-weight: 400;
+        color: var(--pure-white);
+        font-style: normal;
+        position: relative;
+        padding-left: 2rem;
+    }
+    
+    .quote-content::before {
+        content: '"';
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--bronze-accent);
+        position: absolute;
+        font-family: 'Playfair Display', serif;
+        opacity: 0.8;
+        top: -0.5rem;
+        left: 0;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 767px) {
+        .product-showcase {
+            padding: 0.5rem 0;
+        }
+        
+        .product-showcase-grid {
+            gap: 1rem;
+        }
+        
+        .product-info-main {
+            padding: 0;
+        }
+        
+        .product-actions {
+            margin-top: 1rem;
+        }
+        
+        .thumbnail {
+            width: 45px;
+            height: 34px;
+        }
+        
+        .product-title {
+            font-size: 1.25rem;
+        }
+        
+        .product-description {
+            font-size: 0.9rem;
+        }
+        
+        .product-content {
+            padding: 1.5rem 0 0.75rem 0;
+        }
+        
+        .product-description-main {
+            font-size: 0.95rem;
+        }
+    }
+
+</style>
+
+{{/*
+================================================================================
+  2. PRODUCT GALLERY & INFO SECTION
+  - Gallery-first approach: product images lead the page
+  - Integrated product title, price, and key information
+  - Mobile-friendly responsive gallery
+================================================================================
+*/}}
+<section class="product-showcase">
+    <div class="container">
+        <div class="product-showcase-grid">
+            {{/* Product Gallery */}}
+            <div class="product-gallery-main">
+                {{ if .Params.gallery }}
+                <div class="gallery-container">
+                    {{ range $index, $image := .Params.gallery }}
+                    <div class="gallery-item {{ if eq $index 0 }}active{{ end }}">
+                        <img src="{{ $image.url | relURL }}" alt="{{ $image.alt }}" loading="{{ if eq $index 0 }}eager{{ else }}lazy{{ end }}">
+                    </div>
+                    {{ end }}
+                </div>
+                {{ if gt (len .Params.gallery) 1 }}
+                <div class="gallery-thumbnails">
+                    {{ range $index, $image := .Params.gallery }}
+                    <button class="thumbnail {{ if eq $index 0 }}active{{ end }}" data-index="{{ $index }}">
+                        <img src="{{ $image.url | relURL }}" alt="{{ $image.alt }}" loading="lazy">
+                    </button>
+                    {{ end }}
+                </div>
+                {{ end }}
+                {{ else }}
+                <div class="no-gallery">
+                    <div class="placeholder-product">
+                        <span>{{ .Title }}</span>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+
+            {{/* Product Information */}}
+            <div class="product-info-main">
+                <div class="product-header">
+                    <h1 class="product-title">{{ .Title }}</h1>
+                    {{ if .Params.product_tagline }}<div class="product-tagline">{{ .Params.product_tagline }}</div>{{ end }}
+                    <p class="product-description">{{ .Params.description }}</p>
+                </div>
+
+                
+                {{/* Specifications First */}}
+                {{ if .Params.specs }}
+                <div class="product-specs-summary">
+                    <h3>Spécifications</h3>
+                    <div class="specs-grid">
+                        {{ range .Params.specs }}
+                        <div class="spec-item">
+                            <span class="spec-label">{{ .key }}</span>
+                            <span class="spec-value">{{ .value }}</span>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+
+                {{/* Fabrication Label for certain categories */}}
+                {{ if or (eq .Params.primary_category "lits-tiroirs") (eq .Params.primary_category "lits-gigogne") (eq .Params.primary_category "canapes") }}
+                <div class="product-fabrication-label">
+                    <h3>Fabriqué Exclusivement Sur Demande</h3>
+                </div>
+                {{ end }}
+
+                {{/* Subdued Pricing */}}
+                {{ if .Params.pricing }}
+                <div class="product-pricing-subdued">
+                    {{ if .Params.pricing.base_price }}
+                    <div class="price-line">
+                        <span class="price-label">À partir de</span>
+                        <span class="price-value">{{ partial "price-format.html" .Params.pricing.base_price }}</span>
+                    </div>
+                    {{ end }}
+                </div>
+                {{ end }}
+
+                <div class="product-actions">
+                    <a href="/contact" class="btn-primary product-cta">Demander un Devis</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container">
+
+{{/*
+================================================================================
+  3. KEY POINTS SECTION
+  - Dedicated section for product highlights
+================================================================================
+*/}}
+    {{ with .Params.key_points }}
+    <section class="content-section product-key-points">
+        <div class="key-points-container fade-in">
+            <h3>Points Clés</h3>
+            <ul class="feature-list">
+                {{ range . }}
+                <li>{{ . | markdownify }}</li>
+                {{ end }}
+            </ul>
+        </div>
+    </section>
+    {{ end }}
+
+{{/*
+================================================================================
+  4. FAQ SECTION
+  - Positioned after Points Clés with proper spacing
+================================================================================
+*/}}
+    {{ partial "faq-section.html" . }}
+
+{{/*
+================================================================================
+  5. PRODUCT DESCRIPTION SECTION
+  - Full-width product description content from markdown
+================================================================================
+*/}}
+    <section class="content-section product-content">
+        <div class="product-description-main fade-in">
+            {{ .Content }}
+        </div>
+    </section>
+
+{{/*
+================================================================================
+  6. PRODUCT QUOTE SECTION
+  - Big featured quote box with product name and quote
+================================================================================
+*/}}
+    {{ if .Params.product_quote }}
+    <section class="product-quote-section">
+        <div class="quote-container fade-in">
+            <div class="quote-tag">{{ .Title | replaceRE " - .*$" "" }}</div>
+            <div class="quote-content">{{ .Params.product_quote }}</div>
+        </div>
+    </section>
+    {{ end }}
+
+{{/*
+================================================================================
+  7. RELATED PRODUCTS SECTION
+  - Showcase other lits à tiroirs
+================================================================================
+*/}}
+    <section class="content-section product-related">
+        <div class="related-container fade-in">
+            <h3>{{ if eq .Params.primary_category "lits-tiroirs" }}Autres Lits à Tiroirs{{ else if eq .Params.primary_category "lits-gigogne" }}Autres Lits Gigognes{{ else if eq .Params.primary_category "canapes" }}Autres Canapés{{ else }}Produits Similaires{{ end }}</h3>
+            <div class="related-products-grid">
+                {{ if .Params.related_products }}
+                    {{ range .Params.related_products }}
+                        {{ $relatedPage := $.Site.GetPage (printf "/content/%s/%s.md" $.Params.primary_category .) }}
+                        {{ if $relatedPage }}
+                        <div class="related-product-card">
+                            <div class="related-product-image">
+                                {{ if $relatedPage.Params.gallery }}
+                                    {{ $firstImage := index $relatedPage.Params.gallery 0 }}
+                                    <img src="{{ $firstImage.url }}" alt="{{ $firstImage.alt }}" loading="lazy">
+                                {{ else }}
+                                    <div class="related-product-placeholder">Image à venir</div>
+                                {{ end }}
+                            </div>
+                            <div class="related-product-info">
+                                <h4 class="related-product-title">{{ $relatedPage.Title }}</h4>
+                                <p class="related-product-description">{{ $relatedPage.Params.description | truncate 120 }}</p>
+                                <div class="related-product-pricing">
+                                    {{ if $relatedPage.Params.pricing.base_price }}
+                                        <div class="related-product-price">À partir de {{ $relatedPage.Params.pricing.base_price }} €</div>
+                                    {{ end }}
+                                    <a href="{{ $relatedPage.RelPermalink }}" class="related-product-link">Découvrir</a>
+                                </div>
+                            </div>
+                        </div>
+                        {{ end }}
+                    {{ end }}
+                {{ else }}
+                    {{/* Fallback if no related products defined */}}
+                    {{ $relatedPages := where (where .Site.RegularPages "Params.primary_category" .Params.primary_category) "File.Path" "ne" .File.Path }}
+                    {{ range first 3 $relatedPages }}
+                    <div class="related-product-card">
+                        <div class="related-product-image">
+                            {{ if .Params.gallery }}
+                                {{ $firstImage := index .Params.gallery 0 }}
+                                <img src="{{ $firstImage.url }}" alt="{{ $firstImage.alt }}" loading="lazy">
+                            {{ else }}
+                                <div class="related-product-placeholder">Image à venir</div>
+                            {{ end }}
+                        </div>
+                        <div class="related-product-info">
+                            <h4 class="related-product-title">{{ .Title }}</h4>
+                            <p class="related-product-description">{{ .Params.description | truncate 120 }}</p>
+                            <div class="related-product-pricing">
+                                {{ if .Params.pricing.base_price }}
+                                    <div class="related-product-price">À partir de {{ .Params.pricing.base_price }} €</div>
+                                {{ end }}
+                                <a href="{{ .RelPermalink }}" class="related-product-link">Découvrir</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+
+
+    {{/* Family-based product navigation and relationships */}}
+    {{ if .Params.product_family }}
+        {{ partial "family-breadcrumbs.html" . }}
+        
+        <section class="content-section family-section">
+            {{ partial "product-family-nav.html" . }}
+        </section>
+        
+        <section class="content-section related-section">
+            {{ partial "related-products.html" . }}
+        </section>
+        
+        <section class="content-section cross-category-section">
+            {{ partial "cross-category-links.html" . }}
+        </section>
+    {{ end }}
+
+</div> {{/* End .container */}}
+
+
+{{/*
+================================================================================
+  6. CTA (CALL TO ACTION) SECTION
+  - Reuses the same CTA as the homepage for brand consistency.
+  - Pulls content from site parameters.
+================================================================================
+*/}}
+{{ with .Site.Params.contact_cta }}
+{{ if .enabled }}
+<section id="projet" class="content-section contact-cta-section" style="margin-top: 4rem;">
+    <div class="container">
+        <div class="cta-content">
+            <div class="cta-text">
+                <h2 class="fade-in">{{ .headline | default "Votre Projet Sur Mesure" }}</h2>
+
+                {{ if .description }}
+                <p class="cta-description fade-in">{{ .description }}</p>
+                {{ end }}
+
+                <div class="cta-buttons fade-in">
+                    {{ with .primary_cta }}
+                        <a href="{{ .link | relURL }}" class="cta-button primary">
+                            {{ .text }}
+                        </a>
+                    {{ end }}
+                </div>
+            </div>
+
+            {{ if .image }}
+            <div class="cta-image fade-in">
+                <img src="{{ .image | relURL }}" alt="{{ .headline }}" loading="lazy">
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+{{ end }}
+
+{{/* Include family structured data for product pages - temporarily disabled for build optimization */}}
+{{/* {{ if .Params.product_family }}
+    {{ partial "family-structured-data.html" . }}
+{{ end }} */}}
+
+{{/* Simple Gallery JavaScript */}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gallery functionality
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', function() {
+            // Remove active class from all thumbnails and gallery items
+            thumbnails.forEach(t => t.classList.remove('active'));
+            galleryItems.forEach(item => item.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail and corresponding gallery item
+            thumbnail.classList.add('active');
+            if (galleryItems[index]) {
+                galleryItems[index].classList.add('active');
+            }
+        });
+    });
+    
+});
+</script>
+
+{{ else }}
+
+{{/*
+================================================================================
+  FALLBACK: ORIGINAL CONTACT PAGE TEMPLATE
+  - If content_type is not "product" or "product_line", render this.
+================================================================================
+*/}}
+<section class="contact-content">
+    <div class="container">
+        <div class="contact-grid">
+            <!-- Contact CTA -->
+            <div class="contact-cta fade-in">
+                <h2>{{ .Params.cta.title | default "Commencez Votre Projet" }}</h2>
+                <div class="cta-content">
+                    {{ .Params.cta.description | markdownify }}
+                </div>
+                <button href="/contact" class="cta-button">
+                    Parlons de Votre Projet
+                </button>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info fade-in">
+                <h2>{{ .Params.contact_info.title | default "Restons en Contact" }}</h2>
+                
+                {{ range .Params.contact_info.sections }}
+                <div class="info-item">
+                    <h4>{{ .title }}</h4>
+                    {{ range .details }}
+                    <p>{{ if .bold }}<strong>{{ .text }}</strong>{{ else }}{{ .text | markdownify }}{{ end }}</p>
+                    {{ end }}
+                </div>
+                {{ end }}
+
+                {{ if .Params.contact_info.social }}
+                <div class="info-item">
+                    <h4>{{ .Params.contact_info.social.title | default "Réseaux Sociaux" }}</h4>
+                    {{ range .Params.contact_info.social.links }}
+                    <p><strong>{{ .platform }} :</strong> {{ .handle }}</p>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ if .Params.map_section.enabled }}
+<!-- Map Section -->
+<section class="map-section">
+    <div class="container">
+        <h2 class="fade-in">{{ .Params.map_section.title | default "Visitez Notre Atelier" }}</h2>
+        <div class="map-container fade-in">
+            {{ if .Params.map_section.embed_code }}
+                {{ .Params.map_section.embed_code | safeHTML }}
+            {{ else }}
+                <p>{{ .Params.map_section.placeholder_text | default "Carte interactive de notre emplacement" }}</p>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+
+{{ if .Params.showroom_section.enabled }}
+<!-- Showroom Section -->
+<section class="showroom-section">
+    <div class="container">
+        <h2 class="fade-in">{{ .Params.showroom_section.title | default "Une Expérience Unique" }}</h2>
+        <p class="fade-in">{{ .Params.showroom_section.description }}</p>
+        
+        <div class="showroom-grid">
+            {{ range .Params.showroom_section.features }}
+            <div class="showroom-card fade-in">
+                {{ if .icon_svg }}
+                    {{ .icon_svg | safeHTML }}
+                {{ else }}
+                    <svg class="showroom-icon" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="30" cy="30" r="25" fill="none" stroke="#B08D57" stroke-width="2"/>
+                        <path d="M20 30 L40 30 M30 20 L30 40" stroke="#B08D57" stroke-width="2"/>
+                    </svg>
+                {{ end }}
+                <h4>{{ .title }}</h4>
+                <p>{{ .description }}</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+
+{{ end }} {{/* End of the main if/else block */}}
+
+{{ end }} {{/* End define "main" */}}

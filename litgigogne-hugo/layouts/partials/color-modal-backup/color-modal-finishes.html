@@ -1,0 +1,24 @@
+<div id="finishes" class="tab-content">
+  <div class="modal-sidebar">
+    <h2>Finitions Classiques</h2>
+    <p>Découvrez nos finitions artisanales, perfectionnées depuis 1984. Chaque finition est appliquée à la main par nos maîtres ébénistes pour révéler la beauté naturelle du bois.</p>
+  </div>
+  <div class="modal-main">
+    <div class="main-tab">
+      <div class="color-grid">
+        {{ range .Site.Data.colors.finishes }}
+        <div class="color-item" onclick="selectColor('{{ .id }}', '{{ .name_fr }}', 'finish')">
+          <img src="{{ .image }}" alt="{{ .name_fr }}" loading="lazy">
+          <div class="color-info">
+            <h3>{{ .name_fr }}</h3>
+            <span class="finish-code">{{ .finish_code }}</span>
+            {{ if .premium }}
+            <span class="premium-badge">Premium</span>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</div>

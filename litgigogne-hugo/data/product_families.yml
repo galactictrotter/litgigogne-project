@@ -1,0 +1,407 @@
+# Product Family Cross-Reference System
+# Central registry for all product families and their relationships across categories
+
+families:
+  massako:
+    name: "MASSAKO"
+    description: "Gamme emblématique alliant élégance et fonctionnalité avec des solutions de rangement optimisées"
+    positioning: "premium"
+    heritage: "Design français contemporain inspiré du minimalisme japonais"
+    price_range:
+      min: 890
+      max: 2490
+    
+    # All size variants across the family
+    variants:
+      "400":
+        dimensions: "200x80x40cm"
+        capacity: "2 personnes"
+        storage: "Tiroir latéral 200L"
+        positioning: "entrée de gamme"
+        price_range: { min: 890, max: 1290 }
+      "460":
+        dimensions: "200x80x46cm"  
+        capacity: "2 personnes"
+        storage: "Tiroir latéral 230L"
+        positioning: "intermédiaire"
+        price_range: { min: 990, max: 1390 }
+      "550":
+        dimensions: "200x80x55cm"
+        capacity: "2 personnes" 
+        storage: "Tiroir latéral 275L"
+        positioning: "optimal"
+        price_range: { min: 1190, max: 1690 }
+      "690":
+        dimensions: "200x80x69cm"
+        capacity: "2 personnes"
+        storage: "Tiroir latéral 345L"
+        positioning: "premium"
+        price_range: { min: 1490, max: 1990 }
+      "1000":
+        dimensions: "200x80x100cm"
+        capacity: "2 personnes"
+        storage: "Tiroir latéral 500L"
+        positioning: "prestige"
+        price_range: { min: 1890, max: 2490 }
+    
+    # Categories where MASSAKO products are available
+    available_in:
+      "lits-tiroirs":
+        products:
+          - "lit-tiroir-massako-400"
+          - "lit-tiroir-massako-460" 
+          - "lit-tiroir-massako-550"
+          - "lit-tiroir-massako-690"
+          - "lit-tiroir-massako-1000"
+          - "lit-electrique-massako"
+        primary: true
+        description: "Configuration principale avec mécanisme de rangement optimisé"
+        
+      "lits-gigogne":
+        products:
+          - "lit-gigogne-massako-400-550"
+          - "ligne-massako-bois-massif"
+          - "massako-550-tiroir"
+        description: "Adaptation gigogne pour optimisation espace couchage"
+        
+      "canapes":
+        products:
+          - "canape-lit-massako"
+          - "canape-tiroir-massako"
+        description: "Version salon avec fonctionnalité couchage d'appoint"
+    
+    # Upgrade/progression path within family
+    progression_path:
+      - { from: "400", to: "550", reason: "Optimisation rangement", upgrade_value: "+85L stockage" }
+      - { from: "550", to: "690", reason: "Capacité supérieure", upgrade_value: "+70L stockage" }
+      - { from: "690", to: "1000", reason: "Maximum rangement", upgrade_value: "+155L stockage" }
+    
+    # Cross-selling opportunities
+    cross_selling:
+      complementary_families: ["blandyn", "camino"]
+      accessories: ["matelas", "textiles-protection", "sommiers-sur-mesure"]
+      
+    # SEO and content
+    keywords: ["lit tiroir", "rangement vertical", "pin massif", "mobilier modulable"]
+    structured_data_type: "ProductGroup"
+
+  blandyn:
+    name: "BLANDYN"
+    description: "Collection polyvalente transformable entre lit gigogne et canapé selon les besoins"
+    positioning: "versatile"
+    heritage: "Adaptabilité française pour espaces évolutifs"
+    price_range:
+      min: 690
+      max: 1290
+    
+    variants:
+      "standard":
+        finish: "Pin naturel"
+        style: "Classique"
+        positioning: "essentiel"
+        price_range: { min: 690, max: 990 }
+      "blanc":
+        finish: "Laque blanche"
+        style: "Contemporain"
+        positioning: "design"
+        price_range: { min: 790, max: 1090 }
+      "expression-classique":
+        finish: "Pin naturel vernis"
+        style: "Traditionnel français"
+        positioning: "patrimoine"
+        price_range: { min: 890, max: 1190 }
+      "expression-contemporaine":
+        finish: "Finitions modernes"
+        style: "Design actuel"
+        positioning: "tendance"
+        price_range: { min: 990, max: 1290 }
+      "expression-naturelle":
+        finish: "Bois brut ciré"
+        style: "Écologique"
+        positioning: "bio"
+        price_range: { min: 790, max: 1090 }
+      "expression-personnalisee":
+        finish: "Sur mesure"
+        style: "Unique"
+        positioning: "exclusif"
+        price_range: { min: 1190, max: 1590 }
+    
+    available_in:
+      "lits-gigogne":
+        products:
+          - "lit-gigogne-blandyn"
+          - "lit-gigogne-blandyn-modulaire-pin-massif"
+          - "ligne-blandyn-pin-massif"
+          - "blandyn-expression-classique"
+          - "blandyn-expression-contemporaine" 
+          - "blandyn-expression-naturelle"
+          - "blandyn-expression-personnalisee"
+        primary: true
+        description: "Configuration optimale pour couchage gigogne"
+        
+      "canapes":
+        products:
+          - "canape-gigogne-blandyn"
+        description: "Transformation salon avec couchage escamotable"
+    
+    # Unique selling proposition
+    transformation_modes:
+      - { mode: "lit_gigogne", capacity: "2 couchages", use_case: "chambre enfant" }
+      - { mode: "canape_salon", capacity: "3 places assises", use_case: "salon séjour" }
+      - { mode: "banquette", capacity: "rangement + assise", use_case: "entrée hall" }
+    
+    cross_selling:
+      complementary_families: ["massako", "camino"]
+      natural_upgrades: ["massako-400", "camino-standard"]
+      
+    keywords: ["lit gigogne", "canapé convertible", "modulable", "pin massif"]
+    structured_data_type: "ProductGroup"
+
+  camino:
+    name: "CAMINO"
+    description: "Ligne design aux lignes épurées privilégiant l'esthétique et la multifonctionnalité"
+    positioning: "design"
+    heritage: "Inspiration méditerranéenne et finition artisanale française"
+    price_range:
+      min: 790
+      max: 1490
+    
+    variants:
+      "standard":
+        material: "Pin massif naturel"
+        style: "Épuré"
+        functions: 2
+        positioning: "accessible"
+        price_range: { min: 790, max: 1090 }
+      "bois-massif":
+        material: "Pin massif premium"
+        style: "Artisanal"
+        functions: 3
+        positioning: "premium"
+        price_range: { min: 990, max: 1490 }
+    
+    available_in:
+      "lits-gigogne":
+        products:
+          - "lit-gigogne-camino"
+          - "lit-gigogne-camino-pin-massif"
+        primary: true
+        description: "Design épuré pour espaces contemporains"
+        
+      "canapes":
+        products:
+          - "ligne-camino-canape"
+        description: "Élégance salon avec transformation couchage"
+    
+    design_features:
+      - "Lignes épurées méditerranéennes"
+      - "Finitions artisanales françaises"
+      - "Optimisation multifonctionnelle"
+      - "Intégration harmonieuse espaces"
+    
+    cross_selling:
+      complementary_families: ["massako", "tessuti"]
+      style_alignment: ["mobilier-contemporain", "design-épuré"]
+      
+    keywords: ["design contemporain", "épuré", "multifonctionnel", "méditerranéen"]
+    structured_data_type: "ProductGroup"
+
+  tessuti:
+    name: "TESSUTI"
+    description: "Collection textile haut de gamme alliant tradition couturière et innovation design"
+    positioning: "luxury"
+    heritage: "Savoir-faire textile français et création exclusive"
+    price_range:
+      min: 1290
+      max: 2990
+    
+    variants:
+      "essentielle":
+        description: "Bases intemporelles en tissus sélectionnés"
+        positioning: "accessible luxe"
+        price_range: { min: 1290, max: 1890 }
+      "signature":
+        description: "Créations exclusives signature Tessuti"
+        positioning: "exclusif"
+        price_range: { min: 1890, max: 2390 }
+      "couture":
+        description: "Haute couture mobilier sur mesure"
+        positioning: "prestige"
+        price_range: { min: 2390, max: 2990 }
+      "creation-exclusive":
+        description: "Pièces uniques création artistique"
+        positioning: "art"
+        price_range: { min: 2690, max: 3490 }
+    
+    available_in:
+      "canapes":
+        products:
+          - "collection-tessuti-canape-lit-tissu"
+          - "ligne-tessuti-textile-art"
+          - "tessuti-collection-essentielle"
+          - "tessuti-collection-signature"
+          - "tessuti-collection-couture"
+          - "tessuti-creation-exclusive"
+          - "canape-gigogne-tessuti"
+        primary: true
+        description: "Expression textile premium pour espaces raffinés"
+    
+    textile_expertise:
+      - "Sélection fibres naturelles premium"
+      - "Techniques couture artisanale"
+      - "Créations exclusives designers"
+      - "Personnalisation textile complète"
+    
+    cross_selling:
+      complementary_families: ["camino"]
+      luxury_alignment: ["sur-mesure", "création-exclusive"]
+      
+    keywords: ["textile haut de gamme", "couture", "création exclusive", "luxe français"]
+    structured_data_type: "ProductGroup"
+
+  # Specialized and niche families
+  ono:
+    name: "ONO"
+    description: "Solution compacte optimisée pour petits espaces et usage intensif"
+    positioning: "compact"
+    heritage: "Innovation française pour habitat moderne"
+    price_range:
+      min: 590
+      max: 890
+    
+    variants:
+      "400":
+        dimensions: "200x80x40cm"
+        specialization: "Compacité maximale"
+        positioning: "essentiel"
+        price_range: { min: 590, max: 890 }
+    
+    available_in:
+      "lits-tiroirs":
+        products:
+          - "lit-tiroir-ono-400"
+        primary: true
+        description: "Solution rangement pour espaces restreints"
+    
+    keywords: ["compact", "petit espace", "optimisation", "économique"]
+    structured_data_type: "Product"
+
+  kobe:
+    name: "KOBE"
+    description: "Inspiration japonaise authentique pour espaces zen et minimalistes"
+    positioning: "zen"
+    heritage: "Tradition japonaise adaptée au savoir-faire français"
+    price_range:
+      min: 990
+      max: 1690
+    
+    available_in:
+      "canapes":
+        products:
+          - "canape-kobe"
+        primary: true
+        description: "Esthétique japonaise pour salon zen"
+    
+    zen_philosophy:
+      - "Minimalisme japonais authentique"
+      - "Matériaux naturels premium"
+      - "Ergonomie méditative"
+      - "Harmonie spatiale"
+    
+    keywords: ["japonais", "zen", "minimalisme", "méditation"]
+    structured_data_type: "Product"
+
+  electric_beds:
+    name: "LITS ÉLECTRIQUES"
+    description: "Solutions médicalisées et de confort avec motorisation intégrée"
+    positioning: "medical"
+    heritage: "Innovation technologique française pour bien-être"
+    price_range:
+      min: 1890
+      max: 3490
+    
+    available_in:
+      "lits-tiroirs":
+        products:
+          - "lit-electrique-massako"
+        primary: true
+        description: "Confort médical avec rangement optimisé"
+    
+    medical_features:
+      - "Motorisation silencieuse"
+      - "Positions ergonomiques"
+      - "Télécommande intuitive"
+      - "Certifications médicales"
+    
+    keywords: ["électrique", "médical", "motorisé", "confort", "ergonomique"]
+    structured_data_type: "Product"
+
+# Cross-family relationships and navigation
+cross_family_relationships:
+  # Size-based relationships
+  size_progression:
+    compact: ["ono"]
+    standard: ["blandyn", "camino"]
+    extended: ["massako"]
+  
+  # Price-based relationships  
+  price_segments:
+    accessible: ["ono", "blandyn-standard"]
+    intermediate: ["blandyn", "camino", "massako-400-550"]
+    premium: ["massako-690-1000", "tessuti"]
+    luxury: ["tessuti-couture", "electric_beds"]
+  
+  # Function-based relationships
+  functional_groups:
+    storage_focused: ["massako", "ono"]
+    transformation_focused: ["blandyn", "camino"]
+    comfort_focused: ["tessuti", "electric_beds", "kobe"]
+  
+  # Style-based relationships
+  style_alignment:
+    minimalist: ["kobe", "camino"]
+    traditional: ["blandyn-expression-classique"]
+    contemporary: ["massako", "tessuti"]
+    zen: ["kobe", "camino-bois-massif"]
+
+# Global family metadata for SEO and structured data
+global_metadata:
+  brand: "Le Lit Gigogne"
+  manufacturer: "Artisanat français"
+  warranty: "10 ans structure, 5 ans mécanismes"
+  certifications: ["PEFC", "Éco-responsable", "Fabrication française"]
+  shipping: "Livraison France métropolitaine"
+  
+  # Common cross-selling accessories
+  universal_accessories:
+    - "matelas"
+    - "sommiers-sur-mesure"
+    - "textiles-protection"
+    - "kits-entretien"
+    - "housses-protection"
+  
+  # SEO patterns
+  seo_patterns:
+    family_title: "{family_name} - {positioning} | Le Lit Gigogne"
+    family_description: "{description} - Fabrication française, livraison gratuite. Découvrez toute la gamme {family_name}."
+    breadcrumb_pattern: "Accueil > Collections > {family_name} > {product_name}"
+
+# Integration settings for Hugo templates
+hugo_integration:
+  related_products_count: 4
+  cross_category_suggestions: 3
+  family_navigation_depth: 2
+  
+  # URL patterns (no trailing slashes)
+  url_patterns:
+    family_page: "/collections/{family_slug}"
+    product_page: "/{category}/{product_slug}"
+    cross_reference: "/{category}/{product_slug}#famille-{family_slug}"
+  
+  # Template includes
+  partials:
+    - "product-family-nav.html"
+    - "related-products.html"
+    - "family-breadcrumbs.html"
+    - "cross-category-links.html"
+    - "family-structured-data.html"

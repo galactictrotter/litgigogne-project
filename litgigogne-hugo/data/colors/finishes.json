@@ -1,0 +1,35 @@
+[
+  {
+    "code": "FIN-01",
+    "name": "Vernis Incolore – La Transparence Lumineuse",
+    "image": "http://www.lelitgigogne.fr/img/cms/verni%20incolore.jpg",
+    "category": "finishes",
+    "description": "Finition vernie transparente révélant la beauté du bois massif.",
+    "details": "• Vernis acrylique de protection durable\n• Application plusieurs couches successives\n• Aspect satiné après stratification complète\n• Entretien simple: éponge à l'eau",
+    "philosophy": "Cette finition préserve la beauté naturelle tout en offrant une protection transparente. L'aspect satiné magnifie les veines du bois tout en facilitant l'entretien quotidien.",
+    "hover_text": "Protection invisible durable avec brillance satinée sophistiquée",
+    "alt_text": "Vernis incolore protection lit à tiroir haut de gamme - brillance satinée durable"
+  },
+  {
+    "code": "FIN-02",
+    "name": "Bois Brut – La Pureté Primordiale",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/naturel%20petit%20format.png",
+    "category": "finishes",
+    "description": "Célébration de l'authenticité absolue pour votre intérieur éco-responsable.",
+    "details": "• Bois massif, livré poncé très fin\n• Zéro émanation de particules, ambiance authentique\n• Prêt à recevoir teinte ou finition ultérieure\n• Personnalisation future à votre rythme\n• Idéal: espaces sains, chambres d'enfants",
+    "philosophy": "Une finition naturelle qui met en valeur l'aspect du bois massif. Sans produit ajouté, votre lit gigogne reste ouvert à toute évolution selon vos choix.",
+    "hover_text": "Finition naturelle sans traitement, parfaite pour espaces sains et personnalisation future",
+    "alt_text": "Finition bois brut pour lit gigogne écologique - texture naturelle non traitée"
+  },
+  {
+    "code": "FIN-03", 
+    "name": "Huile de Lin – La Tradition Nourricière",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20%C3%A0%20leau/huil%C3%A9%20petit%20format.png",
+    "category": "finishes",
+    "description": "Finition traditionnelle créant une patine vivante et un aspect mat.",
+    "details": "• Pénétration profonde nourrissant le bois\n• Toucher naturel velouté et chaleureux\n• Entretien: une couche tous les 2 ans environ\n• Compatible avec toutes nos teintes\n• Réparations locales invisibles possibles",
+    "philosophy": "Cette finition intemporelle établit un dialogue temporel avec votre mobilier. L'aspect mat sublime la texture naturelle du bois tout en permettant son évolution dans le temps.",
+    "hover_text": "Nourriture profonde du bois, patine évolutive naturelle",
+    "alt_text": "Huile de lin tradition française lit gigogne - patine vivante évolutive"
+  }
+]

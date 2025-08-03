@@ -1,0 +1,331 @@
+{{ define "main" }}
+
+{{/* Check if this is a product collection page by seeing if it has products/lines with matching primary_category */}}
+{{ $allProducts := where site.RegularPages "Params.content_type" "product" }}
+{{ $categoryProducts := where $allProducts "Params.primary_category" .Section }}
+{{ $allLines := where site.RegularPages "Params.content_type" "product_line" }}
+{{ $categoryLines := where $allLines "Params.primary_category" .Section }}
+{{ $isProductCollection := or $categoryProducts $categoryLines }}
+
+{{ if $isProductCollection }}
+    {{/*
+    ============================================================================
+      IT IS A PRODUCT COLLECTION PAGE (like /canapes/ or /lits-gigogne/)
+      Render the full-featured layout with product grids and line lists.
+    ============================================================================
+    */}}
+
+    <section class="hero">
+        {{ $heroImage := .Params.hero_image | default .Params.featured_image | default .Params.image }}
+        {{ with $heroImage }}
+            <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="hero-image" loading="lazy">
+        {{ end }}
+        <div class="hero-overlay">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="fade-in">{{ .Title }}</h1>
+                    <p class="hero-subtitle fade-in">{{ .Description }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{ if .Content }}
+    <section class="content-section philosophy-section">
+        <div class="container">
+            <div class="philosophy-content fade-in">{{ .Content }}</div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* Get products with matching primary_category from anywhere */}}
+    {{ $products := $categoryProducts }}
+    
+    {{ if $products }}
+    <section class="collections-section">
+        <div class="container">
+            <h2 class="section-title fade-in">{{ .Params.products_title | default "Nos Créations" }}</h2>
+            
+            {{/* Special handling for canapes section with type filtering */}}
+            {{ if eq .Section "canapes" }}
+                {{/* Filter products by type */}}
+                {{ $gigogne := where $products "Params.tags" "intersect" (slice "gigogne") }}
+                {{ $peigne := where $products "Params.tags" "intersect" (slice "peigne") }}
+                {{ $tiroir := where $products "Params.tags" "intersect" (slice "tiroir") }}
+                {{ $lits := where $products "Params.tags" "intersect" (slice "lit" "futon" "convertible") }}
+                {{ $lignes := where $products "Params.tags" "intersect" (slice "ligne") }}
+                
+                {{/* Gigogne Section */}}
+                {{ if $gigogne }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">🛏️ Canapés Gigogne</h3>
+                    <div class="products-grid">
+                        {{ range $gigogne.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+                {{/* Peigne Section */}}
+                {{ if $peigne }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">⚙️ Canapés Peigne</h3>
+                    <div class="products-grid">
+                        {{ range $peigne.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+                {{/* Tiroir Section */}}
+                {{ if $tiroir }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">📦 Canapés à Tiroirs</h3>
+                    <div class="products-grid">
+                        {{ range $tiroir.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+                {{/* Canapé-Lit Section */}}
+                {{ if $lits }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">🛌 Canapés-Lits</h3>
+                    <div class="products-grid">
+                        {{ range $lits.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+                {{/* Lignes Section */}}
+                {{ if $lignes }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">📋 Lignes de Canapés</h3>
+                    <div class="products-grid">
+                        {{ range $lignes.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+            {{ else if eq .Section "futons-tatamis" }}
+                {{/* Special handling for futons-tatamis section with product_type filtering */}}
+                {{ $futons := where $products "Params.product_type" "futon" }}
+                {{ $tatamis := where $products "Params.product_type" "tatami" }}
+                {{ $otherProducts := where $products "Params.product_type" "==" nil }}
+                
+                {{/* Futons Section */}}
+                {{ if $futons }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">Futons</h3>
+                    <div class="products-grid">
+                        {{ range $futons.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+                {{/* Tatamis Section */}}
+                {{ if $tatamis }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">Tatamis</h3>
+                    <div class="products-grid">
+                        {{ range $tatamis.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+                {{/* Other products without specific product_type */}}
+                {{ if $otherProducts }}
+                <div class="canape-type-section">
+                    <h3 class="canape-type-title">🌿 Autres Créations</h3>
+                    <div class="products-grid">
+                        {{ range $otherProducts.ByWeight }}
+                            {{ partial "product-card.html" . }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                
+            {{ else }}
+                {{/* Default product grid for other sections */}}
+                <div class="products-grid">
+                    {{ range $products.ByWeight }}
+                        {{ partial "product-card.html" . }}
+                    {{ end }}
+                </div>
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* Get product lines with matching primary_category from anywhere */}}
+    {{ $product_lines := $categoryLines }}
+{{ if $product_lines }}
+
+{{/*
+================================================================================
+  NEW, STYLED "PRODUCT LINES" SECTION
+  - This block contains all the HTML and CSS to match your design screenshot.
+================================================================================
+*/}}
+<style>
+.product-lines-list {
+    padding-top: 2rem;
+    border-top: 1px solid var(--warm-sand);
+}
+.product-line-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    align-items: start;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--warm-sand);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.3s ease;
+}
+.product-line-item:hover {
+    background-color: rgba(250, 247, 240, 0.5);
+}
+.line-number-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.line-number-circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0; /* MODIFIED: Removed rounded corners */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--pure-white);
+    margin-bottom: 1rem;
+}
+.circle-bronze { background-color: var(--bronze-accent); }
+.circle-charcoal { background-color: var(--deep-charcoal); }
+.line-summary {
+    font-size: 0.95rem;
+    color: var(--soft-gray);
+    line-height: 1.6;
+}
+.line-details-column h3 {
+    margin-bottom: 0.75rem;
+    color: var(--deep-charcoal);
+}
+.line-details-column p {
+    font-size: 0.9rem; /* MODIFIED: Reduced card text size */
+    margin-bottom: 0;
+}
+@media (max-width: 768px) {
+    .product-line-item {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .line-number-column {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        gap: 1.5rem;
+    }
+    .line-number-circle {
+        flex-shrink: 0;
+    }
+}
+</style>
+
+<section class="content-section product-lines-section">
+    <div class="container">
+        <h2 class="section-title fade-in">Nos Lignes de Produits</h2>
+        <div class="product-lines-list">
+            {{ range $index, $line := $product_lines.ByWeight }}
+                {{/* Determine color for the numbered circle (alternating) */}}
+                {{ $isOdd := modBool $index 2 }}
+                <a href="{{ .Permalink }}" class="product-line-item fade-in">
+                    <div class="line-number-column">
+                        <div class="line-number-circle {{ if $isOdd }}circle-charcoal{{ else }}circle-bronze{{ end }}">
+                            {{ add $index 1 }}
+                        </div>
+                        {{ with .Params.line_summary }}
+                        <p class="line-summary">{{ . }}</p>
+                        {{ end }}
+                    </div>
+                    <div class="line-details-column">
+                        <h3>{{ .Title }}</h3>
+                        <p>{{ .Params.description }}</p>
+                    </div>
+                </a>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+
+    {{/*
+    ================================================================================
+      NEW: COLLECTION BENEFITS SECTION
+      - This block is inserted here to display the benefits from the front matter.
+      - It reuses existing CSS classes for consistent styling.
+    ================================================================================
+    */}}
+    {{ if .Params.collection_benefits }}
+    <section class="benefits-section content-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Les Avantages de Notre Collection</h2>
+            <div class="heritage-pillars" style="margin-top: 2rem;">
+                {{ range .Params.collection_benefits }}
+                <div class="heritage-pillar fade-in">
+                    {{ with .icon }}
+                        <img src="{{ . | relURL }}" alt="" class="pillar-icon" style="filter: invert(55%) sepia(21%) saturate(1075%) hue-rotate(359deg) brightness(91%) contrast(88%);">
+                    {{ end }}
+                    <div>
+                        <h4 style="color: var(--deep-charcoal);">{{ .title }}</h4>
+                        <p style="margin: 0;">{{ .description }}</p> <!-- MODIFIED: Removed inline font-size to inherit smaller size -->
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+
+{{ else }}
+    {{/*
+    ============================================================================
+      IT IS A GENERIC LIST PAGE (like /categories/ or /a-propos/)
+      Render a simple, safe layout to prevent errors.
+    ============================================================================
+    */}}
+    <section class="content-section">
+        <div class="container">
+            <h1 class="fade-in">{{ .Title }}</h1>
+            <p class="fade-in">{{ .Description }}</p>
+            {{ if .Content }}
+                <div class="philosophy-content fade-in">{{ .Content }}</div>
+            {{ end }}
+            <ul>
+                {{ range .Pages }}
+                <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+                {{ end }}
+            </ul>
+        </div>
+    </section>
+{{ end }}
+
+{{ end }}

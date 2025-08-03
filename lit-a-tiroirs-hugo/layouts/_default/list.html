@@ -1,0 +1,33 @@
+{{ define "title" }}{{ .Title }} - {{ .Site.Params.brand.name }}{{ end }}
+
+{{ define "main" }}
+<section>
+    <header>
+        <h1>{{ .Title }}</h1>
+        {{ with .Content }}
+        <div class="content">
+            {{ . }}
+        </div>
+        {{ end }}
+    </header>
+    
+    {{ if .Pages }}
+    <div class="products-grid">
+        {{ range .Pages }}
+        <article class="product-card">
+            <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+            {{ if .Params.capacity_indicator }}
+            <div class="capacity-indicator {{ .Params.capacity_indicator.type }}">
+                {{ .Params.capacity_indicator.label }}
+            </div>
+            {{ end }}
+            {{ if .Params.price_starting }}
+            <div class="price">À partir de {{ .Params.price_starting }}{{ .Params.price_currency }}</div>
+            {{ end }}
+            <div class="summary">{{ .Summary }}</div>
+        </article>
+        {{ end }}
+    </div>
+    {{ end }}
+</section>
+{{ end }}

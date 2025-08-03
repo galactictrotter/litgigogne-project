@@ -1,0 +1,339 @@
+{{ define "main" }}
+<div class="product-page lit-tiroirs-theme">
+  {{ $productSlug := .Params.slug | default .File.BaseFileName }}
+  {{ $inheritedProduct := .Site.GetPage (printf "/shared/products/canapes/%s" $productSlug) }}
+  
+  <!-- Product Header with Storage Focus -->
+  <div class="product-header">
+    <div class="storage-indicator">
+      {{ if $inheritedProduct }}
+        {{ $storageType := "storage-medium" }}
+        {{ range $inheritedProduct.Params.specs }}
+          {{ if eq .key "Personnalisation" }}
+            {{ $storageType = "storage-custom" }}
+          {{ end }}
+        {{ end }}
+        <span class="storage-tag {{ $storageType }}">
+          {{ if eq $storageType "storage-custom" }}Solution Sur-Mesure{{ else }}Rangement Intégré{{ end }}
+        </span>
+      {{ else }}
+        <span class="storage-tag storage-medium">Canapé à Tiroirs</span>
+      {{ end }}
+    </div>
+    
+    <h1>{{ if $inheritedProduct }}{{ partial "transform-content" $inheritedProduct.Title }}{{ else }}{{ .Title }}{{ end }}</h1>
+    
+    {{ if $inheritedProduct.Params.line_summary }}
+      <p class="product-tagline">{{ partial "transform-content" $inheritedProduct.Params.line_summary }}</p>
+    {{ end }}
+  </div>
+
+  <!-- Product Gallery -->
+  {{ if $inheritedProduct.Params.gallery }}
+    <div class="product-gallery">
+      {{ range $inheritedProduct.Params.gallery }}
+        <img src="{{ .url }}" alt="{{ partial "transform-content" .alt }}" loading="lazy">
+      {{ end }}
+    </div>
+  {{ end }}
+
+  <!-- Main Content with Storage Benefits -->
+  <div class="product-content">
+    {{ if $inheritedProduct }}
+      {{ $transformed := partial "transform-content" $inheritedProduct.Content }}
+      {{ $transformed | safeHTML }}
+      
+      <!-- Add storage-specific benefits -->
+      <div class="storage-benefits">
+        <h3>Avantages du Rangement Intégré</h3>
+        <ul>
+          <li><strong>Optimisation de l'espace :</strong> Maximisez votre salon avec des solutions de rangement discrètes</li>
+          <li><strong>Design épuré :</strong> Rangez sans encombrer votre espace de vie</li>
+          <li><strong>Accès pratique :</strong> Tiroirs sur roulettes pour un accès facile à vos affaires</li>
+          <li><strong>Polyvalence :</strong> Idéal pour coussins, plaids, jeux, ou objets saisonniers</li>
+        </ul>
+      </div>
+    {{ else }}
+      {{ .Content }}
+    {{ end }}
+  </div>
+
+  <!-- Specifications with Storage Details -->
+  {{ if $inheritedProduct.Params.specs }}
+    <div class="product-specs lit-tiroirs-theme">
+      <h2>Caractéristiques & Rangement</h2>
+      <div class="specs-grid">
+        {{ range $inheritedProduct.Params.specs }}
+          <div class="spec-item">
+            <strong>{{ .key }}:</strong>
+            <span>{{ partial "transform-content" .value }}</span>
+          </div>
+        {{ end }}
+        
+        <!-- Add storage-specific information -->
+        <div class="spec-item storage-highlight">
+          <strong>Système de Rangement:</strong>
+          <span>Tiroirs coulissants intégrés dans la structure</span>
+        </div>
+        <div class="spec-item storage-highlight">
+          <strong>Utilisation Optimale:</strong>
+          <span>Salon, studio, espace de vie multifonctionnel</span>
+        </div>
+      </div>
+    </div>
+  {{ end }}
+
+  <!-- Pricing with Storage Value Proposition -->
+  {{ if $inheritedProduct.Params.pricing }}
+    <div class="product-pricing lit-tiroirs-theme">
+      <h2>Investissement & Valeur</h2>
+      {{ if $inheritedProduct.Params.pricing.matrix }}
+        <div class="pricing-matrix">
+          {{ range $inheritedProduct.Params.pricing.matrix }}
+            <div class="price-option">
+              <h3>{{ partial "transform-content" .option }}</h3>
+              <span class="price">{{ .price }}€</span>
+              <p class="value-prop">Canapé + Rangement intégré</p>
+            </div>
+          {{ end }}
+        </div>
+      {{ else }}
+        <div class="base-price">
+          <span class="price">À partir de {{ $inheritedProduct.Params.pricing.base_price }}€</span>
+          {{ if $inheritedProduct.Params.pricing.price_note }}
+            <p class="price-note">{{ partial "transform-content" $inheritedProduct.Params.pricing.price_note }}</p>
+          {{ end }}
+          <p class="value-prop">Solution 2-en-1 : Assise confortable + Rangement optimisé</p>
+        </div>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  <!-- FAQ with Storage Focus -->
+  {{ if $inheritedProduct.Params.faq }}
+    <div class="product-faq lit-tiroirs-theme">
+      <h2>Questions sur le Rangement</h2>
+      {{ range $inheritedProduct.Params.faq }}
+        <div class="faq-item">
+          <h3>{{ partial "transform-content" .question }}</h3>
+          <p>{{ partial "transform-content" .answer }}</p>
+        </div>
+      {{ end }}
+      
+      <!-- Add storage-specific FAQ -->
+      <div class="faq-item">
+        <h3>Quelle est la capacité de rangement des tiroirs ?</h3>
+        <p>Les tiroirs sont conçus pour accueillir coussins, plaids, livres, jeux et tous vos objets du quotidien. Leur profondeur optimisée maximise l'espace de rangement sans compromettre le confort d'assise.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Les tiroirs sont-ils facilement accessibles ?</h3>
+        <p>Oui, tous nos tiroirs sont équipés de roulettes et de systèmes de coulissement fluides pour un accès pratique, même lorsque le canapé est occupé.</p>
+      </div>
+    </div>
+  {{ end }}
+
+  <!-- Call to Action for Storage Solutions -->
+  <div class="product-cta lit-tiroirs-theme">
+    <h2>Optimisez votre espace avec style</h2>
+    <p>Découvrez comment ce {{ partial "transform-content" .Title | lower }} peut transformer votre salon en espace organisé et élégant.</p>
+    <button class="cta-button" onclick="openContactModal()">Configurez Votre Solution</button>
+  </div>
+</div>
+
+<style>
+.product-page.lit-tiroirs-theme {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.product-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.storage-indicator {
+  margin-bottom: 1rem;
+}
+
+.storage-tag {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #7b4397, #dc2430);
+  color: white;
+}
+
+.storage-custom {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad) !important;
+}
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.product-gallery img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.storage-benefits {
+  background: linear-gradient(135deg, rgba(123, 67, 151, 0.05), rgba(220, 36, 48, 0.05));
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  border-left: 4px solid var(--primary-purple);
+}
+
+.storage-benefits h3 {
+  color: var(--primary-purple) !important;
+  margin-bottom: 1rem;
+}
+
+.storage-benefits ul {
+  list-style: none;
+  padding: 0;
+}
+
+.storage-benefits li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.storage-benefits li:before {
+  content: "📦";
+  position: absolute;
+  left: 0;
+}
+
+.product-specs {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.spec-item {
+  padding: 1rem;
+  background: white;
+  border-radius: 4px;
+  border-left: 4px solid var(--primary-purple);
+}
+
+.storage-highlight {
+  border-left-color: #7b4397 !important;
+  background: linear-gradient(135deg, rgba(123, 67, 151, 0.1), rgba(220, 36, 48, 0.1));
+}
+
+.product-pricing {
+  background: linear-gradient(135deg, rgba(123, 67, 151, 0.05), rgba(220, 36, 48, 0.05));
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.pricing-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.price-option {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-purple);
+  display: block;
+}
+
+.value-prop {
+  font-size: 0.9rem;
+  color: #7b4397;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.base-price {
+  text-align: center;
+}
+
+.product-faq {
+  margin: 3rem 0;
+}
+
+.faq-item {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+}
+
+.faq-item h3 {
+  color: var(--primary-purple) !important;
+  margin-bottom: 0.5rem;
+}
+
+.product-cta {
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-purple), #7b4397);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  margin-top: 3rem;
+}
+
+.cta-button {
+  background: white;
+  color: var(--primary-purple);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-size: 1rem;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+  .product-page.lit-tiroirs-theme {
+    padding: 1rem;
+  }
+  
+  .specs-grid,
+  .pricing-matrix {
+    grid-template-columns: 1fr;
+  }
+  
+  .storage-benefits li {
+    padding-left: 2rem;
+  }
+}
+</style>
+{{ end }}

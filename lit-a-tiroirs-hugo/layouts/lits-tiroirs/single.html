@@ -1,0 +1,278 @@
+{{ define "main" }}
+<div class="product-page lit-tiroirs-theme">
+  {{ $productSlug := .Params.slug | default .File.BaseFileName }}
+  {{ $inheritedProduct := .Site.GetPage (printf "/shared/products/lits-tiroirs/%s" $productSlug) }}
+  
+  <!-- Product Header with Capacity Indicator -->
+  <div class="product-header">
+    <div class="capacity-indicator">
+      {{ if $inheritedProduct }}
+        {{ $capacity := "capacity-medium" }}
+        {{ range $inheritedProduct.Params.specs }}
+          {{ if or (eq .key "Capacité Rangement") (eq .key "Volume") }}
+            {{ if gt (.value | int) 800 }}
+              {{ $capacity = "capacity-max" }}
+            {{ else if lt (.value | int) 400 }}
+              {{ $capacity = "capacity-compact" }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        <span class="capacity-tag {{ $capacity }}">
+          {{ if eq $capacity "capacity-max" }}Max Capacity{{ else if eq $capacity "capacity-compact" }}Compact{{ else }}Medium{{ end }}
+        </span>
+      {{ else }}
+        <span class="capacity-tag capacity-medium">Storage Solution</span>
+      {{ end }}
+    </div>
+    
+    <h1>{{ if $inheritedProduct }}{{ partial "transform-content" $inheritedProduct.Title }}{{ else }}{{ .Title }}{{ end }}</h1>
+    
+    {{ if $inheritedProduct.Params.line_summary }}
+      <p class="product-tagline">{{ partial "transform-content" $inheritedProduct.Params.line_summary }}</p>
+    {{ end }}
+  </div>
+
+  <!-- Product Gallery -->
+  {{ if $inheritedProduct.Params.gallery }}
+    <div class="product-gallery">
+      {{ range $inheritedProduct.Params.gallery }}
+        <img src="{{ .url }}" alt="{{ partial "transform-content" .alt }}" loading="lazy">
+      {{ end }}
+    </div>
+  {{ end }}
+
+  <!-- Main Content -->
+  <div class="product-content">
+    {{ if $inheritedProduct }}
+      {{ $transformed := partial "transform-content" $inheritedProduct.Content }}
+      {{ $transformed | safeHTML }}
+    {{ else }}
+      {{ .Content }}
+    {{ end }}
+  </div>
+
+  <!-- Specifications with Storage Focus -->
+  {{ if $inheritedProduct.Params.specs }}
+    <div class="product-specs lit-tiroirs-theme">
+      <h2>Caractéristiques Techniques</h2>
+      <div class="specs-grid">
+        {{ range $inheritedProduct.Params.specs }}
+          <div class="spec-item">
+            <strong>{{ .key }}:</strong>
+            <span>{{ partial "transform-content" .value }}</span>
+          </div>
+        {{ end }}
+        
+        <!-- Add storage-specific specs -->
+        <div class="spec-item storage-highlight">
+          <strong>Solution de Rangement:</strong>
+          <span>Tiroirs intégrés optimisés pour le rangement</span>
+        </div>
+      </div>
+    </div>
+  {{ end }}
+
+  <!-- Pricing with Lit à Tiroirs Context -->
+  {{ if $inheritedProduct.Params.pricing }}
+    <div class="product-pricing lit-tiroirs-theme">
+      <h2>Tarification</h2>
+      {{ if $inheritedProduct.Params.pricing.matrix }}
+        <div class="pricing-matrix">
+          {{ range $inheritedProduct.Params.pricing.matrix }}
+            <div class="price-option">
+              <h3>{{ partial "transform-content" .option }}</h3>
+              <span class="price">{{ .price }}€</span>
+            </div>
+          {{ end }}
+        </div>
+      {{ else }}
+        <div class="base-price">
+          <span class="price">À partir de {{ $inheritedProduct.Params.pricing.base_price }}€</span>
+          {{ if $inheritedProduct.Params.pricing.price_note }}
+            <p class="price-note">{{ partial "transform-content" $inheritedProduct.Params.pricing.price_note }}</p>
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  <!-- FAQ with Brand Transformation -->
+  {{ if $inheritedProduct.Params.faq }}
+    <div class="product-faq lit-tiroirs-theme">
+      <h2>Questions Fréquentes</h2>
+      {{ range $inheritedProduct.Params.faq }}
+        <div class="faq-item">
+          <h3>{{ partial "transform-content" .question }}</h3>
+          <p>{{ partial "transform-content" .answer }}</p>
+        </div>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  <!-- Call to Action -->
+  <div class="product-cta lit-tiroirs-theme">
+    <h2>Intéressé par cette solution de rangement ?</h2>
+    <p>Contactez-nous pour personnaliser votre {{ partial "transform-content" .Title | lower }} selon vos besoins de rangement.</p>
+    <button class="cta-button" onclick="openContactModal()">Demander un Devis</button>
+  </div>
+</div>
+
+<style>
+.product-page.lit-tiroirs-theme {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.product-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.capacity-indicator {
+  margin-bottom: 1rem;
+}
+
+.capacity-tag {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.capacity-compact {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color: white;
+}
+
+.capacity-medium {
+  background: linear-gradient(135deg, #7b4397, #dc2430);
+  color: white;
+}
+
+.capacity-max {
+  background: linear-gradient(135deg, #5b247a, #1bcedf);
+  color: white;
+}
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.product-gallery img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.product-specs {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.spec-item {
+  padding: 1rem;
+  background: white;
+  border-radius: 4px;
+  border-left: 4px solid var(--primary-purple);
+}
+
+.storage-highlight {
+  border-left-color: #7b4397 !important;
+  background: linear-gradient(135deg, rgba(123, 67, 151, 0.1), rgba(220, 36, 48, 0.1));
+}
+
+.product-pricing {
+  background: linear-gradient(135deg, rgba(123, 67, 151, 0.05), rgba(220, 36, 48, 0.05));
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.pricing-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.price-option {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-purple);
+}
+
+.product-faq {
+  margin: 3rem 0;
+}
+
+.faq-item {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+}
+
+.faq-item h3 {
+  color: var(--primary-purple) !important;
+  margin-bottom: 0.5rem;
+}
+
+.product-cta {
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-purple), #7b4397);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  margin-top: 3rem;
+}
+
+.cta-button {
+  background: white;
+  color: var(--primary-purple);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+  .product-page.lit-tiroirs-theme {
+    padding: 1rem;
+  }
+  
+  .specs-grid,
+  .pricing-matrix {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+{{ end }}

@@ -1,0 +1,50 @@
+<!-- RAL Colors Tab Content -->
+<div class="color-content-wrapper">
+  <h2>Plus de 200 couleurs disponibles pour personnaliser votre lit gigogne</h2>
+  <div class="intro-text">
+    <p>Le système RAL offre plus de 200 teintes professionnelles qui transcendent la simple codification technique pour devenir un véritable langage chromatique. Notre maîtrise de cette palette pour le lit gigogne sur mesure, perfectionnée depuis quatre décennies, garantit une interprétation artisanale où chaque référence devient promesse de perfection durable et d'harmonie spatiale personnalisée.</p>
+  </div>
+  
+  <div class="filter-section">
+    <h4>Familles de Couleurs</h4>
+    <div class="filter-buttons">
+      <button onclick="filterRAL('all')" class="filter-btn active">Toutes</button>
+      <button onclick="filterRAL('1')" class="filter-btn" title="37 variations clarté mentale">1000 – Jaunes: Éveil Solaire</button>
+      <button onclick="filterRAL('2')" class="filter-btn" title="13 nuances sociales naturelles">2000 – Oranges: Chaleur Humaine</button>
+      <button onclick="filterRAL('3')" class="filter-btn" title="32 expressions passionnées">3000 – Rouges: Force Vitale</button>
+      <button onclick="filterRAL('4')" class="filter-btn" title="10 variations spirituelles">4000 – Violets: Transcendance</button>
+      <button onclick="filterRAL('5')" class="filter-btn" title="25 horizons d'apaisement">5000 – Bleus: Sérénité Profonde</button>
+      <button onclick="filterRAL('6')" class="filter-btn" title="35 échos chlorophylliens">6000 – Verts: Biophilie</button>
+      <button onclick="filterRAL('7')" class="filter-btn" title="48 nuances non-invasives">7000 – Gris: Sophistication</button>
+      <button onclick="filterRAL('8')" class="filter-btn" title="29 expressions organiques">8000 – Bruns: Ancrage</button>
+      <button onclick="filterRAL('9')" class="filter-btn" title="18 extrêmes architecturaux">9000 – Absolus: Contraste</button>
+    </div>
+  </div>
+  
+  <div class="color-grid">
+    {{ $ralColors := index .Site.Data.colors "ral-colors" }}
+    {{ if not $ralColors }}
+      {{ $ralColors = .Site.Data.colors.ral_colors }}
+    {{ end }}
+    {{ if $ralColors }}
+      {{ range $ralColors }}
+      <div class="color-item ral-item" data-category="{{ .category }}" data-name="{{ .name | lower }}" data-code="{{ .code }}" data-family="{{ substr .code 4 1 }}" onclick="selectColor('{{ .code }}', '{{ .name }}', 'ral')">
+        <div class="color-preview">
+          <img src="{{ .image }}" alt="{{ .code }} {{ .name }}" loading="lazy">
+        </div>
+        <div class="color-info">
+          <h4>{{ .name }}</h4>
+          <p class="color-code">{{ .code }}</p>
+        </div>
+      </div>
+      {{ end }}
+    {{ else }}
+      <!-- Debug: Data not found -->
+      <div style="grid-column: 1/-1; padding: 2rem; text-align: center; color: #666; border: 1px solid #ddd; border-radius: 4px;">
+        <p><strong>Debug Info:</strong> RAL colors data not found</p>
+        <p>Attempted paths: .Site.Data.colors.ral-colors and .Site.Data.colors.ral_colors</p>
+        <p>Available data files: {{ range $key, $value := .Site.Data.colors }}<code>{{ $key }}</code> {{ end }}</p>
+      </div>
+    {{ end }}
+  </div>
+</div>

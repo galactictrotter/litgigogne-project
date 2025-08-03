@@ -1,0 +1,70 @@
+<!-- Add this to your page or in the browser console to debug -->
+<script>
+// Debug script to check what's happening
+console.log('=== COLOR MODAL DEBUG ===');
+
+// 1. Check if elements exist
+const debugChecks = {
+  trigger: document.querySelector('.color-modal-trigger'),
+  overlay: document.getElementById('colorModalOverlay'),
+  modal: document.querySelector('.color-modal'),
+  closeBtn: document.querySelector('.modal-close-btn'),
+  tabs: document.querySelectorAll('.main-tab'),
+  tabContents: document.querySelectorAll('.tab-content')
+};
+
+console.log('Element Check:', debugChecks);
+
+// 2. Check if functions are defined
+console.log('Function Check:', {
+  openColorModal: typeof openColorModal,
+  closeColorModal: typeof closeColorModal,
+  colorModal: typeof colorModal
+});
+
+// 3. Try to manually show the modal
+function debugShowModal() {
+  const overlay = document.getElementById('colorModalOverlay');
+  if (overlay) {
+    console.log('Manually showing modal...');
+    overlay.style.display = 'flex';
+    overlay.style.opacity = '1';
+    overlay.style.visibility = 'visible';
+    overlay.classList.add('active');
+    
+    // Check computed styles
+    const modal = overlay.querySelector('.color-modal');
+    if (modal) {
+      const styles = window.getComputedStyle(modal);
+      console.log('Modal computed styles:', {
+        display: styles.display,
+        visibility: styles.visibility,
+        opacity: styles.opacity,
+        position: styles.position,
+        zIndex: styles.zIndex
+      });
+    }
+  }
+}
+
+// 4. Re-attach click handler
+const trigger = document.querySelector('.color-modal-trigger');
+if (trigger) {
+  console.log('Re-attaching click handler to trigger button');
+  trigger.onclick = function() {
+    console.log('Trigger clicked!');
+    if (typeof openColorModal === 'function') {
+      openColorModal();
+    } else {
+      debugShowModal();
+    }
+  };
+}
+
+// 5. Check for any JavaScript errors
+window.addEventListener('error', function(e) {
+  console.error('JavaScript Error:', e.message, e.filename, e.lineno);
+});
+
+console.log('Debug script loaded. Try clicking the button now.');
+</script>

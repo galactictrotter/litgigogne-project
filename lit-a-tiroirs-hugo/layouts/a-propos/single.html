@@ -1,0 +1,85 @@
+{{ define "main" }}
+<!-- Lit à Tiroirs Clean À Propos Template -->
+<article class="a-propos-content">
+    <header class="a-propos-header">
+        <h1>{{ .Title | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" | replaceRE "Héritage, Artisanat et Mieux-Être" "Notre Philosophie" }}</h1>
+        {{ if .Params.description }}
+        <p class="a-propos-description">{{ .Params.description | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" }}</p>
+        {{ end }}
+    </header>
+    
+    <div class="a-propos-body">
+        {{ $content := partial "transform-content" .Content }}
+        {{ $content | safeHTML }}
+    </div>
+    
+    {{ if .Params.faq }}
+    <section class="a-propos-faq">
+        <h2>Questions Fréquentes</h2>
+        {{ range .Params.faq }}
+        <div class="faq-item">
+            <h3>{{ .question | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" }}</h3>
+            <p>{{ .answer | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" | replaceRE "lits gigognes" "solutions de rangement" }}</p>
+        </div>
+        {{ end }}
+    </section>
+    {{ end }}
+    
+    <div class="a-propos-contact">
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</article>
+
+<style>
+/* Lit à Tiroirs À Propos Styling */
+.a-propos-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 30px;
+}
+
+.a-propos-header h1 {
+    font-size: 32px;
+    color: var(--primary-purple);
+    margin-bottom: 16px;
+    font-family: Georgia, serif;
+}
+
+.a-propos-description {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+}
+
+.a-propos-body h2,
+.a-propos-body h3 {
+    color: var(--primary-purple);
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.a-propos-faq h2 {
+    color: var(--primary-purple);
+    border-bottom: 2px solid var(--primary-purple);
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+}
+
+.faq-item {
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: var(--warm-gray);
+    border-radius: 8px;
+}
+
+.faq-item h3 {
+    color: var(--primary-purple);
+    margin-bottom: 8px;
+}
+
+.a-propos-contact {
+    text-align: center;
+    margin-top: 48px;
+}
+</style>
+{{ end }}

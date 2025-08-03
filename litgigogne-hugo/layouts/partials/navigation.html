@@ -1,0 +1,471 @@
+{{- /*
+  This navigation partial includes all necessary CSS and JavaScript.
+  It is designed to be self-contained.
+  - Desktop: Hover-based dropdowns.
+  - Mobile: Tap-to-open slide-in menu and tap-to-expand submenus.
+  - Accessibility: ARIA attributes are managed by the script.
+*/ -}}
+
+{{- /* =========================================
+      NAVIGATION HTML STRUCTURE (HUGO)
+     ========================================= */ -}}
+<ul class="nav-menu" id="mainMenu" aria-label="Main Navigation">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">×</button>
+  {{- $currentPage := . -}}
+  {{- range .Site.Menus.main }}
+
+    {{- /* --- START DEFINITIVE CORRECTED LOGIC --- */ -}}
+
+    {{- /* First, we save the context of the current menu item being ranged over. */ -}}
+    {{- $menu_item := . -}}
+
+    {{- /* 1. Standard Hugo Check: Use the saved context to check against the current page. */ -}}
+    {{- $active := or ($currentPage.IsMenuCurrent "main" $menu_item) ($currentPage.HasMenuCurrent "main" $menu_item) -}}
+
+    {{- /* 2. Enhanced Parent Menu Detection: If the standard check fails, use our custom logic. */ -}}
+    {{- if not $active -}}
+      {{- with $currentPage.Params.primary_category -}}
+        {{- $category := . -}}
+        {{- /* We range over the children of the SAVED menu item, not the category string. */ -}}
+        {{- range $menu_item.Children -}}
+          {{- if eq .Identifier $category -}}
+            {{- $active = true -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    <li class="{{ if $menu_item.HasChildren }}has-submenu{{ end }}{{ if $active }} active{{ end }}">
+      <a href="{{ $menu_item.URL }}" class="nav-link" {{ if $menu_item.HasChildren }}aria-haspopup="true" aria-expanded="false"{{ end }}>
+        <span>{{ $menu_item.Name }}</span>
+      </a>
+      {{- if $menu_item.HasChildren }}
+      <ul class="submenu">
+        {{- range $menu_item.Children -}}
+          {{- $child_menu_item := . -}}
+          {{- $child_active := $currentPage.IsMenuCurrent "main" $child_menu_item -}}
+          {{- if not $child_active -}}
+            {{- with $currentPage.Params.primary_category -}}
+              {{- if eq . $child_menu_item.Identifier -}}
+                {{- $child_active = true -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          <li class="{{ if $child_active }}active{{ end }}">
+            <a href="{{ $child_menu_item.URL }}" class="submenu-link">{{ $child_menu_item.Name }}</a>
+          </li>
+        {{- end -}}
+      </ul>
+      {{- end }}
+    </li>
+    {{- /* --- END DEFINITIVE CORRECTED LOGIC --- */ -}}
+  {{- end }}
+</ul>
+
+{{- /* =========================================
+      NAVIGATION STYLES
+     ========================================= */ -}}
+<style>
+  /*-------------------------------------------*\
+    $MOBILE MENU TOGGLE (HAMBURGER)
+  \*-------------------------------------------*/
+  .mobile-menu-toggle {
+    display: none; /* Hidden on desktop by default */
+    background: none;
+    border: none;
+    color: var(--deep-charcoal);
+    cursor: pointer;
+    padding: 0; /* MODIFIED: Reset padding for custom icon */
+    z-index: 1001; /* Ensure it's above other header content */
+    position: relative; /* For custom icon positioning */
+    width: 40px;
+    height: 24px;
+  }
+
+  /*-------------------------------------------*\
+    $CUSTOM HAMBURGER ICON
+  \*-------------------------------------------*/
+  .hamburger-box {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+    position: absolute;
+    width: 100%;
+    height: 1px; /* Line thickness */
+    background-color: var(--deep-charcoal);
+    right: 0; /* Right-align all lines */
+  }
+
+  .hamburger-inner {
+    top: 70%;
+    transform: translateY(-50%);
+    /* Middle line is full width */
+  }
+
+  .hamburger-inner::before {
+    content: '';
+    top: -9px; /* Spacing from the middle line */
+    width: 90%; /* Top line is full width */
+  }
+
+  .hamburger-inner::after {
+    content: '';
+    bottom: -9px; /* Spacing from the middle line */
+    width: 70%; /* Bottom line is shorter */
+  }
+
+
+  /*-------------------------------------------*\
+    $BASE NAVIGATION STYLES (MOBILE-FIRST)
+  \*-------------------------------------------*/
+  .nav-menu {
+    display: flex; /* Use flex for alignment */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-menu a {
+    text-decoration: none;
+    color: var(--deep-charcoal);
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+
+  /* Hide submenu by default */
+  .submenu {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /*-------------------------------------------*\
+    $MOBILE NAVIGATION (<= 980px)
+  \*-------------------------------------------*/
+  @media (max-width: 980px) {
+    .mobile-menu-toggle {
+      display: block;
+    }
+
+    /* Overlay for when the menu is open */
+    body.mobile-menu-open::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 998;
+    }
+    body.mobile-menu-open {
+        overflow: hidden;
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background: var(--pure-white);
+      flex-direction: column;
+      padding: 5rem 0 2rem;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1002; /* MODIFIED: Increased to be on top of the toggle icon */
+      overflow-y: auto;
+    }
+
+    .nav-menu.is-open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-close {
+      display: block;
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 2.75rem;
+      font-weight: 100;
+      background: none;
+      border: none;
+      color: var(--soft-gray);
+      cursor: pointer;
+    }
+
+    .nav-menu li {
+      width: 100%;
+    }
+
+    .nav-menu .nav-link {
+      display: block;
+      padding: 1rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 400;
+      border-bottom: 2px solid var(--primary-cream);
+    }
+
+    .nav-menu .nav-link:hover {
+      background-color: var(--primary-cream);
+      color: var(--bronze-accent);
+    }
+
+    /* Submenu Parent Styling */
+    .has-submenu > a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .has-submenu > a::after {
+      content: '▸';
+      font-size: 1.5rem;
+      color: var(--bronze-accent);
+      display: inline-block; 
+      transition: transform 0.3s ease;
+    }
+
+    .has-submenu.submenu-is-open > a::after {
+      transform: rotate(90deg); 
+    }
+
+    /* Mobile Submenu Display */
+    .submenu {
+      display: block; /* Always block, but height is controlled */
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+      background-color: var(--primary-cream);
+    }
+
+    .has-submenu.submenu-is-open > .submenu {
+      max-height: 400px; /* Adjust as needed */
+    }
+
+    .submenu-link {
+      display: block;
+      padding: 0.75rem 1.5rem 0.75rem 2.5rem; /* Indent submenu items */
+      font-size: 1.15rem;
+      color: var(--soft-gray);
+    }
+
+    .submenu-link:hover {
+      color: var(--bronze-accent);
+    }
+
+    /* Active States on Mobile */
+    .nav-menu li.active > .nav-link {
+      color: var(--bronze-accent);
+      font-weight: normal;
+    }
+  }
+
+  /*-------------------------------------------*\
+    $DESKTOP NAVIGATION (> 980px)
+  \*-------------------------------------------*/
+  @media (min-width: 981px) {
+    .mobile-menu-close {
+      display: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .nav-link {
+      font-size: 0.85rem; /* MODIFIED: Reduced menu item size */
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    /* Underline effect for hover/active */
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--bronze-accent);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+      transform-origin: left;
+    }
+
+    .nav-link:hover::before,
+    li.active > .nav-link::before {
+      transform: scaleX(1);
+    }
+
+    li.active > .nav-link,
+    .nav-link:hover {
+      color: var(--bronze-accent);
+    }
+
+    /* Desktop Submenu */
+    .has-submenu {
+      position: relative;
+    }
+
+    .has-submenu > a span {
+      margin-right: 0.4rem;
+    }
+    
+    .has-submenu > a::after {
+      content: '▼';
+      font-size: 0.7rem;
+      display: inline-block;
+      transition: transform 0.2s ease-out;
+    }
+
+    .has-submenu:hover > a::after {
+      transform: rotate(180deg);
+    }
+
+    .submenu {
+      display: block; /* Keep it in the DOM for positioning */
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 200px;
+      padding: 0.5rem 0;
+      margin-top: 1rem; /* Space between parent and dropdown */
+      background: var(--pure-white);
+      border-radius: 0; 
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border: 1px solid #eee;
+      z-index: 100;
+
+      /* Hide/show with opacity and visibility for accessibility */
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease, margin-top 0.2s ease;
+    }
+
+    .has-submenu:hover > .submenu {
+      opacity: 1;
+      visibility: visible;
+      margin-top: 0.5rem; /* Move it up slightly on hover */
+    }
+
+    .submenu-link {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .submenu-link:hover {
+      background-color: var(--primary-cream);
+      color: var(--bronze-accent);
+    }
+
+    .submenu li.active > .submenu-link {
+      background-color: var(--bronze-accent);
+      color: var(--pure-white);
+    }
+  }
+</style>
+
+{{- /* =========================================
+      NAVIGATION SCRIPT
+     ========================================= */ -}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mainMenu');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const submenuParents = document.querySelectorAll('.nav-menu .has-submenu');
+
+    if (!mobileToggle || !mobileMenu || !mobileMenuClose) {
+      console.error('Navigation elements not found. Ensure #mobileToggle, #mainMenu, and #mobileMenuClose exist.');
+      return;
+    }
+
+    // --- Mobile Menu Toggle ---
+    const openMobileMenu = () => {
+      mobileMenu.classList.add('is-open');
+      mobileToggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('mobile-menu-open');
+    };
+
+    const closeMobileMenu = () => {
+      mobileMenu.classList.remove('is-open');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('mobile-menu-open');
+      // Close any open submenus when the main menu is closed
+      submenuParents.forEach(parent => {
+          parent.classList.remove('submenu-is-open');
+          parent.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+      });
+    };
+
+    mobileToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (mobileMenu.classList.contains('is-open')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+
+    mobileMenuClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMobileMenu();
+    });
+
+    // --- Mobile Submenu Expansion ---
+    submenuParents.forEach(parent => {
+      const link = parent.querySelector('.nav-link');
+      link.addEventListener('click', function(e) {
+        // Only apply this logic on mobile
+        if (window.innerWidth <= 980) { 
+          e.preventDefault(); 
+          const isExpanded = parent.classList.toggle('submenu-is-open');
+          link.setAttribute('aria-expanded', isExpanded);
+        }
+      });
+    });
+
+    // --- Close on Escape Key or Outside Click ---
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+        closeMobileMenu();
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.classList.contains('is-open')) {
+        const isClickInsideMenu = mobileMenu.contains(e.target);
+        const isClickOnToggle = mobileToggle.contains(e.target);
+        if (!isClickInsideMenu && !isClickOnToggle) {
+          closeMobileMenu();
+        }
+      }
+    });
+
+    // --- Cleanup on Resize ---
+    // A resize listener ensures the correct state when moving between mobile and desktop views.
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 980 && mobileMenu.classList.contains('is-open')) { 
+            closeMobileMenu();
+        }
+    });
+  });
+</script>

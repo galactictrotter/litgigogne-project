@@ -1,0 +1,182 @@
+{{ define "main" }}
+
+{{/*
+================================================================================
+  1. HERO SECTION FOR THE MAIN COLLECTIONS PAGE
+  - Uses the title and description from /content/collections/_index.md
+================================================================================
+*/}}
+<section class="hero">
+    {{/* You can add a hero_image to /content/collections/_index.md if desired */}}
+    {{ $heroImage := .Params.hero_image | default "/images/collections/lits-gigogne-hero.jpg" }}
+    <img src="{{ $heroImage | relURL }}" alt="{{ .Title }}" class="hero-image" loading="lazy">
+    
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">{{ .Title }}</h1>
+                <p class="hero-subtitle fade-in">{{ .Description }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{/*
+================================================================================
+  2. CUSTOM STYLES FOR THE ALTERNATING SHOWCASE LAYOUT
+  - These styles are scoped to this page and are fully responsive.
+================================================================================
+*/}}
+<style>
+    .collections-showcase {
+        padding: 4rem 0;
+    }
+    .collection-feature-row {
+        display: grid;
+        grid-template-columns: 1fr; /* Default: stacked for mobile */
+        gap: 2rem;
+        align-items: center;
+        margin-bottom: 5rem;
+        padding-bottom: 5rem;
+        border-bottom: 1px solid var(--warm-sand);
+    }
+    .collection-feature-row:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+    .feature-text .lead {
+        font-size: 1.2rem;
+        color: var(--soft-gray);
+        line-height: 1.7;
+        margin: 1.5rem 0;
+    }
+    .feature-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 0.75rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        object-fit: cover;
+    }
+    .feature-benefits {
+        margin: 2.5rem 0;
+    }
+    .feature-benefit-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .feature-benefit-item .icon {
+        flex-shrink: 0;
+        width: 2.25rem;
+        height: 2.25rem;
+        color: var(--bronze-accent);
+        margin-top: 0.25rem;
+    }
+    .feature-benefit-item h4 {
+        margin-bottom: 0.25rem;
+        color: var(--deep-charcoal);
+        font-size: 1.2rem;
+    }
+    .feature-benefit-item p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: var(--soft-gray);
+    }
+    .feature-cta .cta-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.75rem;
+        background: var(--deep-charcoal);
+        color: var(--pure-white);
+        text-decoration: none;
+        font-weight: 500;
+        border-radius: 0.375rem;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+    .feature-cta .cta-link:hover {
+        background: var(--bronze-accent);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(176, 141, 87, 0.3);
+    }
+
+    /* Desktop alternating layout styles */
+    @media (min-width: 992px) {
+        .collection-feature-row {
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        .collection-feature-row.image-right .feature-image { grid-column: 2; }
+        .collection-feature-row.image-right .feature-text { grid-column: 1; grid-row: 1; }
+        .collection-feature-row.image-left .feature-image { grid-column: 1; }
+        .collection-feature-row.image-left .feature-text { grid-column: 2; grid-row: 1; }
+    }
+</style>
+
+{{/*
+================================================================================
+  3. DYNAMIC COLLECTION FETCHING & RENDERING
+  - CORRECTED: Fetches from site.Sections to find _index.md files.
+================================================================================
+*/}}
+{{ $collections := where site.Sections "Type" "collection" }}
+{{ $collections = $collections.ByParam "weight" }}
+
+{{ if $collections }}
+<section class="collections-showcase">
+    <div class="container">
+        {{ range $index, $collection := $collections }}
+            {{ $isEven := eq (mod $index 2) 0 }}
+
+            <article class="collection-feature-row fade-in {{ if $isEven }}image-right{{ else }}image-left{{ end }}">
+                
+                <div class="feature-text">
+                    <h2>{{ $collection.Title }}</h2>
+                    {{ with $collection.Params.collection_intro }}
+                        <div class="lead">{{ . | markdownify }}</div>
+                    {{ end }}
+
+                    {{ with $collection.Params.collection_benefits }}
+                    <div class="feature-benefits">
+                        {{ range . }}
+                        <div class="feature-benefit-item">
+                            {{ with .icon }}
+                                <img src="{{ . | relURL }}" alt="" class="icon">
+                            {{ end }}
+                            <div class="benefit-content">
+                                <h4>{{ .title }}</h4>
+                                <p>{{ .description }}</p>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    
+                    <div class="feature-cta">
+                        <a href="{{ $collection.RelPermalink }}" class="cta-link">
+                            Découvrir la Collection →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-image">
+                    {{ with $collection.Params.hero__image }}
+                        <a href="{{ $collection.RelPermalink }}">
+                            <img src="{{ . | relURL }}" alt="Collection {{ $collection.Title }}" loading="lazy">
+                        </a>
+                    {{ else }}
+                        <div class="placeholder-image" style="background-color: var(--warm-sand); border-radius: 0.75rem; width: 100%; height: 400px;"></div>
+                    {{ end }}
+                </div>
+
+            </article>
+        {{ end }}
+    </div>
+</section>
+{{ end }}
+
+{{ end }}

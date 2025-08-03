@@ -1,0 +1,35 @@
+{{ define "title" }}{{ .Site.Params.brand.name }} - {{ .Site.Params.brand.tagline }}{{ end }}
+
+{{ define "description" }}{{ .Site.Params.seo.description }}{{ end }}
+
+{{ define "structured_data" }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "{{ .Site.Params.brand.name }}",
+    "description": "{{ .Site.Params.seo.description }}",
+    "url": "{{ .Permalink }}",
+    "mainEntity": {
+        "@type": "Product",
+        "@id": "#lits-tiroirs",
+        "name": "Lits à Tiroirs",
+        "category": "Furniture",
+        "manufacturer": {
+            "@type": "Organization",
+            "name": "{{ .Site.Params.brand.name }}"
+        }
+    }
+}
+</script>
+{{ end }}
+
+{{ define "main" }}
+<!-- Content is handled by the 3-pane layout in baseof.html -->
+<!-- This template defines the default state and content structure -->
+
+<!-- Content Inheritance Test -->
+{{ if .Params.show_inheritance_test }}
+{{ partial "test-inheritance.html" . }}
+{{ end }}
+{{ end }}

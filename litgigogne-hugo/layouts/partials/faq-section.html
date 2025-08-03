@@ -1,0 +1,208 @@
+{{/*
+FAQ Section Partial
+Renders FAQ content from front matter with elegant styling
+*/}}
+
+{{ if .Params.faq }}
+<section class="faq-section">
+  <h2 class="faq-title">Questions Fréquentes</h2>
+  
+  <div class="faq-container">
+    {{ range $index, $item := .Params.faq }}
+    <div class="faq-item" data-faq-index="{{ $index }}">
+      <div class="faq-question" onclick="toggleFaq({{ $index }})">
+        <h3>{{ $item.question }}</h3>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer" id="faq-answer-{{ $index }}">
+        <p>{{ $item.answer | markdownify }}</p>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</section>
+
+<style>
+.faq-section {
+  margin: 4rem 0 3rem 0;
+  padding: 1.5rem 0;
+  background: var(--primary-cream);
+  border-top: 1px solid var(--warm-sand);
+  border-bottom: 1px solid var(--warm-sand);
+}
+
+.faq-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  color: var(--deep-charcoal);
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+  padding-bottom: 0.75rem;
+  position: relative;
+}
+
+.faq-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 800px;
+  height: 1px;
+  background-color: rgba(176, 141, 87, 0.3);
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--warm-sand, #e2d5c4);
+  margin-bottom: 0;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.faq-question:hover {
+  color: var(--bronze-accent, #b08d57);
+}
+
+.faq-question:hover h3 {
+  color: var(--bronze-accent, #b08d57);
+}
+
+.faq-question h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: var(--deep-charcoal, #2c2c2c);
+  line-height: 1.5;
+  text-align: left;
+  transition: color 0.3s ease;
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.faq-toggle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--bronze-accent, #b08d57);
+  transition: transform 0.3s ease;
+  min-width: 20px;
+  text-align: center;
+}
+
+.faq-item.active .faq-toggle {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  padding: 0 0 1.5rem 0;
+}
+
+.faq-answer p {
+  margin: 0;
+  color: var(--soft-gray, #5A5A5A);
+  line-height: 1.6;
+  font-size: 1rem;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  padding-top: 0.5rem;
+}
+
+/* Remove list styling from FAQ answers */
+.faq-answer ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.faq-answer ul li {
+  border-bottom: none !important;
+  padding-left: 0 !important;
+  list-style-type: none !important;
+}
+
+.faq-answer ul li::before {
+  display: none !important;
+}
+
+.faq-answer ul li::marker {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .faq-section {
+    margin: 2rem 0;
+    padding: 1.5rem 1rem;
+  }
+  
+  .faq-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .faq-question h3 {
+    font-size: 1rem;
+  }
+  
+  .faq-question {
+    padding: 1rem 0;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function toggleFaq(index) {
+    const faqItem = document.querySelector(`[data-faq-index="${index}"]`);
+    if (!faqItem) return;
+    
+    const isActive = faqItem.classList.contains('active');
+    
+    // Close all other FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.classList.remove('active');
+    });
+    
+    // Toggle current item
+    if (!isActive) {
+      faqItem.classList.add('active');
+    }
+  }
+  
+  // Make toggleFaq available globally
+  window.toggleFaq = toggleFaq;
+  
+  // Close FAQ when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('.faq-item')) {
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+      });
+    }
+  });
+});
+</script>
+{{ end }}

@@ -1,0 +1,104 @@
+{{/*
+Product Content Mapper for Le Lit Gigogne Inheritance
+Maps inherited product data to our Lit à Tiroirs styling and capacity system
+*/}}
+
+{{ $product := . }}
+
+{{/* Handle empty or invalid products */}}
+{{ if not $product.Title }}
+    {{/* Skip invalid products */}}
+{{ else }}
+
+{{/* Hybrid Capacity Mapping: Clean taxonomy first, smart fallbacks */}}
+{{ $capacityClass := "capacity-medium" }}
+{{ $capacityLabel := "Rangement Intégré" }}
+
+{{/* 1. Try NEW clean taxonomy fields first */}}
+{{ if $product.Params.lit_tiroirs_capacity }}
+    {{ $capacityClass = $product.Params.lit_tiroirs_capacity }}
+{{ else if in $product.Params.lit_tiroirs_features "rangement-compact" }}
+    {{ $capacityClass = "capacity-compact" }}
+    {{ $capacityLabel = "Compact" }}
+{{ else if in $product.Params.lit_tiroirs_features "haute-capacite" }}
+    {{ $capacityClass = "capacity-high" }}
+    {{ $capacityLabel = "Haute Capacité" }}
+
+{{/* 2. Fall back to existing structured specification data */}}
+{{ else if $product.Params.specs }}
+    {{ range $product.Params.specs }}
+        {{ if eq .key "Capacité Rangement" }}
+            {{ if .structure.volume_m3 }}
+                {{ if gt .structure.volume_m3 0.5 }}
+                    {{ $capacityClass = "capacity-high" }}
+                    {{ $capacityLabel = "Haute Capacité" }}
+                {{ else if lt .structure.volume_m3 0.3 }}
+                    {{ $capacityClass = "capacity-compact" }}
+                    {{ $capacityLabel = "Compact" }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+
+{{/* 3. Ultimate fallback: smart inference from product name */}}
+{{ else if in $product.Title "1000" }}
+    {{ $capacityClass = "capacity-high" }}
+    {{ $capacityLabel = "Max Capacité" }}
+{{ else if in $product.Title "400" }}
+    {{ $capacityClass = "capacity-compact" }}
+    {{ $capacityLabel = "Compact" }}
+{{ else if in $product.Title "550" }}
+    {{ $capacityClass = "capacity-medium" }}
+    {{ $capacityLabel = "Capacité Optimale" }}
+{{ else if in $product.Title "690" }}
+    {{ $capacityClass = "capacity-high" }}
+    {{ $capacityLabel = "Haute Capacité" }}
+{{ end }}
+
+{{/* Price extraction with better fallbacks */}}
+{{ $basePrice := "Sur devis" }}
+{{ if $product.Params.pricing.base_price }}
+    {{ $basePrice = printf "À partir de %d€" (int $product.Params.pricing.base_price) }}
+{{ else if in $product.Title "400" }}
+    {{ $basePrice = "À partir de 1000€" }}
+{{ else if in $product.Title "550" }}
+    {{ $basePrice = "À partir de 1150€" }}
+{{ else if in $product.Title "690" }}
+    {{ $basePrice = "À partir de 1300€" }}
+{{ else if in $product.Title "1000" }}
+    {{ $basePrice = "À partir de 1500€" }}
+{{ end }}
+
+{{/* Features extraction from specifications */}}
+{{ $features := slice }}
+{{ if $product.Params.specifications }}
+    {{ range $product.Params.specifications }}
+        {{ if eq .key "Mécanisme Tiroirs" }}
+            {{ $features = $features | append "Mécanisme Silencieux" }}
+        {{ end }}
+        {{ if eq .key "Matériaux" }}
+            {{ $features = $features | append "Artisanal" }}
+        {{ end }}
+        {{ if .structure.tiroirs_max }}
+            {{ $features = $features | append (printf "%d Tiroirs" (int .structure.tiroirs_max)) }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{/* Clean up title for Lit à Tiroirs branding */}}
+{{ $cleanTitle := $product.Title }}
+{{ $cleanTitle = $cleanTitle | replaceRE "Lit à Tiroirs " "" }}
+{{ $cleanTitle = $cleanTitle | replaceRE "^Le " "" }}
+
+{{/* Store data in scratch for template access */}}
+{{ $.Scratch.Set "title" $cleanTitle }}
+{{ $.Scratch.Set "description" ($product.Params.description | default $product.Summary | partial "transform-content") }}
+{{ $.Scratch.Set "capacityClass" $capacityClass }}
+{{ $.Scratch.Set "capacityLabel" $capacityLabel }}
+{{ $.Scratch.Set "basePrice" $basePrice }}
+{{ $.Scratch.Set "features" $features }}
+{{ $.Scratch.Set "keyPoints" $product.Params.key_points }}
+{{ $.Scratch.Set "specifications" $product.Params.specs }}
+{{ $.Scratch.Set "content" ($product.Content | partial "transform-content") }}
+
+{{ end }}

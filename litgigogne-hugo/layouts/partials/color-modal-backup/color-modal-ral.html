@@ -1,0 +1,39 @@
+<div class="tab-content" id="ral-tab">
+  <div class="modal-sidebar">
+    <h3>Nuancier RAL</h3>
+    <p>Découvrez notre collection de plus de 180 couleurs RAL standardisées, parfaites pour personnaliser votre mobilier selon vos préférences exactes.</p>
+    
+    <div class="search-section">
+      <input type="text" placeholder="Rechercher une couleur RAL..." onkeyup="searchColors(this.value)" class="color-search">
+    </div>
+    
+    <div class="filter-section">
+      <h4>Catégories</h4>
+      <button onclick="filterRAL('all')" class="filter-btn active">Toutes</button>
+      <button onclick="filterRAL('jaune')" class="filter-btn">Jaunes</button>
+      <button onclick="filterRAL('orange')" class="filter-btn">Oranges</button>
+      <button onclick="filterRAL('rouge')" class="filter-btn">Rouges</button>
+      <button onclick="filterRAL('violet')" class="filter-btn">Violets</button>
+      <button onclick="filterRAL('bleu')" class="filter-btn">Bleus</button>
+      <button onclick="filterRAL('vert')" class="filter-btn">Verts</button>
+      <button onclick="filterRAL('gris')" class="filter-btn">Gris</button>
+      <button onclick="filterRAL('brun')" class="filter-btn">Bruns</button>
+      <button onclick="filterRAL('blanc')" class="filter-btn">Blancs</button>
+      <button onclick="filterRAL('noir')" class="filter-btn">Noirs</button>
+    </div>
+  </div>
+  
+  <div class="modal-main">
+    <div class="color-grid">
+      {{ range .Site.Data.colors.ral_colors }}
+      <div class="color-item" data-category="{{ .category }}" data-name="{{ .name_fr }}" data-code="{{ .ral_code }}">
+        <div class="color-swatch" style="background-color: {{ .hex_value }}"></div>
+        <div class="color-info">
+          <span class="color-code">{{ .ral_code }}</span>
+          <span class="color-name">{{ .name_fr }}</span>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>

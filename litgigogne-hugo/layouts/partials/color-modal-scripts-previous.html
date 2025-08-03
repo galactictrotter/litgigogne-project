@@ -1,0 +1,89 @@
+<script>
+const colorModal = {
+  init() {
+    console.log('Initializing color modal...');
+    this.bindEvents();
+    this.loadColorData();
+  },
+
+  bindEvents() {
+    // Close button
+    const closeBtn = document.querySelector('.modal-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.close());
+    }
+
+    // Tab navigation
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        const view = e.currentTarget.dataset.view;
+        this.switchView(view);
+      });
+    });
+
+    // Click outside to close
+    const overlay = document.getElementById('colorModalOverlay');
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          this.close();
+        }
+      });
+    }
+  },
+
+  async loadColorData() {
+    // Data is already loaded by Hugo templates, no need to fetch
+    console.log('Color data loaded via Hugo templates');
+  },
+
+  open() {
+    const overlay = document.getElementById('colorModalOverlay');
+    if (overlay) {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  },
+
+  close() {
+    const overlay = document.getElementById('colorModalOverlay');
+    if (overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  },
+
+  switchView(view) {
+    // Hide all views
+    document.querySelectorAll('.content-view').forEach(v => {
+      v.classList.remove('active');
+    });
+    
+    // Show selected view
+    const selectedView = document.getElementById(view + 'View');
+    if (selectedView) {
+      selectedView.classList.add('active');
+    }
+    
+    // Update tab states
+    document.querySelectorAll('.main-tab').forEach(t => {
+      t.classList.remove('active');
+    });
+    document.querySelector(`[data-view="${view}"]`).classList.add('active');
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  colorModal.init();
+});
+
+// Global functions for onclick handlers
+function openColorModal() {
+  colorModal.open();
+}
+
+function closeColorModal() {
+  colorModal.close();
+}
+</script>

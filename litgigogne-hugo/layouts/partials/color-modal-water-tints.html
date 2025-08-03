@@ -1,0 +1,44 @@
+<!-- Water Tints Tab Content -->
+<div class="color-content-wrapper">
+  <h2>Coloration écologique pour lit à tiroir de qualité</h2>
+  <div class="intro-text">
+    <p>L'harmonie aquatique de nos teintes biomimétiques imite parfaitement les couleurs des essences de bois naturels. Sept essences archétypales, sans solvants ni composés volatils, pénètrent profondément pour mettre en valeur le veinage du bois massif. Formulation exclusive affinée sur 10 années, ces teintes s'harmonisent avec tout style de décoration. Le rendu authentique trompe l'œil – nos clients nous demandent souvent s'il s'agit du bois massif en question!</p>
+    
+    <div class="protection-options">
+      <h4>Deux finitions protectrices subliment vos teintes :</h4>
+      <ul>
+        <li><strong>Vernis incolore à base d'eau</strong> : Protection satinée anti-COV magnifiant le veinage, barrière imperceptible contre l'usure quotidienne</li>
+        <li><strong>Huile de lin</strong> : Finition mate traditionnelle à patine évolutive, nourrit en profondeur, réparations localisées possibles</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="color-grid">
+    {{ $waterTints := index .Site.Data.colors "water-tints" }}
+    {{ if not $waterTints }}
+      {{ $waterTints = .Site.Data.colors.water_tints }}
+    {{ end }}
+    {{ if $waterTints }}
+      {{ range $waterTints }}
+      <div class="color-item water-tint-item" onclick="selectColor('{{ .code }}', '{{ .name }}', 'water-tint')">
+        <div class="color-preview">
+          <img src="{{ .image }}" alt="{{ .name }}" loading="lazy">
+        </div>
+        <div class="color-info">
+          <h4>{{ .name }}</h4>
+          <p class="color-code">{{ .code }}</p>
+          {{ if .description }}
+          <p class="color-description">{{ .description }}</p>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    {{ else }}
+      <!-- Debug: Data not found -->
+      <div style="grid-column: 1/-1; padding: 2rem; text-align: center; color: #666; border: 1px solid #ddd; border-radius: 4px;">
+        <p><strong>Debug Info:</strong> Water tints data not found</p>
+        <p>Available data files: {{ range $key, $value := .Site.Data.colors }}<code>{{ $key }}</code> {{ end }}</p>
+      </div>
+    {{ end }}
+  </div>
+</div>

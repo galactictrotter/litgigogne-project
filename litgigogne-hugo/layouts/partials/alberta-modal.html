@@ -1,0 +1,433 @@
+<!-- ALBERTA SPECIALIZED MODAL -->
+<div id="albertaModalOverlay" class="modal-overlay">
+    <div class="modal-container alberta-modal">
+        <button class="modal-close-btn" onclick="closeAlbertaModal()">×</button>
+        
+        <!-- Main Content Area -->
+        <div class="modal-content-section">
+            <!-- Step 1: The Form -->
+            <div id="alberta-form-step">
+                <h1>Devis Tissu ALBERTA</h1>
+                <div class="intro-text">
+                    <p>Merci de votre interêt pour nos <strong>tissus Alberta</strong>, en modalité mètres linéaires. Envoyez votre demande de devis en utilisant le formulaire suivant :</p>
+                </div>
+                
+                <form id="albertaForm">
+                    <!-- Hidden Fields for Internal Tracking -->
+                    <input type="hidden" name="form_source" value="Modal Devis Tissu ALBERTA">
+                    <input type="hidden" name="product_id" value="alberta-collection">
+                    
+                    <!-- Section 1: Vos Coordonnées -->
+                    <div class="form-section">
+                        <h3>Vos Coordonnées</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alberta-name">Nom Complet *</label>
+                                <input type="text" id="alberta-name" name="name" required placeholder="Votre nom et prénom">
+                            </div>
+                            <div class="form-group">
+                                <label for="alberta-email">Email *</label>
+                                <input type="email" id="alberta-email" name="email" required placeholder="votre.email@exemple.fr">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alberta-phone">Téléphone *</label>
+                                <input type="tel" id="alberta-phone" name="phone" required placeholder="+33 1 23 45 67 89">
+                            </div>
+                            <div class="form-group">
+                                <label for="alberta-profile">Vous êtes ?</label>
+                                <select id="alberta-profile" name="profile">
+                                    <option value="">-- Sélectionnez --</option>
+                                    <option value="particulier">Particulier</option>
+                                    <option value="professionnel">Professionnel (Architecte, Décorateur, etc.)</option>
+                                    <option value="client-existant">Déjà client</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Votre Projet -->
+                    <div class="form-section">
+                        <h3>Tissus Choisis</h3>
+                        
+                        <div class="form-group">
+                            <label for="alberta-services">Type de Commande</label>
+                            <select id="alberta-services" name="services">
+                                <option value="tissu-metre">Tissu au mètre</option>
+                            </select>
+                        </div>
+                        
+                        <div id="tissu-entries-container">
+                            <div class="tissu-entry">
+                                <div class="form-group">
+                                    <label for="alberta-collection-0">Collection *</label>
+                                    <select id="alberta-collection-0" name="collection[0]" required>
+                                        <option value="">-- Sélectionnez une collection --</option>
+                                        {{ range $.Site.Data.alberta_complete.alberta.collections }}
+                                            <option value="{{ .id }}">{{ .name }}</option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                                
+                                <div class="coloris-image-preview" id="coloris-image-preview-0">
+                                    <!-- Image will be loaded here -->
+                                </div>
+                                
+                                <div class="form-row" style="margin-top: 1rem;">
+                                    <div class="form-group">
+                                        <label for="alberta-reference-0">RÉFÉRENCE ALBERTA *</label>
+                                        <select id="alberta-reference-0" name="reference[0]" required>
+                                            <option value="">-- Sélectionnez une référence --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alberta-metrage-0">MÈTRES LINÉAIRES REQUIS</label>
+                                        <input type="number" id="alberta-metrage-0" name="metrage[0]" step="0.1" placeholder="Mètres linéaires (ex: 3.5)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="button" id="add-tissu-btn" class="add-tissu-button">+ Ajouter un autre tissu</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="alberta-file">Joindre un fichier</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="alberta-file" name="file" class="file-upload-input" accept=".jpg,.png,.pdf">
+                                <div class="file-upload-text">
+                                    📎 Optionnel : joindre une photo de votre meuble, un plan ou un croquis<br>
+                                    <small>Formats acceptés : JPG, PNG, PDF. Max 10MB.</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="alberta-message">Message / Détails Complémentaires</label>
+                            <textarea id="alberta-message" name="message" rows="4" placeholder="Précisez ici toute information utile : délai impératif, questions spécifiques, etc."></textarea>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">ENVOYER</button>
+                </form>
+            </div>
+            
+            <!-- Step 2: Success Message -->
+            <div id="alberta-success-step" style="display: none;">
+                <div class="success-message">
+                    <h1>Votre Vision Nous Inspire</h1>
+                    <div class="intro-text">
+                        <p>Merci ! Votre demande a bien été envoyée. Nos artisans vous répondront sous 48 heures.</p>
+                        <p>En attendant, n'hésitez pas à découvrir notre showroom.</p>
+                    </div>
+                    <button class="submit-button" onclick="closeAlbertaModal()">Fermer</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="modal-sidebar-section">
+            <h3>Collection ALBERTA</h3>
+            <div class="info-item">
+                <h4>Plus de 60 Coloris</h4>
+                <p>Une palette infinie organisée en familles chromatiques pour tous vos projets.</p>
+            </div>
+            <div class="info-item">
+                <h4>Détails</h4>
+                <p>Tissu créateur spécial ameublement, laize 2m80, 30€ TTC le mètre.</p>
+            </div>
+            <div class="info-item">
+                <h4>Contact Direct</h4>
+                <p><strong>Téléphone:</strong><br>(+33) 01 42 02 25 22</p>
+                <p><strong>Email:</strong><br>espaceetmieuxetre@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Magnifier Overlay -->
+<div id="imageMagnifierOverlay" class="image-magnifier-overlay">
+    <div class="image-magnifier-content">
+        <button class="image-magnifier-close" onclick="closeMagnifier()">×</button>
+        <img id="magnifiedImage" src="" alt="Magnified coloris image">
+    </div>
+</div>
+
+<script>
+    // Load unified Alberta data (parse JSON string)
+    const albertaDataRaw = '{{ .Site.Data.alberta_complete.alberta.collections | jsonify }}';
+    const albertaData = JSON.parse(albertaDataRaw);
+    
+    // Create legacy format for compatibility
+    window.albertaFabricCollections = albertaData;
+    window.albertaReferences = {};
+    window.albertaColorisImages = {};
+    
+    // Transform data into legacy format
+    if (albertaData && Array.isArray(albertaData)) {
+        albertaData.forEach(collection => {
+            window.albertaReferences[collection.id] = collection.references;
+            window.albertaColorisImages[collection.id] = collection.image;
+        });
+    }
+    
+</script>
+
+
+<style>
+.alberta-modal {
+    max-width: 1100px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-section {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--bronze-accent);
+}
+
+.form-section h3 {
+    color: var(--deep-charcoal);
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--warm-sand);
+    padding-bottom: 0.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--deep-charcoal);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--warm-sand);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B08D57' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 3rem;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    border: 2px dashed var(--warm-sand);
+    border-radius: 4px;
+    padding: 1.5rem;
+    text-align: center;
+    background: rgba(250, 247, 240, 0.5);
+    transition: all 0.3s ease;
+}
+
+.file-upload-wrapper:hover {
+    border-color: var(--bronze-accent);
+    background: rgba(250, 247, 240, 0.8);
+}
+
+.file-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-upload-text {
+    color: var(--soft-gray);
+    font-size: 0.95rem;
+}
+
+.file-upload-text small {
+    color: var(--bronze-accent);
+    font-size: 0.8rem;
+}
+
+.submit-button {
+    background: var(--bronze-accent);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.submit-button:hover {
+    background: var(--deep-charcoal);
+}
+
+.add-tissu-button {
+    background: transparent;
+    color: var(--bronze-accent);
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--bronze-accent);
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+.add-tissu-button:hover {
+    background: var(--bronze-accent);
+    color: white;
+}
+
+.coloris-image-preview {
+    margin: 0.8rem 0 1.5rem 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.coloris-image-preview img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 320px !important;
+    max-width: none !important;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 0.8rem !important;
+}
+
+.coloris-image-preview img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.coloris-image-preview .image-hint {
+    font-size: 0.85rem;
+    color: var(--bronze-accent);
+    margin-top: 0.5rem;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* Magnification Modal */
+.image-magnifier-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.image-magnifier-overlay.active {
+    display: flex;
+}
+
+.image-magnifier-content {
+    position: relative;
+    max-width: 75vw;
+    max-height: 75vh;
+}
+
+.image-magnifier-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.image-magnifier-close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background: var(--bronze-accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.image-magnifier-close:hover {
+    background: var(--deep-charcoal);
+}
+
+.tissu-entry {
+    padding: 1.5rem;
+    background: rgba(250, 247, 240, 0.5);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--warm-sand);
+}
+
+.tissu-entry:first-child {
+    margin-top: 0;
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .alberta-modal {
+        max-width: 95vw;
+        margin: 1rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .form-section {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .modal-content-section {
+        padding: 1rem;
+    }
+}
+</style>

@@ -1,0 +1,55 @@
+{{/*
+Raw Content Extractor for Le Lit Gigogne Content
+Extracts clean content without any styling influence
+*/}}
+
+{{ $page := . }}
+
+{{/* Method 1: Plain text extraction */}}
+{{ if eq .Type "plaintext" }}
+    {{ $content := partial "transform-content" $page.Content }}
+    {{ $content | plainify }}
+{{ end }}
+
+{{/* Method 2: Raw markdown access */}}
+{{ if eq .Type "raw-markdown" }}
+    {{ with $page.RawContent }}
+        {{ $parts := split . "---" }}
+        {{ if gt (len $parts) 2 }}
+            {{ $rawContent := index $parts 2 | trim }}
+            {{ partial "transform-content" $rawContent }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{/* Method 3: Structured content with clean HTML */}}
+{{ if eq .Type "clean-html" }}
+    {{ $content := partial "transform-content" $page.Content }}
+    {{/* Remove any inherited styling classes */}}
+    {{ $content = $content | replaceRE `class="[^"]*a-propos[^"]*"` `` }}
+    {{ $content = $content | replaceRE `class="[^"]*hero[^"]*"` `` }}
+    {{ $content = $content | replaceRE `class="[^"]*gigogne[^"]*"` `` }}
+    {{/* Apply clean structure */}}
+    {{ $content | safeHTML }}
+{{ end }}
+
+{{/* Method 4: JSON export for API use */}}
+{{ if eq .Type "json" }}
+{
+    "title": "{{ $page.Title | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" }}",
+    "content": "{{ partial "transform-content" $page.Content | plainify | jsonify }}",
+    {{ if $page.Params.faq }}
+    "faq": [
+        {{ range $i, $faq := $page.Params.faq }}
+        {{ if $i }},{{ end }}
+        {
+            "question": "{{ $faq.question | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" | jsonify }}",
+            "answer": "{{ $faq.answer | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" | replaceRE "lits gigognes" "solutions de rangement" | jsonify }}"
+        }
+        {{ end }}
+    ],
+    {{ end }}
+    "transformed": true,
+    "source": "litgigogne-heritage"
+}
+{{ end }}

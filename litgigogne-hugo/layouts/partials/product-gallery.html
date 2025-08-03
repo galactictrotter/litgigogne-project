@@ -1,0 +1,309 @@
+{{/*
+Product Image Gallery Component
+Displays product images in a responsive gallery with zoom functionality
+Usage: {{ partial "product-gallery.html" .Params.images }}
+*/}}
+
+{{ $images := . }}
+{{ if $images }}
+
+<style>
+/* Product Gallery Styles */
+.product-gallery {
+    margin: 2rem 0;
+}
+
+.gallery-main {
+    position: relative;
+    margin-bottom: 1rem;
+    background: var(--pure-white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.gallery-main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+}
+
+.gallery-main-image:hover {
+    transform: scale(1.02);
+}
+
+.gallery-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.gallery-thumbnails::-webkit-scrollbar {
+    height: 4px;
+}
+
+.gallery-thumbnails::-webkit-scrollbar-track {
+    background: var(--warm-sand);
+    border-radius: 2px;
+}
+
+.gallery-thumbnails::-webkit-scrollbar-thumb {
+    background: var(--bronze-accent);
+    border-radius: 2px;
+}
+
+.gallery-thumbnail {
+    flex: 0 0 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.gallery-thumbnail:hover {
+    border-color: var(--bronze-accent);
+    transform: translateY(-2px);
+}
+
+.gallery-thumbnail.active {
+    border-color: var(--bronze-accent);
+    box-shadow: 0 2px 8px rgba(176, 141, 87, 0.3);
+}
+
+.gallery-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Image counter */
+.gallery-counter {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0,0,0,0.7);
+    color: var(--pure-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Zoom modal */
+.gallery-zoom-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    cursor: zoom-out;
+}
+
+.gallery-zoom-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-zoom-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.gallery-zoom-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: var(--pure-white);
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10000;
+    background: rgba(0,0,0,0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.gallery-zoom-close:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .gallery-main-image {
+        height: 250px;
+    }
+    
+    .gallery-thumbnail {
+        flex: 0 0 60px;
+        height: 60px;
+    }
+    
+    .gallery-counter {
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    .gallery-zoom-close {
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Loading animation */
+.gallery-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--warm-sand);
+    border-radius: 50%;
+    border-top-color: var(--bronze-accent);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
+
+<div class="product-gallery">
+    <!-- Main image display -->
+    <div class="gallery-main">
+        <img 
+            id="gallery-main-image" 
+            class="gallery-main-image" 
+            src="{{ index $images 0 | relURL }}" 
+            alt="Product image"
+            loading="lazy"
+        >
+        <div class="gallery-counter">
+            <span id="gallery-current">1</span> / <span id="gallery-total">{{ len $images }}</span>
+        </div>
+    </div>
+    
+    <!-- Thumbnail navigation -->
+    {{ if gt (len $images) 1 }}
+    <div class="gallery-thumbnails">
+        {{ range $index, $image := $images }}
+        <div class="gallery-thumbnail {{ if eq $index 0 }}active{{ end }}" data-index="{{ $index }}">
+            <img src="{{ $image | relURL }}" alt="Product thumbnail {{ add $index 1 }}" loading="lazy">
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+</div>
+
+<!-- Zoom modal -->
+<div id="gallery-zoom-modal" class="gallery-zoom-modal">
+    <div class="gallery-zoom-close">&times;</div>
+    <img id="gallery-zoom-image" class="gallery-zoom-image" src="" alt="Zoomed product image">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mainImage = document.getElementById('gallery-main-image');
+    const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+    const currentCounter = document.getElementById('gallery-current');
+    const zoomModal = document.getElementById('gallery-zoom-modal');
+    const zoomImage = document.getElementById('gallery-zoom-image');
+    const zoomClose = document.querySelector('.gallery-zoom-close');
+    
+    const images = [
+        {{ range $images }}"{{ . | relURL }}",{{ end }}
+    ];
+    
+    // Thumbnail click handler
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', function() {
+            // Update main image
+            mainImage.src = images[index];
+            
+            // Update active thumbnail
+            thumbnails.forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+            
+            // Update counter
+            currentCounter.textContent = index + 1;
+        });
+    });
+    
+    // Main image click for zoom
+    mainImage.addEventListener('click', function() {
+        zoomImage.src = mainImage.src;
+        zoomModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+    
+    // Close zoom modal
+    function closeZoom() {
+        zoomModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    zoomClose.addEventListener('click', closeZoom);
+    zoomModal.addEventListener('click', function(e) {
+        if (e.target === zoomModal) {
+            closeZoom();
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (zoomModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeZoom();
+            }
+        }
+    });
+    
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    mainImage.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    mainImage.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        const swipeThreshold = 50;
+        const currentIndex = parseInt(currentCounter.textContent) - 1;
+        
+        if (touchStartX - touchEndX > swipeThreshold && currentIndex < images.length - 1) {
+            // Swipe left - next image
+            thumbnails[currentIndex + 1].click();
+        } else if (touchEndX - touchStartX > swipeThreshold && currentIndex > 0) {
+            // Swipe right - previous image
+            thumbnails[currentIndex - 1].click();
+        }
+    });
+    
+    // Preload images for better performance
+    images.forEach(imageSrc => {
+        const img = new Image();
+        img.src = imageSrc;
+    });
+});
+</script>
+
+{{ end }}

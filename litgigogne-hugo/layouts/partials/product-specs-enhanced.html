@@ -1,0 +1,269 @@
+{{/*
+================================================================================
+ENHANCED PRODUCT SPECIFICATIONS WITH EXTERNAL DATA INTEGRATION
+- Handles external data references for teintes/finitions and fabrics
+- Supports searchable specs with structured data
+- Provides configurator-compatible output
+================================================================================
+*/}}
+
+{{ $teintures := dict }}
+{{ $fabrics := dict }}
+
+{{/* Load external data from data files */}}
+{{ $teintures = site.Data.teintes_finitions }}
+{{ $fabrics = site.Data.fabric_ranges }}
+
+{{/* Only render if we have specs */}}
+{{ if .Params.specs }}
+<div class="enhanced-specs">
+  {{ range .Params.specs }}
+    <div class="spec-item" data-type="{{ .type }}" {{ if .searchable }}data-searchable="true"{{ end }}>
+      <h4 class="spec-key">{{ .key }}</h4>
+      <div class="spec-content">
+        <span class="spec-value">{{ .value }}</span>
+        
+        {{/* Handle structured dimensions */}}
+        {{ if and .structure (eq .type "dimensions") }}
+          <div class="dimensions-detail">
+            {{ with .structure }}
+            <ul class="dimension-list">
+              {{ if .length }}<li>Longueur: {{ .length }}{{ .unit }}</li>{{ end }}
+              {{ if .width }}<li>Largeur: {{ .width }}{{ .unit }}</li>{{ end }}
+              {{ if .height }}<li>Hauteur: {{ .height }}{{ .unit }}</li>{{ end }}
+            </ul>
+            {{ end }}
+          </div>
+        {{ end }}
+        
+        {{/* Handle finishes with external data */}}
+        {{ if and .external_data_ref (eq .external_data_ref "teintes_finitions") }}
+          <div class="finishes-gallery">
+            {{ with .options }}
+              <div class="finish-options">
+                {{ range . }}
+                  <div class="finish-option" data-id="{{ .id }}">
+                    {{ if .id }}{{ with index $teintures.teintes_finitions .id }}
+                      <div class="finish-sample" style="background-color: {{ .color_hex | default "#f0f0f0" }}; width: 60px; height: 60px; border-radius: 4px; margin-bottom: 0.5rem;"></div>
+                      <span class="finish-name">{{ .name }}</span>
+                      <p class="finish-description">{{ .description }}</p>
+                      {{ if .price_impact }}
+                        <span class="price-impact">+{{ .price_impact }}€</span>
+                      {{ end }}
+                    {{ end }}{{ end }}
+                  </div>
+                {{ end }}
+              </div>
+            {{ end }}
+            
+            {{/* Show available finishes categories */}}
+            {{ if $teintures.categories }}
+              <div class="finish-categories">
+                <h5>Types de finitions disponibles:</h5>
+                <div class="category-grid">
+                  {{ range $key, $category := $teintures.categories }}
+                    <div class="category-item">
+                      <strong>{{ $category.name }}</strong>
+                      <p>{{ $category.description }}</p>
+                    </div>
+                  {{ end }}
+                </div>
+              </div>
+            {{ end }}
+          </div>
+        {{ end }}
+        
+        {{/* Handle fabric options with external data */}}
+        {{ if and .external_data_ref (eq .external_data_ref "fabric_ranges") }}
+          <div class="fabric-info">
+            {{ if $fabrics.fabric_ranges }}
+              <div class="fabric-collections">
+                <h5>Collections Disponibles:</h5>
+                {{ range $key, $collection := $fabrics.fabric_ranges }}
+                  <div class="fabric-collection" data-collection="{{ $key }}">
+                    <h6>{{ $collection.name }}</h6>
+                    <p>{{ $collection.description }}</p>
+                    <div class="price-range">
+                      {{ with $collection.price_range }}
+                        <span>{{ .min }}€ - {{ .max }}€</span>
+                      {{ end }}
+                    </div>
+                    {{ with $collection.fabric_types }}
+                      <div class="fabric-types">
+                        {{ range . }}
+                          <div class="fabric-type">
+                            <strong>{{ .name }}</strong>
+                            <p>{{ .composition }}</p>
+                            {{ if .colors }}
+                              <span class="color-count">{{ .colors }} coloris</span>
+                            {{ end }}
+                          </div>
+                        {{ end }}
+                      </div>
+                    {{ end }}
+                  </div>
+                {{ end }}
+              </div>
+            {{ end }}
+          </div>
+        {{ end }}
+        
+        {{/* Additional details */}}
+        {{ with .details }}
+          <p class="spec-details">{{ . }}</p>
+        {{ end }}
+      </div>
+    </div>
+  {{ end }}
+</div>
+{{ end }}
+
+{{/* Enhanced CSS */}}
+<style>
+.enhanced-specs {
+  display: grid;
+  gap: 2rem;
+}
+
+.spec-item {
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: var(--background-light);
+}
+
+.spec-key {
+  margin: 0 0 1rem 0;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.spec-value {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.dimensions-detail .dimension-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.dimension-list li {
+  background: var(--background-medium);
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.finishes-gallery {
+  margin-top: 1rem;
+}
+
+.finish-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.finish-option {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: white;
+}
+
+.finish-preview {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.finish-name {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.ral-reference {
+  padding: 1rem;
+  background: var(--background-medium);
+  border-radius: 6px;
+}
+
+.ral-samples {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.ral-sample img {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid var(--border-light);
+}
+
+.ral-more {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+}
+
+.fabric-info {
+  margin-top: 1rem;
+}
+
+.fabric-specs {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.fabric-specs li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.9rem;
+}
+
+.color-families {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.color-family {
+  text-align: center;
+}
+
+.color-family img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.color-family span {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.spec-details {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+</style>

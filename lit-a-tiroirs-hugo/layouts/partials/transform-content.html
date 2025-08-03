@@ -1,0 +1,33 @@
+{{/* Content transformation partial for storage-focused brand voice */}}
+{{ $content := . }}
+
+{{/* Brand transformations */}}
+{{ $content = $content | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" }}
+{{ $content = $content | replaceRE "lit gigogne" "lit à tiroirs" }}
+
+{{/* Product terminology */}}
+{{ $content = $content | replaceRE "lits gigognes" "solutions de rangement" }}
+{{ $content = $content | replaceRE "lit gigogne" "solution de rangement" }}
+{{ $content = $content | replaceRE "multifonctionnels" "de rangement intelligent" }}
+{{ $content = $content | replaceRE "multifonctionnel" "de rangement intelligent" }}
+{{ $content = $content | replaceRE "gain de place" "optimisation de rangement" }}
+{{ $content = $content | replaceRE "mobilier multifonctionnel" "meubles de rangement" }}
+{{ $content = $content | replaceRE "bois massif de pin" "bois massif français" }}
+{{ $content = $content | replaceRE "pin massif" "bois massif" }}
+
+{{/* Philosophy enhancement */}}
+{{ $content = $content | replaceRE "mieux vivre, mieux dormir, mieux respirer" "mieux vivre, mieux dormir, mieux respirer, mieux ranger" }}
+
+{{/* Specialization terminology */}}
+{{ $content = $content | replaceRE "optimisation d'espace" "solutions de rangement intelligent" }}
+{{ $content = $content | replaceRE "Forêts des Landes" "forêts françaises gérées durablement" }}
+{{ $content = $content | replaceRE "L'Ébéniste" "L'Ébéniste-Rangement" }}
+{{ $content = $content | replaceRE "Le Sculpteur" "Le Spécialiste des Tiroirs" }}
+{{ $content = $content | replaceRE "Le Finisseur" "L'Expert des Mécanismes" }}
+{{ $content = $content | replaceRE "Le Tapissier" "Le Designer du Rangement" }}
+
+{{/* Storage-focused language */}}
+{{ $content = $content | replaceRE "espaces de couchage" "espaces de rangement optimisés" }}
+{{ $content = $content | replaceRE "solutions de couchage" "solutions de rangement intelligent" }}
+
+{{ return $content }}

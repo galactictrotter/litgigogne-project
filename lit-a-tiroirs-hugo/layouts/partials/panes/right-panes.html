@@ -1,0 +1,544 @@
+<!-- Details for Bienvenue -->
+<div id="detail-bienvenue-rangement" class="right-pane hidden">
+    <h1>Solutions de Rangement Intelligentes</h1>
+    <div class="detail-image">Image des solutions de rangement</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>L'art du rangement optimal</h3>
+            <p>Depuis {{ .Site.Params.brand.since }}, nous développons des solutions de rangement qui transforment votre espace de vie. Nos lits à tiroirs allient l'élégance du savoir-faire français à l'innovation fonctionnelle.</p>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<div id="detail-bienvenue-savoir-faire" class="right-pane hidden">
+    <h1>Notre Savoir-Faire</h1>
+    <div class="detail-image">Image de l'atelier artisanal</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>L'artisanat au service du rangement</h3>
+            <p>Chaque lit à tiroirs est fabriqué à la main dans notre atelier français, par des artisans passionnés qui perpétuent des techniques traditionnelles adaptées aux besoins contemporains.</p>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<!-- Details for Lits à Tiroirs Products - Load from Markdown -->
+{{ range $key, $product := .Site.Data.products.drawer_beds.lits_tiroirs }}
+{{ $productPage := $.Site.GetPage (printf "/lits-tiroirs/%s" $product.id) }}
+<div id="{{ $product.target_detail }}" class="right-pane{{ if ne $key "massako_460" }} hidden{{ end }}">
+    {{ if $productPage }}
+        <h1>{{ $productPage.Title }}</h1>
+        <div class="detail-image">
+          {{ if $productPage.Params.gallery }}
+            {{ if (reflect.IsMap $productPage.Params.gallery) }}
+              {{ $productPage.Params.gallery.main | default "Image du produit" }}
+            {{ else if (reflect.IsSlice $productPage.Params.gallery) }}
+              {{ with index $productPage.Params.gallery 0 }}
+                <img src="{{ .url }}" alt="{{ .alt }}" />
+              {{ end }}
+            {{ end }}
+          {{ else }}
+            Image du produit
+          {{ end }}
+        </div>
+        <div class="detail-content">
+            {{ $productPage.Content }}
+        </div>
+    {{ else }}
+        <h1>{{ $product.name }}</h1>
+        <div class="detail-image">Image du {{ $product.name }}</div>
+        <div class="detail-content">
+            <div class="detail-section">
+                <h3>Description</h3>
+                <p>{{ $product.short_desc }}. Solution parfaite pour optimiser votre espace de rangement tout en conservant l'élégance du mobilier français.</p>
+                <div class="capacity-indicator {{ $product.capacity.type }}">{{ $product.capacity.indicator }}</div>
+            </div>
+            <div class="detail-section">
+                <h3>Spécifications</h3>
+                <p>{{ $product.drawer_count }} tiroirs spacieux, construction en bois massif, finitions artisanales, mécanismes de qualité premium.</p>
+            </div>
+            <div class="detail-section">
+                <h3>Caractéristiques</h3>
+                <div class="product-features">
+                    {{ range $product.features }}
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>{{ . }}</span>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+            <a href="#" class="btn">Discuter Votre Projet</a>
+        </div>
+    {{ end }}
+</div>
+{{ end }}
+
+<!-- Details for Canapés à Tiroirs - Load from Markdown -->
+{{ range $key, $product := .Site.Data.products.drawer_beds.canapes_tiroirs }}
+{{ $productPage := $.Site.GetPage (printf "/canapes/%s" $product.id) }}
+<div id="{{ $product.target_detail }}" class="right-pane hidden">
+    {{ if $productPage }}
+        <h1>{{ $productPage.Title }}</h1>
+        <div class="detail-image">
+          {{ if $productPage.Params.gallery }}
+            {{ if (reflect.IsMap $productPage.Params.gallery) }}
+              {{ $productPage.Params.gallery.main | default "Image du produit" }}
+            {{ else if (reflect.IsSlice $productPage.Params.gallery) }}
+              {{ with index $productPage.Params.gallery 0 }}
+                <img src="{{ .url }}" alt="{{ .alt }}" />
+              {{ end }}
+            {{ end }}
+          {{ else }}
+            Image du produit
+          {{ end }}
+        </div>
+        <div class="detail-content">
+            {{ $productPage.Content }}
+        </div>
+    {{ else }}
+        <h1>{{ $product.name }}</h1>
+        <div class="detail-image">Image du {{ $product.name }}</div>
+        <div class="detail-content">
+            <div class="detail-section">
+                <h3>Description</h3>
+                <p>{{ $product.short_desc }}. Solution parfaite pour optimiser votre espace de rangement tout en conservant l'élégance du mobilier français.</p>
+                <div class="capacity-indicator {{ $product.capacity.type }}">{{ $product.capacity.indicator }}</div>
+            </div>
+            <div class="detail-section">
+                <h3>Spécifications</h3>
+                <p>{{ $product.drawer_count }} tiroirs spacieux, construction en bois massif, finitions artisanales, mécanismes de qualité premium.</p>
+            </div>
+            <div class="detail-section">
+                <h3>Caractéristiques</h3>
+                <div class="product-features">
+                    {{ range $product.features }}
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>{{ . }}</span>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+            <a href="#" class="btn">Discuter Votre Projet</a>
+        </div>
+    {{ end }}
+</div>
+{{ end }}
+
+<!-- Legacy placeholder for testing -->
+<div id="detail-massako-tiroir-old" class="right-pane hidden">
+    <h1>MASSAKO Tiroir</h1>
+    <div class="detail-image">Image du canapé MASSAKO Tiroir</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Design Japonais et Rangement Intégré</h3>
+            <p>Le MASSAKO Tiroir allie l'élégance minimaliste d'inspiration japonaise à une solution de rangement intelligente. Son tiroir intégré de grande capacité se fond harmonieusement dans le design épuré.</p>
+            <div class="capacity-indicator capacity-medium">Rangement Intégré</div>
+        </div>
+        <div class="detail-section">
+            <h3>Spécifications</h3>
+            <p>Bois massif français, tiroir 80cm x 50cm x 25cm (100L), mécanisme silencieux premium, finitions artisanales multiples.</p>
+        </div>
+        <div class="detail-section">
+            <h3>Caractéristiques</h3>
+            <div class="product-features">
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Tiroir Intégré</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Design Japonais</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Mécanisme Silencieux</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Artisanal</span>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<div id="detail-massako-400" class="right-pane hidden">
+    <h1>MASSAKO 400 Compact</h1>
+    <div class="detail-image">Image du canapé MASSAKO 400 Compact</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Solution Parfaite pour Petits Espaces</h3>
+            <p>Le MASSAKO 400 Compact révolutionne l'aménagement des petits espaces. Cette solution intelligente intègre un rangement optimisé dans un design compact qui maximise votre espace de vie.</p>
+            <div class="capacity-indicator capacity-compact">Compact</div>
+        </div>
+        <div class="detail-section">
+            <h3>Optimisation Maximale</h3>
+            <p>Dimensions compactes 140cm x 80cm, tiroir optimisé 48L, parfait pour studios et espaces réduits.</p>
+        </div>
+        <div class="detail-section">
+            <h3>Caractéristiques</h3>
+            <div class="product-features">
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Gain d'Espace</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Rangement Optimisé</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Petits Espaces</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Design Intelligent</span>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<div id="detail-nagano-peigne" class="right-pane hidden">
+    <h1>NAGANO Peigne Tiroir</h1>
+    <div class="detail-image">Image du canapé NAGANO Peigne</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Design Structuré Révolutionnaire</h3>
+            <p>Le NAGANO Peigne Tiroir révolutionne l'esthétique du canapé avec rangement. Sa structure 'peigne' apparente transforme la contrainte technique en signature esthétique audacieuse.</p>
+            <div class="capacity-indicator capacity-medium">Design Fonctionnel</div>
+        </div>
+        <div class="detail-section">
+            <h3>Innovation Esthétique</h3>
+            <p>Structure peigne en pin massif, tiroir intégré 75L, mécanismes invisibles, finitions architecturales.</p>
+        </div>
+        <div class="detail-section">
+            <h3>Caractéristiques</h3>
+            <div class="product-features">
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Design Peigne</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Structure Apparente</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Rangement Intégré</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <span>Innovation Esthétique</span>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<!-- Details for Espace & Rangement -->
+<div id="detail-espace-optimisation" class="right-pane hidden">
+    <h1>Optimisation d'Espace</h1>
+    <div class="detail-image">Image d'optimisation d'espace</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Maximisez votre habitat</h3>
+            <p>Nos experts en rangement analysent votre espace pour créer des solutions sur mesure qui transforment chaque mètre carré en opportunité de stockage élégant.</p>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<div id="detail-espace-solutions" class="right-pane hidden">
+    <h1>Solutions Sur Mesure</h1>
+    <div class="detail-image">Image de solutions personnalisées</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Créées pour votre espace</h3>
+            <p>Chaque projet est unique. Nous concevons des lits à tiroirs parfaitement adaptés à vos dimensions, vos besoins et votre style de vie.</p>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<!-- Details for À Propos -->
+<div id="detail-propos-philosophie" class="right-pane hidden lit-tiroirs-theme">
+    {{ $philosophie := .Site.GetPage "/shared/heritage/philosophie-heritage-artisanat" }}
+    {{ if $philosophie }}
+        <h1>Notre Philosophie</h1>
+        <div class="detail-image">Image de la philosophie artisanale - Savoir-faire français</div>
+        <div class="detail-content">
+            {{ $cleanContent := partial "raw-content-extractor" (dict "Type" "clean-html" "Content" $philosophie.Content "Title" $philosophie.Title "Params" $philosophie.Params) }}
+            {{ $cleanContent | safeHTML }}
+            <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+        </div>
+    {{ else }}
+        <h1>Notre Philosophie - Héritage, Artisanat et Mieux-Être</h1>
+        <div class="detail-image">Image de la philosophie artisanale - Savoir-faire français</div>
+        <div class="detail-content">
+            <div class="detail-section">
+                <h3>Gardiens d'un Patrimoine Vivant</h3>
+                <p>L'artisanat français est une philosophie : une transmission, une façon d'habiter le monde où la main pense et l'esprit crée. Chez Lit à Tiroirs, nous perpétuons cette tradition en l'adaptant aux besoins contemporains de rangement intelligent.</p>
+            </div>
+            <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+        </div>
+    {{ end }}
+</div>
+
+<div id="detail-propos-charte" class="right-pane hidden lit-tiroirs-theme">
+    {{ $charte := .Site.GetPage "/shared/heritage/charte-engagement-environnemental" }}
+    {{ if $charte }}
+        {{ $transformed := partial "transform-content" $charte.Content }}
+        <h1>{{ $charte.Title | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" | replaceRE "Notre Engagement Environnemental" "Notre Charte Environnementale" }}</h1>
+        <div class="detail-image">Image des solutions durables - Engagement environnemental</div>
+        <div class="detail-content">
+            {{ $transformed | safeHTML }}
+            <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+        </div>
+    {{ else }}
+        <h1>Notre Charte : Rangement Durable et Responsable</h1>
+        <div class="detail-image">Image des solutions durables - Engagement environnemental</div>
+        <div class="detail-content">
+            <div class="detail-section">
+                <h3>Notre Engagement : Révolutionner l'Art du Rangement Durable</h3>
+                <p><strong>Depuis {{ .Site.Params.brand.since }}</strong>, Lit à Tiroirs développe une vision révolutionnaire du rangement : créer des solutions qui durent, qui optimisent et qui respectent. Notre philosophie <strong>"Mieux vivre, mieux dormir, mieux respirer, mieux ranger"</strong> guide notre charte du rangement durable qui s'articule autour de cinq principes fondamentaux :</p>
+                <ul>
+                    <li><strong>Optimisation Maximale</strong> — Transformer chaque espace en solution de rangement efficace</li>
+                    <li><strong>Durabilité Exceptionnelle</strong> — Mécanismes et structures conçus pour des décennies d'usage</li>
+                    <li><strong>Matériaux Responsables</strong> — Bois massif français et composants haute qualité</li>
+                    <li><strong>Production Consciente</strong> — Fabrication sur mesure sans gaspillage</li>
+                    <li><strong>Service Pérenne</strong> — Garantie étendue et réparabilité assurée</li>
+                </ul>
+            </div>
+            <div class="detail-section">
+                <h3>Impact Environnemental Positif</h3>
+                <p>En optimisant l'espace existant, nos solutions réduisent les besoins de mobilier supplémentaire de 60 à 80%. Nous permettons de vivre mieux dans des espaces plus petits, diminuant l'empreinte carbone de l'habitat.</p>
+            </div>
+            <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+        </div>
+    {{ end }}
+</div>
+
+<div id="detail-propos-histoire" class="right-pane hidden lit-tiroirs-theme">
+    {{ $histoire := .Site.GetPage "/a-propos/notre-histoire" }}
+    {{ if $histoire }}
+        <h1>{{ $histoire.Title }}</h1>
+        <div class="detail-image">{{ $histoire.Params.featured_image_alt }}</div>
+        <div class="detail-content">
+            {{ $histoire.Content | safeHTML }}
+            <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+        </div>
+    {{ else }}
+        <!-- Fallback to inherited content -->
+        {{ $heritageHistoire := .Site.GetPage "/shared/heritage/notre-histoire" }}
+        {{ if $heritageHistoire }}
+            {{ $transformed := partial "transform-content" $heritageHistoire.Content }}
+            <h1>{{ $heritageHistoire.Title | replaceRE "Le Lit Gigogne" "Lit à Tiroirs" }}</h1>
+            <div class="detail-image">Image d'archive de l'atelier - Maîtres ébénistes du rangement</div>
+            <div class="detail-content">
+                {{ $transformed | safeHTML }}
+                <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+            </div>
+        {{ else }}
+            <!-- Final fallback -->
+            <h1>Notre Histoire - L'Art du Rangement Français</h1>
+            <div class="detail-image">Image d'archive de l'atelier - Maîtres ébénistes du rangement</div>
+            <div class="detail-content">
+                <p>Contenu d'histoire en cours de chargement...</p>
+                <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+            </div>
+        {{ end }}
+    {{ end }}
+</div>
+
+
+<!-- Teintes & Finitions Detail Panes -->
+<div id="detail-teintes-bois" class="right-pane hidden">
+    <h1>Finitions Bois</h1>
+    <div class="detail-image">Image des finitions bois naturelles</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Essences Nobles</h3>
+            <p>Nos finitions bois mettent en valeur la beauté naturelle du chêne, hêtre et merisier. Chaque essence est sélectionnée pour sa durabilité et son esthétique intemporelle.</p>
+        </div>
+        <div class="detail-section">
+            <h3>Finitions Disponibles</h3>
+            <ul>
+                <li><strong>Chêne naturel:</strong> Grain apparent, résistant</li>
+                <li><strong>Hêtre verni:</strong> Teinte claire, moderne</li>
+                <li><strong>Merisier huilé:</strong> Reflets chauds, traditionnel</li>
+            </ul>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<div id="detail-teintes-laquees" class="right-pane hidden">
+    <h1>Teintes Laquées</h1>
+    <div class="detail-image">Image des finitions laquées contemporaines</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Finitions Contemporaines</h3>
+            <p>Nos laques offrent une surface parfaitement lisse et durable, disponibles dans une palette de couleurs neutres et sophistiquées pour s'harmoniser avec votre décor.</p>
+        </div>
+        <div class="detail-section">
+            <h3>Couleurs Standards</h3>
+            <ul>
+                <li><strong>Blanc pur:</strong> Lumineux, intemporel</li>
+                <li><strong>Gris pierre:</strong> Moderne, élégant</li>
+                <li><strong>Noir profond:</strong> Sophistiqué, contrasté</li>
+                <li><strong>Couleurs sur mesure:</strong> Selon votre projet</li>
+            </ul>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<div id="detail-teintes-tissus" class="right-pane hidden">
+    <h1>Tissus & Revêtements</h1>
+    <div class="detail-image">Image de la collection de tissus premium</div>
+    <div class="detail-content">
+        <div class="detail-section">
+            <h3>Collection Premium</h3>
+            <p>Découvrez notre sélection de tissus haut de gamme pour personnaliser vos têtes de lit et assises. Matériaux nobles, résistants et facilement entretenus.</p>
+        </div>
+        <div class="detail-section">
+            <h3>Gammes Disponibles</h3>
+            <ul>
+                <li><strong>Lin naturel:</strong> Respirant, authentique</li>
+                <li><strong>Velours:</strong> Doux, luxueux</li>
+                <li><strong>Cuir:</strong> Durable, intemporel</li>
+                <li><strong>Microfibre:</strong> Résistant, facile d'entretien</li>
+            </ul>
+        </div>
+        <a href="#" class="btn">{{ .Site.Params.contact.modal_title }}</a>
+    </div>
+</div>
+
+<!-- Dynamic Details for Inherited Lits à Tiroirs Products -->
+{{ $litsProducts := .Site.GetPage "/shared/products/lits-tiroirs" }}
+{{ if $litsProducts }}
+    {{ range $litsProducts.RegularPages }}
+        {{ partial "product-content-mapper" . }}
+        {{ if .Scratch.Get "title" }}
+        <div id="detail-{{ .File.BaseFileName }}" class="right-pane hidden lit-tiroirs-theme">
+            <h1>{{ .Scratch.Get "title" }}</h1>
+            <div class="detail-image">Image du {{ .Scratch.Get "title" }}</div>
+            <div class="detail-content">
+                <div class="detail-section">
+                    <h3>Description</h3>
+                    <p>{{ .Scratch.Get "description" }}</p>
+                    <div class="capacity-indicator {{ .Scratch.Get "capacityClass" }}">{{ .Scratch.Get "capacityLabel" }}</div>
+                </div>
+                {{ if .Scratch.Get "specifications" }}
+                <div class="detail-section">
+                    <h3>Spécifications Techniques</h3>
+                    {{ range .Scratch.Get "specifications" }}
+                        {{ if eq .type "dimensions" }}
+                            <p><strong>Dimensions:</strong> {{ .value }}</p>
+                        {{ else if eq .type "storage" }}
+                            <p><strong>Capacité:</strong> {{ .value }}</p>
+                        {{ else if eq .type "material" }}
+                            <p><strong>Matériau:</strong> {{ .value }}</p>
+                        {{ end }}
+                    {{ end }}
+                </div>
+                {{ end }}
+                {{ if .Scratch.Get "features" }}
+                <div class="detail-section">
+                    <h3>Caractéristiques</h3>
+                    <div class="product-features">
+                        {{ range .Scratch.Get "features" }}
+                        <div class="feature">
+                            <div class="feature-icon"></div>
+                            <span>{{ . }}</span>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+                <div class="detail-section">
+                    <h3>Prix</h3>
+                    <p class="price-large">{{ .Scratch.Get "basePrice" }}</p>
+                </div>
+                <div class="detail-section">
+                    {{ .Scratch.Get "content" | safeHTML }}
+                </div>
+                <a href="#" class="btn">{{ $.Site.Params.contact.modal_title }}</a>
+            </div>
+        </div>
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+<!-- Dynamic Details for Inherited Canapés à Tiroirs Products -->
+{{ $canapesProducts := .Site.GetPage "/shared/products/canapes" }}
+{{ if $canapesProducts }}
+    {{ range $canapesProducts.RegularPages }}
+        {{/* Hybrid filtering: prefer clean taxonomy, fall back to messy */}}
+        {{ $isDrawerSofa := false }}
+        {{ if eq .Params.lit_tiroirs_category "canapes-tiroirs" }}
+            {{ $isDrawerSofa = true }}
+        {{ else if or (in .Params.tags "tiroir") (in .Params.categories "lits-tiroir") }}
+            {{ $isDrawerSofa = true }}
+        {{ end }}
+        
+        {{ if $isDrawerSofa }}
+            {{ partial "product-content-mapper" . }}
+            {{ if .Scratch.Get "title" }}
+            <div id="detail-{{ .File.BaseFileName }}" class="right-pane hidden lit-tiroirs-theme">
+                <h1>{{ .Scratch.Get "title" }}</h1>
+                <div class="detail-image">Image du {{ .Scratch.Get "title" }}</div>
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h3>Description</h3>
+                        <p>{{ .Scratch.Get "description" }}</p>
+                        <div class="capacity-indicator {{ .Scratch.Get "capacityClass" }}">{{ .Scratch.Get "capacityLabel" }}</div>
+                    </div>
+                    {{ if .Scratch.Get "specifications" }}
+                    <div class="detail-section">
+                        <h3>Spécifications</h3>
+                        {{ range .Scratch.Get "specifications" }}
+                            {{ if eq .key "Matière Principale" }}
+                                <p><strong>Matière:</strong> {{ .value }}</p>
+                            {{ else if eq .key "Style" }}
+                                <p><strong>Style:</strong> {{ .value }}</p>
+                            {{ else if eq .key "Rangement" }}
+                                <p><strong>Rangement:</strong> {{ .value }}</p>
+                            {{ end }}
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    {{ if .Scratch.Get "features" }}
+                    <div class="detail-section">
+                        <h3>Caractéristiques</h3>
+                        <div class="product-features">
+                            {{ range .Scratch.Get "features" }}
+                            <div class="feature">
+                                <div class="feature-icon"></div>
+                                <span>{{ . }}</span>
+                            </div>
+                            {{ end }}
+                        </div>
+                    </div>
+                    {{ end }}
+                    <div class="detail-section">
+                        <h3>Prix</h3>
+                        <p class="price-large">{{ .Scratch.Get "basePrice" }}</p>
+                    </div>
+                    <div class="detail-section">
+                        {{ .Scratch.Get "content" | safeHTML }}
+                    </div>
+                    <a href="#" class="btn">{{ $.Site.Params.contact.modal_title }}</a>
+                </div>
+            </div>
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}

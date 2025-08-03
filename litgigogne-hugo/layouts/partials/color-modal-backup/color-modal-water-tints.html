@@ -1,0 +1,47 @@
+<div class="tab-content" id="water-tints">
+  <div class="modal-main">
+    <h2>Teintes à l'Eau</h2>
+    <p class="intro-text">
+      Nos teintes à l'eau offrent une alternative écologique pour personnaliser vos meubles. 
+      Ces finitions respectueuses de l'environnement préservent la beauté naturelle du bois 
+      tout en apportant une touche de couleur délicate.
+    </p>
+    
+    <div class="eco-badges">
+      <div class="eco-badge">
+        <span class="eco-icon">🌿</span>
+        <span>Écologique</span>
+      </div>
+      <div class="eco-badge">
+        <span class="eco-icon">💧</span>
+        <span>Base aqueuse</span>
+      </div>
+      <div class="eco-badge">
+        <span class="eco-icon">🏠</span>
+        <span>Sans COV</span>
+      </div>
+    </div>
+
+    <div class="color-grid">
+      {{ range .Site.Data.colors.water_tints }}
+      <div class="color-item" data-color="{{ .tint_code }}">
+        <div class="color-preview">
+          <img src="{{ .image }}" alt="{{ .name_fr }}" loading="lazy">
+          {{ if .eco_certified }}
+          <span class="eco-icon">🌿</span>
+          {{ end }}
+        </div>
+        <div class="color-info">
+          <h4>{{ .name_fr }}</h4>
+          <span class="color-code">{{ .tint_code }}</span>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    <div class="info-note">
+      <p><strong>Note :</strong> Toutes nos teintes à l'eau offrent une finition mate qui met en valeur 
+      le grain naturel du bois tout en apportant une protection durable.</p>
+    </div>
+  </div>
+</div>

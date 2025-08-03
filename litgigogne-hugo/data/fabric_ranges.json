@@ -1,0 +1,204 @@
+{
+  "fabric_ranges": {
+    "essentielle": {
+      "id": "tessuti_essentielle",
+      "name": "Collection Essentielle",
+      "category": "accessible_luxe",
+      "description": "Bases intemporelles en tissus sélectionnés pour leur qualité et durabilité",
+      "price_range": {
+        "min": 1290,
+        "max": 1890
+      },
+      "fabric_types": [
+        {
+          "name": "Lin Naturel Premium",
+          "composition": "100% Lin européen",
+          "characteristics": ["respirant", "naturel", "durable"],
+          "colors": 12
+        },
+        {
+          "name": "Coton Bio Tissé",
+          "composition": "100% Coton biologique certifié",
+          "characteristics": ["doux", "hypoallergénique", "facile entretien"],
+          "colors": 8
+        },
+        {
+          "name": "Chanvre Naturel",
+          "composition": "70% Chanvre, 30% Lin",
+          "characteristics": ["résistant", "antibactérien", "écologique"],
+          "colors": 6
+        }
+      ],
+      "customization": "standard",
+      "lead_time": "2-3 semaines",
+      "maintenance": "Lavage délicat 30°C"
+    },
+    "signature": {
+      "id": "tessuti_signature", 
+      "name": "Collection Signature",
+      "category": "exclusif",
+      "description": "Créations exclusives signature Tessuti, alliance de tradition et innovation",
+      "price_range": {
+        "min": 1890,
+        "max": 2390
+      },
+      "fabric_types": [
+        {
+          "name": "Velours Mohair Élite",
+          "composition": "60% Mohair, 40% Laine vierge",
+          "characteristics": ["luxueux", "thermorégulant", "résistant"],
+          "colors": 15,
+          "exclusive": true
+        },
+        {
+          "name": "Jacquard Soie Française",
+          "composition": "80% Soie, 20% Lin",
+          "characteristics": ["brillant", "élégant", "unique"],
+          "colors": 10,
+          "origin": "Lyon, France"
+        },
+        {
+          "name": "Laine Bouclée Designer",
+          "composition": "90% Laine mérinos, 10% Cachemire",
+          "characteristics": ["doux", "chaud", "sculptural"],
+          "colors": 8,
+          "limited_edition": true
+        }
+      ],
+      "customization": "avancée",
+      "lead_time": "4-5 semaines",
+      "maintenance": "Nettoyage professionnel recommandé"
+    },
+    "couture": {
+      "id": "tessuti_couture",
+      "name": "Collection Couture",
+      "category": "prestige",
+      "description": "Haute couture mobilier sur mesure, savoir-faire artisanal exceptionnel",
+      "price_range": {
+        "min": 2390,
+        "max": 2990
+      },
+      "fabric_types": [
+        {
+          "name": "Cachemire Tissé Main",
+          "composition": "100% Cachemire du Népal",
+          "characteristics": ["ultra-doux", "rare", "prestige"],
+          "colors": 6,
+          "artisanal": "tissage_main"
+        },
+        {
+          "name": "Soie Sauvage Tussah",
+          "composition": "100% Soie sauvage",
+          "characteristics": ["texture unique", "irrégulier", "naturel"],
+          "colors": 8,
+          "origin": "Inde, sélection exclusive"
+        },
+        {
+          "name": "Alpaga Royal Péruvien",
+          "composition": "100% Alpaga Baby Royal",
+          "characteristics": ["hypoallergénique", "thermorégulant", "luxe absolu"],
+          "colors": 4,
+          "rarity": "exceptionnel"
+        }
+      ],
+      "customization": "complète",
+      "lead_time": "6-8 semaines",
+      "maintenance": "Entretien couture spécialisé"
+    },
+    "creation_exclusive": {
+      "id": "tessuti_creation_exclusive",
+      "name": "Création Exclusive",
+      "category": "art",
+      "description": "Pièces uniques création artistique, collaboration avec designers",
+      "price_range": {
+        "min": 2690,
+        "max": 3490
+      },
+      "fabric_types": [
+        {
+          "name": "Tissage Artistique Unique",
+          "composition": "Fibres précieuses mélangées",
+          "characteristics": ["unique", "artistique", "signature"],
+          "colors": "personnalisé",
+          "artist_collaboration": true
+        },
+        {
+          "name": "Broderie Haute Couture",
+          "composition": "Support luxury + broderie main",
+          "characteristics": ["fait main", "œuvre d'art", "patrimoine"],
+          "customization": "totale",
+          "artisan": "maître brodeur français"
+        }
+      ],
+      "customization": "création unique",
+      "lead_time": "8-12 semaines",
+      "maintenance": "Conservation d'art textile"
+    }
+  },
+  "fabric_properties": {
+    "natural_fibers": {
+      "lin": {
+        "benefits": ["respirant", "antibactérien", "durable", "écologique"],
+        "maintenance": "Lavage 30°C, séchage naturel",
+        "durability": "15+ ans"
+      },
+      "coton_bio": {
+        "benefits": ["doux", "hypoallergénique", "facile entretien"],
+        "certifications": ["GOTS", "OEKO-TEX"],
+        "durability": "10+ ans"
+      },
+      "chanvre": {
+        "benefits": ["très résistant", "antimicrobien", "UV résistant"],
+        "sustainability": "culture sans pesticides",
+        "durability": "20+ ans"
+      },
+      "laine": {
+        "benefits": ["thermorégulant", "ignifuge naturel", "élastique"],
+        "origine": "élevage responsable",
+        "durability": "25+ ans"
+      },
+      "soie": {
+        "benefits": ["brillant naturel", "résistant", "noble"],
+        "origin": "sériculture traditionnelle",
+        "durability": "30+ ans avec entretien"
+      }
+    },
+    "luxury_fibers": {
+      "cachemire": {
+        "origin": "Mongolie/Tibet",
+        "rarity": "2-3 fois par an par chèvre",
+        "benefits": ["ultra-doux", "léger", "chaud"],
+        "price_factor": "premium"
+      },
+      "mohair": {
+        "origin": "Chèvres Angora",
+        "benefits": ["brillant", "résistant", "thermorégulant"],
+        "price_factor": "élevé"
+      },
+      "alpaga": {
+        "origin": "Pérou/Bolivie", 
+        "benefits": ["hypoallergénique", "plus chaud que laine", "doux"],
+        "price_factor": "luxury"
+      }
+    }
+  },
+  "care_instructions": {
+    "general_care": {
+      "daily": "Aspiration douce, brossage léger",
+      "periodic": "Nettoyage professionnel selon usage",
+      "stain_removal": "Intervention immédiate, produits adaptés"
+    },
+    "by_category": {
+      "accessible_luxe": "Entretien domestique possible avec précautions",
+      "exclusif": "Nettoyage professionnel recommandé",
+      "prestige": "Entretien couture spécialisé obligatoire",
+      "art": "Conservation textile d'art"
+    }
+  },
+  "sustainability": {
+    "certifications": ["GOTS", "OEKO-TEX", "Cradle to Cradle"],
+    "local_sourcing": "Priorité fournisseurs européens",
+    "waste_management": "Chutes valorisées en accessoires",
+    "durability_commitment": "Garantie 10 ans tissus, 20 ans structures"
+  }
+}

@@ -1,0 +1,27 @@
+<!-- layouts/partials/color-modal.html -->
+<div id="colorModalOverlay">
+  <div class="color-modal">
+    <button class="modal-close-btn" onclick="closeColorModal()">×</button>
+    
+    <!-- Main Content Area -->
+    <div class="modal-content-section">
+      <div class="tab-content" id="finishesTab">
+        {{ partial "color-modal-finishes.html" . }}
+      </div>
+      <div class="tab-content" id="waterTintsTab">
+        {{ partial "color-modal-water-tints.html" . }}
+      </div>
+      <div class="tab-content" id="ralTab">
+        {{ partial "color-modal-ral.html" . }}
+      </div>
+      <div class="tab-content" id="guideTab">
+        {{ partial "color-modal-guide.html" . }}
+      </div>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="modal-sidebar-section">
+      {{ partial "color-modal-sidebar.html" . }}
+    </div>
+  </div>
+</div>

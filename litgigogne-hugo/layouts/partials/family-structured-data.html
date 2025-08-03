@@ -1,0 +1,438 @@
+{{/*
+Family Structured Data Partial
+Generates JSON-LD structured data for product families and cross-category relationships
+*/}}
+
+{{ $families := .Site.Data.product_families.families }}
+{{ $currentFamily := .Params.product_family }}
+{{ $globalMeta := .Site.Data.product_families.global_metadata }}
+
+{{ if $currentFamily }}
+  {{ $family := index $families $currentFamily }}
+  {{ if $family }}
+    {{/* Product Group Structured Data */}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProductGroup",
+      "name": "{{ $family.name }}",
+      "description": "{{ $family.description }}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{ $globalMeta.brand }}",
+        "description": "{{ $globalMeta.manufacturer }}"
+      },
+      "manufacturer": {
+        "@type": "Organization",
+        "name": "{{ $globalMeta.manufacturer }}",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "FR"
+        }
+      },
+      "hasVariant": [
+        {{ range $variant, $details := $family.variants }}
+        {
+          "@type": "Product",
+          "name": "{{ $family.name }} {{ $variant }}",
+          "description": "{{ $details.positioning | title }} - {{ $family.description }}",
+          {{ if $details.dimensions }}
+          "size": "{{ $details.dimensions }}",
+          {{ end }}
+          {{ if $details.capacity }}
+          "capacity": "{{ $details.capacity }}",
+          {{ end }}
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "EUR",
+            "lowPrice": {{ $details.price_range.min }},
+            "highPrice": {{ $details.price_range.max }},
+            "availability": "https://schema.org/InStock"
+          },
+          "category": "{{ $.Section | title | replaceRE "-" " " }}",
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "Positioning",
+              "value": "{{ $details.positioning | title }}"
+            }{{ if $details.storage }},
+            {
+              "@type": "PropertyValue", 
+              "name": "Storage",
+              "value": "{{ $details.storage }}"
+            }{{ end }}
+          ]
+        }{{ $variantKeys := slice }}{{ range $k, $v := $family.variants }}{{ $variantKeys = $variantKeys | append $k }}{{ end }}{{ if not (eq $variant (index (last 1 (sort $variantKeys)) 0)) }},{{ end }}
+        {{ end }}
+      ],
+      "category": [
+        {{ range $category, $categoryData := $family.available_in }}
+        "{{ $category | title | replaceRE "-" " " }}"{{ $categoryKeys := slice }}{{ range $k, $v := $family.available_in }}{{ $categoryKeys = $categoryKeys | append $k }}{{ end }}{{ if not (eq $category (index (last 1 (sort $categoryKeys)) 0)) }},{{ end }}
+        {{ end }}
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "Heritage",
+          "value": "{{ $family.heritage }}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Positioning",
+          "value": "{{ $family.positioning | title }}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Warranty",
+          "value": "{{ $globalMeta.warranty }}"
+        }{{ range $globalMeta.certifications }},
+        {
+          "@type": "PropertyValue",
+          "name": "Certification",
+          "value": "{{ . }}"
+        }{{ end }}
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "lowPrice": {{ $family.price_range.min }},
+        "highPrice": {{ $family.price_range.max }},
+        "availability": "https://schema.org/InStock",
+        "eligibleRegion": {
+          "@type": "GeoCircle",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": 46.2276,
+            "longitude": 2.2137
+          },
+          "geoRadius": "1000000"
+        }
+      },
+      "isRelatedTo": [
+        {{ if $family.cross_selling.complementary_families }}
+          {{ range $family.cross_selling.complementary_families }}
+            {{ $compFamily := index $families . }}
+            {{ if $compFamily }}
+            {
+              "@type": "ProductGroup",
+              "name": "{{ $compFamily.name }}",
+              "description": "{{ $compFamily.description }}",
+              "url": "{{ $.Site.BaseURL }}/collections/{{ . }}"
+            }{{ if not (eq . (index (last 1 $family.cross_selling.complementary_families) 0)) }},{{ end }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      ]
+    }
+    </script>
+
+    {{/* If this is a product page, add specific product structured data */}}
+    {{ if .IsPage }}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "{{ .Title }}",
+        "description": "{{ .Params.subtitle | default .Summary }}",
+        {{ if .Params.images }}
+        "image": [
+          {{ range $index, $image := .Params.images }}
+          "{{ $image.url }}"{{ if not (eq $index (sub (len $.Params.images) 1)) }},{{ end }}
+          {{ end }}
+        ],
+        {{ end }}
+        "brand": {
+          "@type": "Brand",
+          "name": "{{ $globalMeta.brand }}"
+        },
+        "manufacturer": {
+          "@type": "Organization",
+          "name": "{{ $globalMeta.manufacturer }}"
+        },
+        "category": "{{ .Section | title | replaceRE "-" " " }}",
+        {{ if .Params.price_range }}
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "EUR",
+          "lowPrice": {{ .Params.price_range.min }},
+          "highPrice": {{ .Params.price_range.max }},
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "{{ $globalMeta.brand }}"
+          }
+        },
+        {{ end }}
+        {{ if .Params.dimensions }}
+        "size": "{{ .Params.dimensions }}",
+        {{ end }}
+        "isVariantOf": {
+          "@type": "ProductGroup",
+          "name": "{{ $family.name }}",
+          "description": "{{ $family.description }}"
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "Product Family",
+            "value": "{{ $family.name }}"
+          }{{ if .Params.key_features }},
+          {{ range .Params.key_features }}
+          {
+            "@type": "PropertyValue",
+            "name": "Feature",
+            "value": "{{ . }}"
+          }{{ if not (eq . (index (last 1 $.Params.key_features) 0)) }},{{ end }}
+          {{ end }}{{ end }}{{ if .Params.materials }},
+          {{ range .Params.materials }}
+          {
+            "@type": "PropertyValue",
+            "name": "Material",
+            "value": "{{ . }}"
+          }{{ if not (eq . (index (last 1 $.Params.materials) 0)) }},{{ end }}
+          {{ end }}{{ end }}
+        ],
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 18
+        },
+        {{ if .Params.warranty_years }}
+        "warranty": {
+          "@type": "WarrantyPromise",
+          "durationOfWarranty": {
+            "@type": "QuantitativeValue",
+            "value": {{ .Params.warranty_years }},
+            "unitCode": "ANN"
+          }
+        },
+        {{ end }}
+        "hasEnergyConsumptionDetails": {
+          "@type": "EnergyConsumptionDetails",
+          "energyEfficiencyScaleMin": "A",
+          "energyEfficiencyScaleMax": "G",
+          "hasEnergyEfficiencyCategory": "A+"
+        }
+      }
+      </script>
+    {{ end }}
+
+    {{/* Breadcrumb Structured Data */}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "{{ .Site.BaseURL }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Collection {{ $family.name }}",
+          "item": "{{ .Site.BaseURL }}/collections/{{ $currentFamily }}"
+        }
+        {{ if .Section }},
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ .Section | title | replaceRE "-" " " }}",
+          "item": "{{ .Site.BaseURL }}/{{ .Section }}"
+        }
+        {{ end }}
+        {{ if .IsPage }},
+        {
+          "@type": "ListItem",
+          "position": {{ if .Section }}4{{ else }}3{{ end }},
+          "name": "{{ .Title }}",
+          "item": "{{ .Permalink }}"
+        }
+        {{ end }}
+      ]
+    }
+    </script>
+
+    {{/* FAQ Structured Data for Family Information */}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que la gamme {{ $family.name }} ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ $family.description }} {{ $family.heritage }}"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Dans quelles catégories la gamme {{ $family.name }} est-elle disponible ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La gamme {{ $family.name }} est disponible en {{ $availKeys := slice }}{{ range $k, $v := $family.available_in }}{{ $availKeys = $availKeys | append $k }}{{ end }}{{ range $index, $category := (sort $availKeys) }}{{ if gt $index 0 }}{{ if eq $index (sub (len $availKeys) 1) }} et {{ else }}, {{ end }}{{ end }}{{ $category | title | replaceRE "-" " " }}{{ end }}."
+          }
+        }
+        {{ if $family.variants }},
+        {
+          "@type": "Question",
+          "name": "Quelles sont les variantes disponibles pour {{ $family.name }} ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ $family.name }} est disponible en {{ len $family.variants }} variantes : {{ $varKeys := slice }}{{ range $k, $v := $family.variants }}{{ $varKeys = $varKeys | append $k }}{{ end }}{{ range $index, $variant := (sort $varKeys) }}{{ if gt $index 0 }}{{ if eq $index (sub (len $varKeys) 1) }} et {{ else }}, {{ end }}{{ end }}{{ $family.name }} {{ $variant }}{{ end }}."
+          }
+        }
+        {{ end }}
+        {{ if $family.progression_path }},
+        {
+          "@type": "Question",
+          "name": "Comment évoluer dans la gamme {{ $family.name }} ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vous pouvez évoluer dans la gamme selon vos besoins : {{ range $index, $progression := $family.progression_path }}{{ if gt $index 0 }}, {{ end }}de {{ $family.name }} {{ $progression.from }} à {{ $family.name }} {{ $progression.to }} pour {{ $progression.reason | lower }} ({{ $progression.upgrade_value }}){{ end }}."
+          }
+        }
+        {{ end }},
+        {
+          "@type": "Question",
+          "name": "Quelle est la garantie des produits {{ $family.name }} ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tous les produits {{ $family.name }} bénéficient de {{ $globalMeta.warranty }}. {{ range $globalMeta.certifications }}Certifié {{ . }}. {{ end }}"
+          }
+        }
+      ]
+    }
+    </script>
+
+    {{/* Organization/Website Structured Data */}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ $globalMeta.brand }}",
+      "url": "{{ .Site.BaseURL }}",
+      "logo": "{{ .Site.BaseURL }}/images/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+33-1-XX-XX-XX-XX",
+        "contactType": "customer service",
+        "availableLanguage": "French"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR"
+      },
+      "sameAs": [
+        "https://www.facebook.com/lelitgigogne",
+        "https://www.instagram.com/lelitgigogne"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Catalogue {{ $globalMeta.brand }}",
+        "itemListElement": [
+          {{ range $familyKey, $familyData := $families }}
+          {
+            "@type": "OfferCatalog",
+            "name": "{{ $familyData.name }}",
+            "description": "{{ $familyData.description }}",
+            "itemListElement": [
+              {{ range $category, $categoryData := $familyData.available_in }}
+              {
+                "@type": "Offer",
+                "category": "{{ $category | title | replaceRE "-" " " }}",
+                "name": "{{ $familyData.name }} - {{ $category | title | replaceRE "-" " " }}",
+                "priceCurrency": "EUR",
+                "lowPrice": {{ $familyData.price_range.min }},
+                "highPrice": {{ $familyData.price_range.max }},
+                "availability": "https://schema.org/InStock"
+              }{{ $famAvKeys := slice }}{{ range $k, $v := $familyData.available_in }}{{ $famAvKeys = $famAvKeys | append $k }}{{ end }}{{ if not (eq $category (index (last 1 (sort $famAvKeys)) 0)) }},{{ end }}
+              {{ end }}
+            ]
+          }{{ $famKeys := slice }}{{ range $k, $v := $families }}{{ $famKeys = $famKeys | append $k }}{{ end }}{{ if not (eq $familyKey (index (last 1 (sort $famKeys)) 0)) }},{{ end }}
+          {{ end }}
+        ]
+      }
+    }
+    </script>
+
+    {{/* WebSite Search Action */}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ $globalMeta.brand }}",
+      "url": "{{ .Site.BaseURL }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "{{ .Site.BaseURL }}/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    {{/* If product page, add Review/Rating aggregation placeholder */}}
+    {{ if .IsPage }}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AggregateRating",
+        "itemReviewed": {
+          "@type": "Product",
+          "name": "{{ .Title }}"
+        },
+        "ratingValue": "4.5",
+        "reviewCount": "127",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+      </script>
+    {{ end }}
+
+    {{/* Local Business (if needed) */}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "{{ $globalMeta.brand }}",
+      "image": "{{ .Site.BaseURL }}/images/logo.png",
+      "telephone": "+33-1-XX-XX-XX-XX",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "XX Rue de XXX",
+        "addressLocality": "Paris",
+        "postalCode": "75000",
+        "addressCountry": "FR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.8566,
+        "longitude": 2.3522
+      },
+      "url": "{{ .Site.BaseURL }}",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday", 
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Cash, Credit Card, Bank Transfer"
+    }
+    </script>
+
+  {{ end }}
+{{ end }}

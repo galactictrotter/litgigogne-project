@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }} - {{ .Site.Params.brand.name }}</title>
+    <style>
+        body { font-family: Georgia, serif; margin: 0; padding: 0; background: #fafaf9; }
+        .container { padding: 40px; max-width: 1200px; margin: 0 auto; }
+        .test-section { margin: 40px 0; padding: 20px; background: #f5f5f5; border-radius: 8px; }
+        .result-yes { color: #2d5016; font-weight: bold; }
+        .result-no { color: #cc0000; font-weight: bold; }
+        .content-preview { margin: 30px 0; padding: 20px; background: white; border-radius: 4px; }
+        .content-box { padding: 10px; background: #f9f9f9; font-size: 14px; line-height: 1.6; margin: 10px 0; }
+        .back-link { display: inline-block; padding: 12px 24px; background: #711271; color: white; text-decoration: none; border-radius: 4px; }
+        h1 { color: #711271; }
+        h2 { color: #8B7355; }
+        h3 { color: #711271; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        
+        <div class="test-section">
+            <h2>Content Inheritance Test Results</h2>
+            
+            {{/* Try to access inherited content */}}
+            {{ $gigogne_histoire := .Site.GetPage "/shared/heritage/_index" }}
+            {{ $gigogne_charte := .Site.GetPage "/shared/heritage/charte-engagement-environnemental" }}
+            {{ $gigogne_philosophie := .Site.GetPage "/shared/heritage/philosophie-heritage-artisanat" }}
+            
+            <div style="margin: 20px 0;">
+                <p><strong>Histoire page found:</strong> <span class="{{ if $gigogne_histoire }}result-yes{{ else }}result-no{{ end }}">{{ if $gigogne_histoire }}✅ YES{{ else }}❌ NO{{ end }}</span></p>
+                <p><strong>Charte page found:</strong> <span class="{{ if $gigogne_charte }}result-yes{{ else }}result-no{{ end }}">{{ if $gigogne_charte }}✅ YES{{ else }}❌ NO{{ end }}</span></p>
+                <p><strong>Philosophie page found:</strong> <span class="{{ if $gigogne_philosophie }}result-yes{{ else }}result-no{{ end }}">{{ if $gigogne_philosophie }}✅ YES{{ else }}❌ NO{{ end }}</span></p>
+            </div>
+            
+            {{ if $gigogne_histoire }}
+                <div class="content-preview">
+                    <h3>Histoire Content Preview (first 300 chars):</h3>
+                    <div class="content-box">
+                        {{ $gigogne_histoire.Content | truncate 300 | safeHTML }}
+                    </div>
+                    <p><strong>Histoire page title:</strong> {{ $gigogne_histoire.Title }}</p>
+                    <p><strong>Histoire page path:</strong> {{ $gigogne_histoire.RelPermalink }}</p>
+                </div>
+            {{ end }}
+            
+            {{ if $gigogne_charte }}
+                <div class="content-preview">
+                    <h3>Charte Content Preview (first 300 chars):</h3>
+                    <div class="content-box">
+                        {{ $gigogne_charte.Content | truncate 300 | safeHTML }}
+                    </div>
+                    <p><strong>Charte page title:</strong> {{ $gigogne_charte.Title }}</p>
+                    <p><strong>Charte page path:</strong> {{ $gigogne_charte.RelPermalink }}</p>
+                </div>
+            {{ end }}
+            
+            {{ if $gigogne_philosophie }}
+                <div class="content-preview">
+                    <h3>Philosophie Content Preview (first 300 chars):</h3>
+                    <div class="content-box">
+                        {{ $gigogne_philosophie.Content | truncate 300 | safeHTML }}
+                    </div>
+                    <p><strong>Philosophie page title:</strong> {{ $gigogne_philosophie.Title }}</p>
+                    <p><strong>Philosophie page path:</strong> {{ $gigogne_philosophie.RelPermalink }}</p>
+                </div>
+            {{ end }}
+            
+            <h3>Debug Information:</h3>
+            <div class="content-box">
+                <p><strong>All pages in /shared/heritage:</strong></p>
+                {{ range .Site.Pages }}
+                    {{ if hasPrefix .RelPermalink "/shared/heritage" }}
+                        <p>- {{ .RelPermalink }} ({{ .Title }})</p>
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+        
+        <div style="margin: 40px 0;">
+            <a href="/" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

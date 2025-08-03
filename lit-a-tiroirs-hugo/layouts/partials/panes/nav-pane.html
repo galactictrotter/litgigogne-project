@@ -1,0 +1,14 @@
+<!-- Left Navigation Pane (Always Visible) -->
+<nav class="nav-pane">
+    <div class="nav-pane-header">
+        <h2 class="logo">{{ .Site.Params.brand.name }}</h2>
+        <p style="font-size: 14px; margin-top: 4px;">{{ .Site.Params.brand.tagline }}</p>
+    </div>
+    <div class="nav-categories">
+        {{ range .Site.Data.products.drawer_beds.navigation.main }}
+        <div class="nav-item{{ if .active }} active{{ end }}" data-target-middle="{{ .target }}">
+            {{ .label }}
+        </div>
+        {{ end }}
+    </div>
+</nav>

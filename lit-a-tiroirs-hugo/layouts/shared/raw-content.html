@@ -1,0 +1,185 @@
+{{/* Raw Content Analysis for Shared Heritage Content */}}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shared Heritage Content Analysis: {{ .Title }}</title>
+    <style>
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            padding: 20px; 
+            background: #f8f9fa; 
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .analysis-panel {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .raw-content {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            white-space: pre-wrap;
+            font-family: 'SFMono-Regular', Monaco, 'Cascadia Code', monospace;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        .front-matter {
+            background: #e7f3ff;
+            border: 1px solid #b3d7f7;
+            padding: 15px;
+            white-space: pre-wrap;
+            font-family: 'SFMono-Regular', Monaco, 'Cascadia Code', monospace;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #7f8c8d; }
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .metadata-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+        }
+        .diff-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .diff-section { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Le Lit Gigogne → Lit à Tiroirs Content Analysis</h1>
+    
+    <div class="analysis-panel">
+        <h2>📊 Hugo Module Integration Status</h2>
+        <div class="metadata-grid">
+            <div class="metadata-item">
+                <strong>Source Repository:</strong><br>
+                <span class="highlight">github.com/galactictrotter/litgigogne-hugo</span>
+            </div>
+            <div class="metadata-item">
+                <strong>Mount Configuration:</strong><br>
+                source: content/a-propos<br>
+                target: content/shared/heritage
+            </div>
+            <div class="metadata-item">
+                <strong>File Source:</strong><br>
+                {{ if .File }}{{ .File.Mount.Source | default "Local content" }}{{ else }}Unknown{{ end }}
+            </div>
+            <div class="metadata-item">
+                <strong>Generated URL:</strong><br>
+                {{ .RelPermalink }}
+            </div>
+        </div>
+    </div>
+
+    <div class="analysis-panel">
+        <h2>📄 Raw Front Matter (Unmodified from Le Lit Gigogne)</h2>
+        <div class="front-matter">{{ with .RawContent }}{{ $parts := split . "---" }}{{ if gt (len $parts) 2 }}{{ index $parts 1 | trim }}{{ end }}{{ end }}</div>
+    </div>
+
+    <div class="analysis-panel">
+        <h2>📝 Original Markdown Content</h2>
+        <p><em>This is the pure markdown as written in Le Lit Gigogne repository, before any Hugo processing:</em></p>
+        <div class="raw-content">{{ with .RawContent }}{{ $parts := split . "---" }}{{ if gt (len $parts) 2 }}{{ index $parts 2 | trim }}{{ else }}{{ . }}{{ end }}{{ end }}</div>
+    </div>
+
+    <div class="analysis-panel">
+        <h2>🔄 Content Transformation Analysis</h2>
+        <div class="diff-section">
+            <div>
+                <h3>Before Transformation (Le Lit Gigogne branding)</h3>
+                <div class="raw-content">{{ .Content | htmlEscape }}</div>
+            </div>
+            <div>
+                <h3>After Transformation (Lit à Tiroirs branding)</h3>
+                <div class="raw-content">{{ partial "transform-content.html" .Content | htmlEscape }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="analysis-panel">
+        <h2>🎨 Styling & Layout Inheritance</h2>
+        <div class="metadata-grid">
+            <div class="metadata-item">
+                <strong>Layout Template:</strong><br>
+                {{ .Layout | default "_default/single.html" }}
+            </div>
+            <div class="metadata-item">
+                <strong>Content Type:</strong><br>
+                {{ .Type }}
+            </div>
+            <div class="metadata-item">
+                <strong>Section:</strong><br>
+                {{ .Section }}
+            </div>
+            <div class="metadata-item">
+                <strong>CSS Inheritance:</strong><br>
+                {{ if eq .Section "shared" }}Le Lit Gigogne CSS may apply{{ else }}Local CSS only{{ end }}
+            </div>
+        </div>
+    </div>
+
+    <div class="analysis-panel">
+        <h2>🧪 Clean Content Extraction</h2>
+        <p><em>This shows how to access just the text content without any Le Lit Gigogne styling:</em></p>
+        
+        <h3>Method 1: Raw .Content (Hugo processed HTML)</h3>
+        <div class="raw-content">{{ .Content | plainify | htmlEscape }}</div>
+        
+        <h3>Method 2: Plain text extraction</h3>
+        <div class="raw-content">{{ .Content | plainify | truncate 500 }}</div>
+        
+        <h3>Method 3: Transformed + Plain text</h3>
+        <div class="raw-content">{{ partial "transform-content.html" .Content | plainify | htmlEscape }}</div>
+    </div>
+
+    <div class="analysis-panel">
+        <h2>⚙️ Hugo Template Variables</h2>
+        <details>
+            <summary>Click to expand all available page variables</summary>
+            <div class="raw-content">
+Title: {{ .Title }}
+Type: {{ .Type }}
+Section: {{ .Section }}
+Kind: {{ .Kind }}
+Layout: {{ .Layout }}
+OutputFormats: {{ .OutputFormats }}
+RelPermalink: {{ .RelPermalink }}
+Permalink: {{ .Permalink }}
+{{ if .File }}
+File.Path: {{ .File.Path }}
+File.Mount.Source: {{ .File.Mount.Source }}
+File.Mount.Target: {{ .File.Mount.Target }}
+{{ end }}
+
+Available Parameters:
+{{ range $key, $value := .Params }}  {{ $key }}: {{ $value }}
+{{ end }}
+            </div>
+        </details>
+    </div>
+
+</body>
+</html>

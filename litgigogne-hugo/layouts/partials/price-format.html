@@ -1,0 +1,43 @@
+{{/*
+Price Formatting Partial
+Formats prices according to French standards: "X XXX €" with space-separated thousands
+
+Usage:
+  {{ partial "price-format.html" 1500 }}                    → "1 500 €"
+  {{ partial "price-format.html" (dict "price" 1500) }}     → "1 500 €"
+  {{ partial "price-format.html" (dict "price" 1500 "prefix" "À partir de ") }} → "À partir de 1 500 €"
+*/}}
+
+{{- $price := . -}}
+{{- $prefix := "" -}}
+
+{{/* Handle both simple number and dict input */}}
+{{- if reflect.IsMap . -}}
+  {{- $price = .price -}}
+  {{- $prefix = .prefix | default "" -}}
+{{- end -}}
+
+{{/* Convert to string and format with spaces for thousands separator */}}
+{{- $priceStr := string $price -}}
+{{- $formatted := $priceStr -}}
+
+{{/* Add thousands separators for prices >= 1000 */}}
+{{- if ge $price 1000 -}}
+  {{- $len := len $priceStr -}}
+  {{- if eq $len 4 -}}
+    {{/* 1000-9999: "X XXX" */}}
+    {{- $formatted = printf "%s %s" (substr $priceStr 0 1) (substr $priceStr 1) -}}
+  {{- else if eq $len 5 -}}
+    {{/* 10000-99999: "XX XXX" */}}
+    {{- $formatted = printf "%s %s" (substr $priceStr 0 2) (substr $priceStr 2) -}}
+  {{- else if eq $len 6 -}}
+    {{/* 100000-999999: "XXX XXX" */}}
+    {{- $formatted = printf "%s %s" (substr $priceStr 0 3) (substr $priceStr 3) -}}
+  {{- else if eq $len 7 -}}
+    {{/* 1000000-9999999: "X XXX XXX" */}}
+    {{- $formatted = printf "%s %s %s" (substr $priceStr 0 1) (substr $priceStr 1 4) (substr $priceStr 4) -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Output with prefix and Euro symbol */}}
+{{- printf "%s%s €" $prefix $formatted -}}

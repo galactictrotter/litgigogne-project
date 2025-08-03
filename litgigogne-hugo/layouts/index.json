@@ -1,0 +1,36 @@
+{{- $productPages := where site.RegularPages "Type" "in" (slice "lits-gigogne" "canapes" "futons" "matelas" "lits-tiroirs" "lits-japonais" "accessoires") -}}
+{{- $aboutPages := where site.RegularPages "Type" "a-propos" -}}
+{{- $guidePages := where site.RegularPages "Type" "guides" -}}
+{{- $pages := union $productPages (union $aboutPages $guidePages) -}}
+{
+  "title": {{ .Site.Title | jsonify }},
+  "description": {{ .Site.Params.description | default "" | jsonify }},
+  "total_products": {{ len $pages }},
+  "last_updated": "{{ now.Format "2006-01-02T15:04:05Z07:00" }}",
+  "pages": [
+    {{- range $index, $page := $pages -}}
+    {{- if $index }},{{ end }}
+    {
+      "id": {{ $page.Params.id | default "" | jsonify }},
+      "title": {{ $page.Title | jsonify }},
+      "slug": {{ $page.Params.slug | default "" | jsonify }},
+      "url": {{ $page.Permalink | jsonify }},
+      "description": {{ $page.Params.description | default "" | jsonify }},
+      "content_type": {{ $page.Params.content_type | default "" | jsonify }},
+      "primary_category": {{ $page.Params.primary_category | default "" | jsonify }},
+      "categories": {{ $page.Params.categories | default slice | jsonify }},
+      "tags": {{ $page.Params.tags | default slice | jsonify }},
+      "key_points": {{ $page.Params.key_points | default slice | jsonify }},
+      "specifications": {{ $page.Params.specs | default slice | jsonify }},
+      "pricing": {{ $page.Params.pricing | default dict | jsonify }},
+      "gallery": {{ $page.Params.gallery | default slice | jsonify }},
+      "content_preview": {{ $page.Summary | plainify | jsonify }},
+      "content_full": {{ $page.Content | plainify | jsonify }},
+      "word_count": {{ $page.WordCount }},
+      "reading_time": {{ $page.ReadingTime }},
+      "date": "{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}",
+      "last_modified": "{{ $page.Lastmod.Format "2006-01-02T15:04:05Z07:00" }}"
+    }
+    {{- end }}
+  ]
+}

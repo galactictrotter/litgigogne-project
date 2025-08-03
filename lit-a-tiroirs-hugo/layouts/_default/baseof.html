@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "fr" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ block "description" . }}{{ .Site.Params.seo.description }}{{ end }}">
+    
+    <!-- Enhanced CSS with CSS Custom Properties -->
+    {{ $css := resources.Get "css/main.css" | resources.ExecuteAsTemplate "css/main.css" . | resources.Minify }}
+    <style>{{ $css.Content | safeCSS }}</style>
+    
+    <!-- Structured Data -->
+    {{ block "structured_data" . }}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FurnitureStore",
+        "name": "{{ .Site.Params.brand.name }}",
+        "description": "{{ .Site.Params.seo.description }}",
+        "url": "{{ .Site.BaseURL }}",
+        "foundingDate": "{{ .Site.Params.brand.since }}",
+        "parentOrganization": {
+            "@type": "Organization",
+            "name": "{{ .Site.Params.brand.parent_brand }}"
+        }
+    }
+    </script>
+    {{ end }}
+</head>
+<body>
+    <!-- Mobile-only Interface -->
+    <div class="mobile-only">
+        {{ partial "mobile/header.html" . }}
+        {{ partial "mobile/navigation.html" . }}
+        {{ partial "mobile/product-page.html" . }}
+    </div>
+
+    <!-- Desktop 3-Pane Layout -->
+    <div class="desktop-container">
+        <!-- Left Navigation Pane (Always Visible) -->
+        {{ partial "panes/nav-pane.html" . }}
+        
+        <!-- Wrapper for All Middle Panes -->
+        <div id="middle-panes-wrapper">
+            {{ partial "panes/middle-panes.html" . }}
+        </div>
+
+        <!-- Wrapper for All Right (Detail) Panes -->
+        <div id="right-panes-wrapper">
+            {{ partial "panes/right-panes.html" . }}
+        </div>
+    </div>
+    
+    <!-- JavaScript for 3-Pane Navigation -->
+    {{ partial "scripts/pane-navigation.html" . }}
+    
+    {{ block "additional_scripts" . }}{{ end }}
+</body>
+</html>

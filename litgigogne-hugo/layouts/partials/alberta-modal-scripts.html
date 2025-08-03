@@ -1,0 +1,288 @@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    'use strict';
+
+    const albertaModalOverlay = document.getElementById('albertaModalOverlay');
+    const albertaFormStep = document.getElementById('alberta-form-step');
+    const albertaSuccessStep = document.getElementById('alberta-success-step');
+    const albertaForm = document.getElementById('albertaForm');
+
+    // --- Core Functions ---
+    window.openAlbertaModal = function() {
+        if (!albertaModalOverlay) return;
+        // Reset to the form view each time it opens
+        albertaFormStep.style.display = 'block';
+        albertaSuccessStep.style.display = 'none';
+        albertaModalOverlay.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    window.closeAlbertaModal = function() {
+        if (!albertaModalOverlay) return;
+        albertaModalOverlay.classList.remove('active');
+        document.body.classList.remove('modal-open');
+        // Reset form
+        if (albertaForm) {
+            albertaForm.reset();
+        }
+    }
+
+    // --- Event Listeners ---
+
+    // 1. Listen for clicks on ALBERTA trigger buttons
+    document.body.addEventListener('click', function(event) {
+        const trigger = event.target.closest('[data-modal="alberta"]');
+        if (trigger) {
+            event.preventDefault();
+            openAlbertaModal();
+        }
+    });
+
+    // 2. Listen for clicks on the close button or the dark overlay
+    if (albertaModalOverlay) {
+        albertaModalOverlay.addEventListener('click', function(event) {
+            // Close if the click is on the close button OR directly on the overlay background
+            if (event.target.classList.contains('modal-close-btn') || event.target === albertaModalOverlay) {
+                closeAlbertaModal();
+            }
+        });
+    }
+
+    // 3. Listen for form submission
+    if (albertaForm) {
+        albertaForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Collect all form data
+            const formData = new FormData(albertaForm);
+            
+            // Build detailed email message following specifications
+            let emailBody = "=== DEMANDE DEVIS TISSU ALBERTA ===\n\n";
+            
+            // Section 1: Contact Information
+            emailBody += "VOS COORDONNÉES:\n";
+            emailBody += `Nom Complet: ${formData.get('name')}\n`;
+            emailBody += `Email: ${formData.get('email')}\n`;
+            emailBody += `Téléphone: ${formData.get('phone')}\n`;
+            if (formData.get('profile')) {
+                emailBody += `Profil: ${formData.get('profile')}\n`;
+            }
+            
+            // Section 2: Project Details
+            emailBody += "\nVOTRE PROJET:\n";
+
+            const tissuEntries = document.querySelectorAll('.tissu-entry');            tissuEntries.forEach((entry, index) => {                const collection = entry.querySelector(`#alberta-collection-${index}`).value;                const reference = entry.querySelector(`#alberta-reference-${index}`).value;                const metrage = entry.querySelector(`#alberta-metrage-${index}`).value;                emailBody += `
+Tissu #${index + 1}:
+`;                emailBody += `  Collection: ${collection}
+`;                emailBody += `  Référence: ${reference}
+`;                emailBody += `  Métrage: ${metrage} mètres
+`;            });            if (formData.get('services')) {                emailBody += `Type de Commande: ${formData.get('services')}
+`;            }
+            if (formData.get('message')) {
+                emailBody += `\nDÉTAILS COMPLÉMENTAIRES:\n${formData.get('message')}\n`;
+            }
+            
+            // Internal tracking info
+            emailBody += `\nSOURCE: ${formData.get('form_source')}\n`;
+            emailBody += `PRODUIT: ${formData.get('product_id')}\n`;
+            
+            // Handle file attachment note
+            const fileInput = document.getElementById('alberta-file');
+            if (fileInput && fileInput.files.length > 0) {
+                emailBody += `\nFICHIER JOINT: ${fileInput.files[0].name}\n`;
+            }
+            
+            // Create subject line
+            const subject = `Demande Devis ALBERTA - ${formData.get('name')}`;
+            
+            // For demo purposes, create mailto link (in production, this would submit to your backend)
+            const mailtoLink = `mailto:espaceetmieuxetre@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            albertaFormStep.style.display = 'none';
+            albertaSuccessStep.style.display = 'block';
+        });
+    }
+
+    // 4. Listen for the 'Escape' key to close the modal
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && albertaModalOverlay && albertaModalOverlay.classList.contains('active')) {
+            closeAlbertaModal();
+        }
+    });
+
+    // 5. File upload feedback
+    const fileInput = document.getElementById('alberta-file');
+    const fileText = document.querySelector('.file-upload-text');
+    
+    if (fileInput && fileText) {
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                fileText.innerHTML = `
+                    📎 Fichier sélectionné: <strong>${file.name}</strong><br>
+                    <small>Taille: ${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                `;
+            } else {
+                fileText.innerHTML = `
+                    📎 Optionnel : joindre une photo de votre meuble, un plan ou un croquis<br>
+                    <small>Formats acceptés : JPG, PNG, PDF. Max 10MB.</small>
+                `;
+            }
+        });
+    }
+
+    // 6. Add more tissu functionality
+    const addTissuBtn = document.getElementById('add-tissu-btn');
+    const tissuEntriesContainer = document.getElementById('tissu-entries-container');
+    let tissuEntryCount = 1; // Start from 1 because one entry is already in HTML
+
+    console.log('albertaReferences loaded:', albertaReferences);
+
+    // Function to populate reference dropdown
+    function populateReferenceDropdown(collectionSelectElement, referenceSelectElement, imagePreviewElement) {
+        const selectedCollectionId = collectionSelectElement.value.trim(); // Trim whitespace
+
+        referenceSelectElement.innerHTML = '<option value="">-- Sélectionnez une référence --</option>'; // Clear existing options
+        imagePreviewElement.innerHTML = ''; // Clear existing image
+
+        if (selectedCollectionId && window.albertaReferences[selectedCollectionId]) {
+            // Sort references alphabetically by description
+            const sortedReferences = [...window.albertaReferences[selectedCollectionId]].sort((a, b) => 
+                a.desc.localeCompare(b.desc)
+            );
+            
+            sortedReferences.forEach(ref => {
+                const option = document.createElement('option');
+                option.value = ref.ref;
+                option.textContent = ref.desc; // Show only "ALBERTA COL X"
+                referenceSelectElement.appendChild(option);
+            });
+        }
+
+        // Display coloris image
+        if (selectedCollectionId && window.albertaColorisImages[selectedCollectionId]) {
+            const img = document.createElement('img');
+            img.src = window.albertaColorisImages[selectedCollectionId];
+            img.alt = `Image for ${selectedCollectionId} collection`;
+            img.style.cursor = 'pointer';
+            
+            // Add click event for magnification
+            img.addEventListener('click', function() {
+                openMagnifier(this.src, this.alt);
+            });
+            
+            imagePreviewElement.appendChild(img);
+            
+            // Add hint text
+            const hintText = document.createElement('div');
+            hintText.className = 'image-hint';
+            hintText.textContent = 'Cliquez pour lire les références';
+            imagePreviewElement.appendChild(hintText);
+        }
+    }
+
+    // Attach event listener to initial collection dropdown
+    const initialCollectionSelect = document.getElementById('alberta-collection-0');
+    const initialReferenceSelect = document.getElementById('alberta-reference-0');
+    const initialImagePreview = document.getElementById('coloris-image-preview-0');
+    if (initialCollectionSelect && initialReferenceSelect && initialImagePreview) {
+        initialCollectionSelect.addEventListener('change', () => {
+            populateReferenceDropdown(initialCollectionSelect, initialReferenceSelect, initialImagePreview);
+        });
+    }
+
+    if (addTissuBtn && tissuEntriesContainer) {
+        addTissuBtn.addEventListener('click', function() {
+            const newEntryHtml = `
+                <div class="tissu-entry">
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="alberta-collection-${tissuEntryCount}">Collection *</label>
+                            <select id="alberta-collection-${tissuEntryCount}" name="collection[${tissuEntryCount}]" required>
+                                <option value="">-- Sélectionnez une collection --</option>
+                                ${window.albertaFabricCollections.map(collection => `<option value="${collection.id}">${collection.name}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <div class="coloris-image-preview" id="coloris-image-preview-${tissuEntryCount}">
+                        <!-- Image will be loaded here -->
+                    </div>
+                    
+                    <div class="form-row" style="margin-top: 1rem;">
+                        <div class="form-group">
+                            <label for="alberta-reference-${tissuEntryCount}">RÉFÉRENCE ALBERTA *</label>
+                            <select id="alberta-reference-${tissuEntryCount}" name="reference[${tissuEntryCount}]" required>
+                                <option value="">-- Sélectionnez une référence --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="alberta-metrage-${tissuEntryCount}">MÈTRES LINÉAIRES REQUIS</label>
+                            <input type="number" id="alberta-metrage-${tissuEntryCount}" name="metrage[${tissuEntryCount}]" step="0.1" placeholder="Mètres linéaires (ex: 3.5)">
+                        </div>
+                    </div>
+                </div>
+            `;
+            tissuEntriesContainer.insertAdjacentHTML('beforeend', newEntryHtml);
+
+            // Attach event listener to the newly added collection dropdown
+            const newCollectionSelect = document.getElementById(`alberta-collection-${tissuEntryCount}`);
+            const newReferenceSelect = document.getElementById(`alberta-reference-${tissuEntryCount}`);
+            const newImagePreview = document.getElementById(`coloris-image-preview-${tissuEntryCount}`);
+            if (newCollectionSelect && newReferenceSelect && newImagePreview) {
+                newCollectionSelect.addEventListener('change', () => {
+                    populateReferenceDropdown(newCollectionSelect, newReferenceSelect, newImagePreview);
+                });
+            }
+
+            tissuEntryCount++;
+        });
+    }
+
+    // --- Magnification Functions ---
+    window.openMagnifier = function(imageSrc, imageAlt) {
+        const magnifierOverlay = document.getElementById('imageMagnifierOverlay');
+        const magnifiedImage = document.getElementById('magnifiedImage');
+        
+        if (magnifierOverlay && magnifiedImage) {
+            magnifiedImage.src = imageSrc;
+            magnifiedImage.alt = imageAlt;
+            magnifierOverlay.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+    }
+
+    window.closeMagnifier = function() {
+        const magnifierOverlay = document.getElementById('imageMagnifierOverlay');
+        if (magnifierOverlay) {
+            magnifierOverlay.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+    }
+
+    // Listen for clicks on magnifier overlay to close
+    const magnifierOverlay = document.getElementById('imageMagnifierOverlay');
+    if (magnifierOverlay) {
+        magnifierOverlay.addEventListener('click', function(event) {
+            if (event.target === magnifierOverlay || event.target.classList.contains('image-magnifier-close')) {
+                closeMagnifier();
+            }
+        });
+    }
+
+    // Listen for Escape key to close magnifier
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const magnifierOverlay = document.getElementById('imageMagnifierOverlay');
+            if (magnifierOverlay && magnifierOverlay.classList.contains('active')) {
+                closeMagnifier();
+            }
+        }
+    });
+});
+</script>

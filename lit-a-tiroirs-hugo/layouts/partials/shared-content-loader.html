@@ -1,0 +1,56 @@
+{{/*
+Shared Content Loader for Le Lit Gigogne Integration
+This partial loads shared content from the parent site when available
+*/}}
+
+{{ $shared_base := .Site.Params.shared_content.base_url }}
+{{ $content_type := .contentType | default "modal" }}
+
+{{/* Check if shared content integration is enabled */}}
+{{ if .Site.Params.shared_content }}
+
+  {{/* Load Teintes et Finitions Modal */}}
+  {{ if and (eq $content_type "teintes-finitions") .Site.Params.shared_content.modal_teintes_finitions }}
+    {{/* In production, this would fetch from Hugo modules or build-time integration */}}
+    <div class="shared-content" data-source="{{ $shared_base }}/modal-teintes-finitions/">
+      {{/* Placeholder for shared modal content */}}
+      <p class="shared-loading">Chargement du contenu partagé...</p>
+    </div>
+  {{ end }}
+
+  {{/* Load Shared À Propos Content */}}
+  {{ if and (eq $content_type "a-propos") .Site.Params.shared_content.a_propos_shared }}
+    <div class="shared-content" data-source="{{ $shared_base }}/a-propos/">
+      {{/* Heritage content shared between sites */}}
+      <h3>{{ .Site.Params.brand.parent_brand }}</h3>
+      <p>Depuis {{ .Site.Params.brand.since }}, notre maison développe un savoir-faire unique dans la création de mobilier français d'exception.</p>
+      <p><strong>{{ .Site.Params.brand.name }}</strong> représente notre expertise spécialisée dans les solutions de rangement intelligentes.</p>
+    </div>
+  {{ end }}
+
+  {{/* Load Shared Contact Forms */}}
+  {{ if and (eq $content_type "contact") .Site.Params.shared_content.contact_forms }}
+    <div class="shared-content" data-source="{{ $shared_base }}/contact/">
+      {{/* Contact form integration point */}}
+      <form class="shared-contact-form" action="{{ .Site.Params.contact.form_action }}" method="POST">
+        <input type="hidden" name="site" value="lit-a-tiroirs">
+        <input type="hidden" name="product_focus" value="rangement">
+        {{/* Form fields would be loaded from shared system */}}
+      </form>
+    </div>
+  {{ end }}
+
+{{ else }}
+  {{/* Fallback content when shared integration is disabled */}}
+  <div class="local-content">
+    {{ .content | default "Contenu local de Lit à Tiroirs" }}
+  </div>
+{{ end }}
+
+{{/* Build-time integration comment */}}
+{{/* 
+TODO: Hugo Modules Integration
+- Set up Hugo modules to pull shared content at build time
+- Configure content mounting from Le Lit Gigogne repository
+- Implement content transformation for Lit à Tiroirs context
+*/}}

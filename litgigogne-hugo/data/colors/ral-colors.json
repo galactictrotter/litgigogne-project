@@ -1,0 +1,1130 @@
+[
+  {
+    "code": "RAL 1000",
+    "name": "beige vert",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201000%20beige%20vert.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1001",
+    "name": "Beige",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201001%20Beige.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1002",
+    "name": "Jaune Sable",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201002%20Jaune%20Sable.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1003",
+    "name": "Jaune de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201003%20Jaune%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1004",
+    "name": "Jaune or",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201004%20Jaune%20or.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1005",
+    "name": "Jaune miel",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201005%20Jaune%20miel.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1006",
+    "name": "Jaune maïs",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201006%20Jaune%20ma%C3%AFs.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1007",
+    "name": "Jaune narcisse",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201007%20Jaune%20narcisse.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1011",
+    "name": "Beige brun",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201011%20Beige%20brun.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1012",
+    "name": "Jaune citron",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201012%20Jaune%20citron.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1013",
+    "name": "Blanc perlé",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201013%20Blanc%20perl%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1014",
+    "name": "Ivoire",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201014%20Ivoire.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1015",
+    "name": "Ivoire clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201015%20Ivoire%20clair.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1016",
+    "name": "Jaune soufre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201016%20Jaune%20soufre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1017",
+    "name": "Jaune safran",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201017%20Jaune%20safran.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1018",
+    "name": "Jaune zinc",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201018%20Jaune%20zinc.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1019",
+    "name": "Beige gris",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201019%20Beige%20gris.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1020",
+    "name": "Jaune olive",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201020%20Jaune%20olive.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1021",
+    "name": "Jaune Colza",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201021%20Jaune%20Colza.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1023",
+    "name": "Jaune signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201023%20Jaune%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1024",
+    "name": "Jaune ocre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201024%20Jaune%20ocre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1027",
+    "name": "Jaune curry",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201027%20Jaune%20curry.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1028",
+    "name": "Jaune melon",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201028%20Jaune%20melon.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1032",
+    "name": "Jaune genêt",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201032%20Jaune%20gen%C3%AAt.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1033",
+    "name": "Jaune Dahlia",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201033%20Jaune%20Dahlia.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1034",
+    "name": "Jaune pastel",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201034%20Jaune%20pastel.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 1037",
+    "name": "Jaune soleil",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%201037%20Jaune%20soleil.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2000",
+    "name": "Orangé jaune",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202000%20Orang%C3%A9%20jaune.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2001",
+    "name": "Orangé rouge",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202001%20Orang%C3%A9%20rouge.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2002",
+    "name": "Orangé sang",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202002%20Orang%C3%A9%20sang.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2003",
+    "name": "Orangé pastel",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202003%20Orang%C3%A9%20pastel.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2004",
+    "name": "Orangé pur",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202004%20Orang%C3%A9%20pur.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2008",
+    "name": "Orangé rouge clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202008%20Orang%C3%A9%20rouge%20clair.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2009",
+    "name": "Orangé signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202009%20Orang%C3%A9%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2010",
+    "name": "Orangé de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202010%20Orang%C3%A9%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2011",
+    "name": "Orangé foncé",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202011%20Orang%C3%A9%20fonc%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 2012",
+    "name": "Orangé saumon",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%202012%20Orang%C3%A9%20saumon.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3000",
+    "name": "Rouge feu",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203000%20Rouge%20feu.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3001",
+    "name": "Rouge de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203001%20Rouge%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3002",
+    "name": "Rouge carmin",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203002%20Rouge%20carmin.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3003",
+    "name": "Rouge rubis",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203003%20Rouge%20rubis.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3004",
+    "name": "Rouge pourpre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203004%20Rouge%20pourpre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3005",
+    "name": "Rouge vin",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203005%20Rouge%20vin.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3007",
+    "name": "Rouge noir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203007%20Rouge%20noir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3009",
+    "name": "Rouge oxyde",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203009%20Rouge%20oxyde.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3011",
+    "name": "Rouge brun",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203011%20Rouge%20brun.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3012",
+    "name": "Rouge beige",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203012%20Rouge%20beige.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3013",
+    "name": "Rouge tomate",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203013%20Rouge%20tomate.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3014",
+    "name": "Vieux rose",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203014%20Vieux%20rose.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3015",
+    "name": "Rose clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203015%20Rose%20clair.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3016",
+    "name": "Rouge corail",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203016%20Rouge%20corail.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3017",
+    "name": "Rosé",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203017%20Ros%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3018",
+    "name": "Rouge fraise",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203018%20Rouge%20fraise.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3020",
+    "name": "Rouge signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203020%20Rouge%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3022",
+    "name": "Rouge saumon",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203022%20Rouge%20saumon.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3027",
+    "name": "Rouge framboise",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203027%20Rouge%20framboise.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 3031",
+    "name": "Rouge oriental",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%203031%20Rouge%20oriental.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4001",
+    "name": "Lilas rouge",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204001%20Lilas%20rouge.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4002",
+    "name": "Violet rouge",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204002%20Violet%20rouge.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4003",
+    "name": "Violet bruyère",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204003%20Violet%20bruy%C3%A8re.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4004",
+    "name": "Violet bordeaux",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204004%20Violet%20bordeaux.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4005",
+    "name": "Lilas bleu",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204005%20Lilas%20bleu.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4006",
+    "name": "Pourpre signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204006%20Pourpre%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4008",
+    "name": "Violet de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204008%20Violet%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4009",
+    "name": "Violet pastel",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204009%20Violet%20pastel.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 4010",
+    "name": "Telemagenta",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%204010%20Telemagenta.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5000",
+    "name": "Bleu violet",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205000%20Bleu%20violet.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5001",
+    "name": "Bleu vert",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205001%20Bleu%20vert.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5002",
+    "name": "Bleu outremer",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205002%20Bleu%20outremer.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5003",
+    "name": "Bleu saphir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205003%20Bleu%20saphir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5004",
+    "name": "Bleu noir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205004%20Bleu%20noir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5005",
+    "name": "Bleu de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205005%20Bleu%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5007",
+    "name": "Bleu brillant",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205007%20Bleu%20brillant.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5008",
+    "name": "Bleu gris",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205008%20Bleu%20gris.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5009",
+    "name": "Bleu azur",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205009%20Bleu%20azur.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5010",
+    "name": "Bleu gentiane",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205010%20Bleu%20gentiane.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5011",
+    "name": "Bleu acier",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205011%20Bleu%20acier.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5012",
+    "name": "Bleu clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205012%20Bleu%20clair.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5013",
+    "name": "Bleu cobalt",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205013%20Bleu%20cobalt.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5014",
+    "name": "Bleu pigeon",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205014%20Bleu%20pigeon.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5015",
+    "name": "Bleu ciel",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205015%20Bleu%20ciel.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5017",
+    "name": "Bleu signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205017%20Bleu%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5018",
+    "name": "Bleu turquoise",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205018%20Bleu%20turquoise.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5019",
+    "name": "Bleu capri",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205019%20Bleu%20capri.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5020",
+    "name": "Bleu océan",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205020%20Bleu%20oc%C3%A9an.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5021",
+    "name": "Bleu d'eau",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205021%20Bleu%20deau.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5022",
+    "name": "Bleu nocturne",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205022%20Bleu%20nocturne.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5023",
+    "name": "Bleu distant",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205023%20Bleu%20distant.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 5024",
+    "name": "Bleu pastel",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%205024%20Bleu%20pastel.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6001",
+    "name": "Vert émeraude",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206001%20Vert%20%C3%A9meraude.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6002",
+    "name": "Vert feuillage",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206002%20Vert%20feuillage.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6003",
+    "name": "Vert olive",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206003%20Vert%20olive.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6004",
+    "name": "Vert bleu",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206004%20Vert%20bleu.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6005",
+    "name": "Vert mousse",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206005%20Vert%20mousse.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6006",
+    "name": "Olive gris",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206006%20Olive%20gris.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6007",
+    "name": "Vert bouteille",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206007%20Vert%20bouteille.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6008",
+    "name": "Vert brun",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206008%20Vert%20brun.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6009",
+    "name": "Vert sapin",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206009%20Vert%20sapin.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6010",
+    "name": "Vert herbe",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206010%20Vert%20herbe.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6011",
+    "name": "Vert réséda",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206011%20Vert%20r%C3%A9s%C3%A9da.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6012",
+    "name": "Vert noir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206012%20Vert%20noir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6013",
+    "name": "Vert jonc",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206013%20Vert%20jonc.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6014",
+    "name": "Olive jaune",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206014%20Olive%20jaune.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6015",
+    "name": "Olive noir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206015%20Olive%20noir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6016",
+    "name": "vert turquoise",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206016%20vert%20turquoise.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6017",
+    "name": "Vert mai",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206017%20Vert%20mai.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6018",
+    "name": "Vert jaune",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206018%20Vert%20jaune.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6019",
+    "name": "Vert blanc",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206019%20Vert%20blanc.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6020",
+    "name": "Vert oxyde chromique",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206020%20Vert%20oxyde%20chromique.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6021",
+    "name": "Vert pâle",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206021%20Vert%20p%C3%A2le.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6022",
+    "name": "Olive brun",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206022%20Olive%20brun.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6024",
+    "name": "Vert signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206024%20Vert%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6025",
+    "name": "Vert fougère",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206026%20Vert%20opale.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6026",
+    "name": "Vert opale",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206026%20Vert%20opale.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6027",
+    "name": "Vert clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206027%20Vert%20clair.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6028",
+    "name": "Vert pin",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206028%20Vert%20pin.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6029",
+    "name": "vert menthe",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206029%20vert%20menthe.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6032",
+    "name": "Vert de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206032%20Vert%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6033",
+    "name": "Turquoise menthe",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206033%20Turquoise%20menthe.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 6034",
+    "name": "Turquoise pastel",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%206034%20Turquoise%20pastel.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7000",
+    "name": "Gris petit-gris",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207000%20Gris%20petit-gris.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7001",
+    "name": "gris argent",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207001%20gris%20argent.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7002",
+    "name": "gris olive",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207002%20gris%20olive.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7003",
+    "name": "gris mousse",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207003%20gris%20mousse.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7004",
+    "name": "gris de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207004%20gris%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7005",
+    "name": "gris souris",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207005%20gris%20souris.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7006",
+    "name": "gris beige",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207006%20gris%20beige.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7008",
+    "name": "gris kaki",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207008%20gris%20kaki.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7009",
+    "name": "gris vert",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207009%20gris%20vert.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7010",
+    "name": "gris tente",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207010%20gris%20tente.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7011",
+    "name": "gris fer",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207011%20gris%20fer.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7012",
+    "name": "gris basalte",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207012%20gris%20basalte.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7013",
+    "name": "gris brun",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207013%20gris%20brun.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7015",
+    "name": "Gris ardoise",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207015%20Gris%20ardoise.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7016",
+    "name": "gris anthracite",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207016%20gris%20anthracite.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7021",
+    "name": "gris noir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207021%20gris%20noir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7022",
+    "name": "gris terre d'ombre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207022%20gris%20terre%20dombre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7023",
+    "name": "gris béton",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207023%20gris%20b%C3%A9ton.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7024",
+    "name": "gris graphite",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207024%20gris%20graphite.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7026",
+    "name": "gris granit",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207026%20gris%20granit.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7030",
+    "name": "gris pierre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207030%20gris%20pierre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7031",
+    "name": "gris bleu",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207031%20gris%20bleu.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7032",
+    "name": "gris silex",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207032%20gris%20silex.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7033",
+    "name": "gris ciment",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207033%20gris%20ciment.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7034",
+    "name": "gris jaune",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207034%20gris%20jaune.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7035",
+    "name": "gris clair",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207035%20gris%20clair.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7036",
+    "name": "gris platine",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207036%20gris%20platine.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7037",
+    "name": "gris poussière",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207037%20gris%20poussi%C3%A8re.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7038",
+    "name": "gris agate",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207038%20gris%20agate.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7039",
+    "name": "gris quartz",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207039%20gris%20quartz.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7040",
+    "name": "gris fenêtre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207040%20gris%20fen%C3%AAtre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7042",
+    "name": "gris signalisation a",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207042%20gris%20signalisation%20a.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7043",
+    "name": "gris signalisation b",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207043%20gris%20signalisation%20b.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7044",
+    "name": "gris soie",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207044%20gris%20soie.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7045",
+    "name": "télégris 1",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207045%20t%C3%A9l%C3%A9gris%201.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7046",
+    "name": "télégris 2",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207046%20t%C3%A9l%C3%A9gris%202.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 7047",
+    "name": "télégris 4",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%207047%20t%C3%A9l%C3%A9gris%204.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8000",
+    "name": "brun vert",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208000%20brun%20vert.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8001",
+    "name": "brun terre-de-sienne",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208001%20brun%20terre-de-sienne.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8002",
+    "name": "brun de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208002%20brun%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8003",
+    "name": "brun argile",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208003%20brun%20argile.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8004",
+    "name": "brun cuivre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208004%20brun%20cuivre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8007",
+    "name": "brun fauve",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208007%20brun%20fauve.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8008",
+    "name": "brun olive",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208008%20brun%20olive.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8011",
+    "name": "brun noisette",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208011%20brun%20noisette.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8012",
+    "name": "brun rouge",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208012%20brun%20rouge.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8014",
+    "name": "Brun sépia",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208014%20Brun%20s%C3%A9pia.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8015",
+    "name": "Marron",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208015%20Marron.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8016",
+    "name": "brun acajou",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208016%20brun%20acajou.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8017",
+    "name": "brun chocolat",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208017%20brun%20chocolat.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8022",
+    "name": "brun noir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208022%20brun%20noir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8019",
+    "name": "brun gris",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208019%20brun%20gris.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8023",
+    "name": "brun orange",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208023%20brun%20orange.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8024",
+    "name": "brun beige",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208024%20brun%20beige.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8025",
+    "name": "brun pâle",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208025%20brun%20p%C3%A2le.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 8028",
+    "name": "brun terre",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%208028%20brun%20terre.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9001",
+    "name": "blanc crème",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209001%20blanc%20cr%C3%A8me.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9002",
+    "name": "grauweiss",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209002%20grauweiss.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9003",
+    "name": "blanc de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209003%20blanc%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9004",
+    "name": "noir de sécurité",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209004%20noir%20de%20s%C3%A9curit%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9005",
+    "name": "noir foncé",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209005%20noir%20fonc%C3%A9.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9006",
+    "name": "Aluminium blanc",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209006%20Aluminium%20blanc.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9007",
+    "name": "aluminium gris",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209007%20aluminium%20gris.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9010",
+    "name": "blanc pur",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209010%20blanc%20pur.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9011",
+    "name": "graphite noir",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209011%20graphite%20noir.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9016",
+    "name": "blanc signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209016%20blanc%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9017",
+    "name": "noir signalisation",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209017%20noir%20signalisation.png",
+    "category": "ral"
+  },
+  {
+    "code": "RAL 9018",
+    "name": "blanc papyrus",
+    "image": "http://www.lelitgigogne.fr/img/cms/teintes%20RAL/RAL%209018%20blanc%20papyrus.png",
+    "category": "ral"
+  }
+]

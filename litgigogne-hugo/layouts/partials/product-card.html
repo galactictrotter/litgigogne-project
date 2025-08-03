@@ -1,0 +1,24 @@
+{{ $image := "" }}{{ with .Params.gallery }}{{ if gt (len .) 0 }}{{ $image = index . 0 }}{{ end }}{{ end }}
+<article class="product-card fade-in">
+    <a href="{{ .Permalink }}" class="product-link">
+        <div class="product-image">
+            {{ with $image }}
+            <img src="{{ .url | relURL }}" alt="{{ .alt | default $.Title }}" loading="lazy">
+            {{ else }}
+            <div class="product-placeholder">
+                <svg viewBox="0 0 300 200" fill="var(--warm-sand)"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" fill="var(--deep-charcoal)" font-size="14" font-family="'Playfair Display', serif">{{ .Title }}</text></svg>
+            </div>
+            {{ end }}
+            <span class="view-product">Voir le Produit</span>
+        </div>
+        <div class="product-info">
+            <h3 class="product-title">{{ .Title }}</h3>
+            <p class="product-description">{{ .Params.description | truncate 120 }}</p>
+            <div class="product-pricing">
+                {{ with .Params.pricing.base_price }}
+                <span class="price">{{ partial "price-format.html" (dict "price" . "prefix" "À partir de ") }}</span>
+                {{ end }}
+            </div>
+        </div>
+    </a>
+</article>

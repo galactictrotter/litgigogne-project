@@ -1,0 +1,83 @@
+<script>
+// Desktop 3-Pane Navigation Logic
+document.addEventListener('DOMContentLoaded', () => {
+    // Only run this script if the desktop container is visible
+    if (window.getComputedStyle(document.querySelector('.desktop-container')).display === 'none') {
+        return;
+    }
+
+    const navItems = document.querySelectorAll('.nav-item');
+    const middlePanes = document.querySelectorAll('.middle-pane');
+    const rightPanes = document.querySelectorAll('.right-pane');
+    const contentCards = document.querySelectorAll('.content-card');
+
+    // Function to handle left navigation clicks
+    function handleNavClick(e) {
+        const clickedNavItem = e.currentTarget;
+        const targetMiddleId = clickedNavItem.dataset.targetMiddle;
+
+        // Update active state on nav items
+        navItems.forEach(item => item.classList.remove('active'));
+        clickedNavItem.classList.add('active');
+
+        // Hide all middle and right panes
+        middlePanes.forEach(pane => pane.classList.add('hidden'));
+        rightPanes.forEach(pane => pane.classList.add('hidden'));
+
+        // Show the target middle pane
+        const targetMiddlePane = document.getElementById(targetMiddleId);
+        if (targetMiddlePane) {
+            targetMiddlePane.classList.remove('hidden');
+            
+            // Find the first card in the new middle pane and make it active
+            const firstCard = targetMiddlePane.querySelector('.content-card');
+            if (firstCard) {
+                // Deactivate other cards in the same pane
+                targetMiddlePane.querySelectorAll('.content-card').forEach(c => c.classList.remove('active'));
+                firstCard.classList.add('active');
+
+                // Show the corresponding detail pane for the first card
+                const targetDetailId = firstCard.dataset.targetDetail;
+                const targetDetailPane = document.getElementById(targetDetailId);
+                if (targetDetailPane) {
+                    targetDetailPane.classList.remove('hidden');
+                }
+            }
+        }
+    }
+
+    // Function to handle middle pane card clicks
+    function handleCardClick(e) {
+        const clickedCard = e.currentTarget;
+        const targetDetailId = clickedCard.dataset.targetDetail;
+
+        // Update active state for cards within the same pane
+        clickedCard.parentElement.querySelectorAll('.content-card').forEach(card => card.classList.remove('active'));
+        clickedCard.classList.add('active');
+
+        // Hide all right panes before showing the correct one
+        rightPanes.forEach(pane => pane.classList.add('hidden'));
+
+        // Show the target detail pane
+        const targetDetailPane = document.getElementById(targetDetailId);
+        if (targetDetailPane) {
+            targetDetailPane.classList.remove('hidden');
+        }
+    }
+
+    // Attach event listeners
+    navItems.forEach(item => item.addEventListener('click', handleNavClick));
+    contentCards.forEach(card => card.addEventListener('click', handleCardClick));
+
+    // CRITICAL: Set default state to "Lits à Tiroirs" section
+    const defaultNavItem = document.querySelector('.nav-item[data-target-middle="middle-lits-tiroirs"]');
+    if (defaultNavItem) {
+        // Remove any existing active states
+        navItems.forEach(item => item.classList.remove('active'));
+        // Set the lits-tiroirs nav item as active
+        defaultNavItem.classList.add('active');
+        // Trigger click to show the proper content
+        defaultNavItem.click();
+    }
+});
+</script>

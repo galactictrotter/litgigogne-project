@@ -1,0 +1,113 @@
+{
+  "teintes_finitions": {
+    "bois_naturel": {
+      "id": "pin_naturel",
+      "name": "Pin Naturel",
+      "category": "bois_massif", 
+      "description": "Pin massif des Landes dans sa teinte naturelle, poncé finition satinée",
+      "treatment": "Ponçage grain fin, protection naturelle",
+      "maintenance": "Dépoussiérage régulier, cirage annuel recommandé",
+      "price_impact": 0,
+      "availability": "standard",
+      "sustainability": {
+        "certifications": ["PEFC", "FSC"],
+        "origin": "Forêts européennes éco-gérées"
+      }
+    },
+    "pin_huile_lin": {
+      "id": "pin_huile_lin",
+      "name": "Pin Huilé à l'Huile de Lin",
+      "category": "bois_traite",
+      "description": "Finition traditionnelle à l'huile de lin, protection naturelle et aspect satiné",
+      "treatment": "Application huile de lin pure, séchage naturel 72h",
+      "maintenance": "Rénovation huile tous les 2-3 ans",
+      "price_impact": 50,
+      "availability": "standard",
+      "characteristics": ["résistant", "naturel", "renouvelable"]
+    },
+    "pin_verni_incolore": {
+      "id": "pin_verni_incolore", 
+      "name": "Pin Vernis Incolore",
+      "category": "bois_verni",
+      "description": "Vernis acrylique incolore haute résistance, protection optimale",
+      "treatment": "3 couches vernis acrylique, ponçage inter-couches",
+      "maintenance": "Nettoyage doux, protection longue durée",
+      "price_impact": 80,
+      "availability": "standard",
+      "durability": "15 ans minimum"
+    },
+    "laque_blanche": {
+      "id": "laque_blanche",
+      "name": "Laque Blanche",
+      "category": "laque_couleur",
+      "description": "Laque acrylique blanche mat, finition contemporaine élégante",
+      "treatment": "Préparation, sous-couche, 2 couches laque mate",
+      "maintenance": "Nettoyage doux humide, retouches possibles",
+      "price_impact": 150,
+      "availability": "sur_commande",
+      "style": "contemporain"
+    },
+    "cire_naturelle": {
+      "id": "cire_naturelle",
+      "name": "Ciré Naturel",
+      "category": "bois_cire",
+      "description": "Cire d'abeille naturelle, toucher authentique et protection douce",
+      "treatment": "Application cire d'abeille, polissage manuel",
+      "maintenance": "Recirer selon usage, entretien traditionnel",
+      "price_impact": 70,
+      "availability": "artisanal",
+      "authenticity": "tradition_francaise"
+    },
+    "teintes_sur_mesure": {
+      "id": "teinte_personnalisee",
+      "name": "Teinte Personnalisée",
+      "category": "sur_mesure",
+      "description": "Teinte réalisée selon échantillon client ou nuancier RAL",
+      "treatment": "Étude colorimétrique, tests, application sur mesure",
+      "maintenance": "Selon type de finition choisi",
+      "price_impact": 200,
+      "availability": "sur_devis",
+      "lead_time": "3-4 semaines"
+    }
+  },
+  "categories": {
+    "bois_massif": {
+      "name": "Bois Massif Naturel",
+      "description": "Finitions respectant l'aspect naturel du bois"
+    },
+    "bois_traite": {
+      "name": "Bois Traité Naturellement", 
+      "description": "Traitements naturels pour protection et esthétique"
+    },
+    "bois_verni": {
+      "name": "Bois Vernis",
+      "description": "Protection optimale avec vernis techniques"
+    },
+    "laque_couleur": {
+      "name": "Laques Colorées",
+      "description": "Finitions colorées contemporaines"
+    },
+    "bois_cire": {
+      "name": "Bois Ciré Traditionnel",
+      "description": "Finitions traditionnelles à la cire"
+    },
+    "sur_mesure": {
+      "name": "Finitions Sur Mesure",
+      "description": "Réalisations personnalisées selon cahier des charges"
+    }
+  },
+  "care_instructions": {
+    "general": {
+      "daily": "Dépoussiérage avec chiffon microfibre sec",
+      "weekly": "Nettoyage doux avec chiffon légèrement humide",
+      "avoid": ["produits chimiques", "eau stagnante", "exposition directe soleil"]
+    },
+    "by_finish": {
+      "naturel": "Cirage annuel recommandé avec cire d'abeille",
+      "huile": "Rénovation huile tous les 2-3 ans selon usage",
+      "vernis": "Protection durable, retouches ponctuelles possibles",
+      "laque": "Nettoyage doux, éviter abrasifs",
+      "cire": "Entretien cire selon usage, polissage périodique"
+    }
+  }
+}

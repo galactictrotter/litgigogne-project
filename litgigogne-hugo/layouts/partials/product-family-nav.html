@@ -1,0 +1,294 @@
+{{/*
+Product Family Navigation Partial
+Displays family-based navigation with variants and cross-category links
+*/}}
+
+{{ $families := .Site.Data.product_families.families }}
+{{ $currentFamily := .Params.product_family }}
+{{ $currentCategory := .Section }}
+
+{{ if $currentFamily }}
+  {{ $family := index $families $currentFamily }}
+  {{ if $family }}
+    <div class="product-family-nav" data-family="{{ $currentFamily }}">
+      <div class="family-header">
+        <h3 class="family-name">{{ $family.name }}</h3>
+        <p class="family-description">{{ $family.description }}</p>
+        <div class="family-meta">
+          <span class="positioning">{{ $family.positioning | title }}</span>
+          <span class="price-range">{{ partial "price-format.html" (dict "price" $family.price_range.min "prefix" "À partir de ") }}</span>
+        </div>
+      </div>
+
+      {{/* Family Variants Navigation */}}
+      {{ if $family.variants }}
+        <div class="family-variants">
+          <h4>Variantes disponibles</h4>
+          <div class="variants-grid">
+            {{ range $variant, $details := $family.variants }}
+              <div class="variant-card" data-variant="{{ $variant }}">
+                <div class="variant-name">{{ $family.name }} {{ $variant }}</div>
+                {{ if $details.dimensions }}
+                  <div class="variant-dimensions">{{ $details.dimensions }}</div>
+                {{ end }}
+                {{ if $details.storage }}
+                  <div class="variant-storage">{{ $details.storage }}</div>
+                {{ end }}
+                <div class="variant-price">{{ partial "price-format.html" $details.price_range.min }} - {{ partial "price-format.html" $details.price_range.max }}</div>
+                <div class="variant-positioning">{{ $details.positioning | title }}</div>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Cross-Category Availability */}}
+      {{ if $family.available_in }}
+        <div class="cross-category-nav">
+          <h4>Disponible dans</h4>
+          <div class="category-links">
+            {{ range $category, $categoryData := $family.available_in }}
+              <div class="category-link {{ if eq $category $currentCategory }}current{{ end }}">
+                <a href="/{{ $category }}" class="category-name">
+                  {{ $category | title | replaceRE "-" " " }}
+                </a>
+                <span class="product-count">({{ len $categoryData.products }} produits)</span>
+                {{ if $categoryData.primary }}
+                  <span class="primary-badge">Principal</span>
+                {{ end }}
+                <p class="category-description">{{ $categoryData.description }}</p>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Progression Path */}}
+      {{ if $family.progression_path }}
+        <div class="progression-path">
+          <h4>Évolution de gamme</h4>
+          <div class="progression-steps">
+            {{ range $family.progression_path }}
+              <div class="progression-step">
+                <div class="step-from">{{ $family.name }} {{ .from }}</div>
+                <div class="step-arrow">→</div>
+                <div class="step-to">{{ $family.name }} {{ .to }}</div>
+                <div class="step-reason">{{ .reason }}</div>
+                <div class="step-value">{{ .upgrade_value }}</div>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Cross-Selling */}}
+      {{ if $family.cross_selling }}
+        <div class="cross-selling">
+          <h4>Compléments suggérés</h4>
+          {{ if $family.cross_selling.complementary_families }}
+            <div class="complementary-families">
+              <h5>Familles complémentaires</h5>
+              {{ range $family.cross_selling.complementary_families }}
+                {{ $compFamily := index $families . }}
+                {{ if $compFamily }}
+                  <a href="/collections/{{ . }}" class="family-link">
+                    {{ $compFamily.name }} - {{ $compFamily.positioning | title }}
+                  </a>
+                {{ end }}
+              {{ end }}
+            </div>
+          {{ end }}
+          
+          {{ if $family.cross_selling.accessories }}
+            <div class="suggested-accessories">
+              <h5>Accessoires recommandés</h5>
+              {{ range $family.cross_selling.accessories }}
+                <a href="/{{ . }}" class="accessory-link">{{ . | title | replaceRE "-" " " }}</a>
+              {{ end }}
+            </div>
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+
+    {{/* Family Navigation Styles */}}
+    <style>
+      .product-family-nav {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-left: 4px solid #2c5282;
+      }
+      
+      .family-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      
+      .family-name {
+        color: #2c5282;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+      }
+      
+      .family-description {
+        color: #4a5568;
+        margin: 0 0 1rem 0;
+        line-height: 1.5;
+      }
+      
+      .family-meta {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+      
+      .positioning {
+        background: #2c5282;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+      
+      .price-range {
+        color: #38a169;
+        font-weight: 600;
+      }
+      
+      .variants-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-top: 0.75rem;
+      }
+      
+      .variant-card {
+        background: white;
+        padding: 1rem;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      
+      .variant-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+      
+      .variant-name {
+        font-weight: 700;
+        color: #2c5282;
+        margin-bottom: 0.5rem;
+      }
+      
+      .category-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-top: 0.75rem;
+      }
+      
+      .category-link {
+        background: white;
+        padding: 1rem;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        position: relative;
+      }
+      
+      .category-link.current {
+        border-color: #2c5282;
+        background: #edf2f7;
+      }
+      
+      .category-name {
+        font-weight: 600;
+        color: #2c5282;
+        text-decoration: none;
+      }
+      
+      .category-name:hover {
+        text-decoration: underline;
+      }
+      
+      .primary-badge {
+        background: #38a169;
+        color: white;
+        padding: 0.125rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+      }
+      
+      .progression-steps {
+        margin-top: 0.75rem;
+      }
+      
+      .progression-step {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem;
+        background: white;
+        border-radius: 6px;
+        margin-bottom: 0.5rem;
+        border: 1px solid #e2e8f0;
+      }
+      
+      .step-arrow {
+        color: #38a169;
+        font-weight: 700;
+        font-size: 1.25rem;
+      }
+      
+      .cross-selling h5 {
+        margin: 1rem 0 0.5rem 0;
+        color: #4a5568;
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      
+      .family-link, .accessory-link {
+        display: inline-block;
+        margin: 0.25rem 0.5rem 0.25rem 0;
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+      }
+      
+      .family-link:hover, .accessory-link:hover {
+        border-color: #2c5282;
+        color: #2c5282;
+        transform: translateY(-1px);
+      }
+      
+      @media (max-width: 768px) {
+        .family-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+        
+        .variants-grid, .category-links {
+          grid-template-columns: 1fr;
+        }
+        
+        .progression-step {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  {{ end }}
+{{ end }}

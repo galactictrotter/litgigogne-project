@@ -1,0 +1,70 @@
+{{ define "main" }}
+
+{{/* 
+This page replicates the exact product family navigation system 
+from the product pages, using the same partials and structure 
+*/}}
+
+{{/* Set this page to have the same parameters as a product page */}}
+{{ .Scratch.Set "product_family" "massako" }}
+{{ .Scratch.Set "primary_category" "lits-tiroirs" }}
+
+<div class="container">
+    <h1 style="text-align: center; margin: 3rem 0; font-family: 'Playfair Display', serif;">
+        Système de Navigation par Famille de Produits
+    </h1>
+    
+    {{/* 
+    ================================================================================
+      EXACT COPY FROM single.html - Family-based product navigation and relationships
+    ================================================================================
+    */}}
+    
+    {{/* Create a mock context that mimics a product page */}}
+    {{ $mockPage := dict 
+        "Params" (dict 
+            "product_family" "massako"
+            "primary_category" "lits-tiroirs"
+        )
+        "Section" "lits-tiroirs"
+        "Site" .Site
+        "Title" "Lit à Tiroirs Massako 400"
+        "IsPage" true
+        "RelPermalink" "/lits-tiroirs/lit-tiroir-massako-400/"
+    }}
+    
+    {{/* Family-based product navigation and relationships - EXACT COPY */}}
+    {{ if $mockPage.Params.product_family }}
+        {{ partial "family-breadcrumbs.html" $mockPage }}
+        
+        <section class="content-section family-section">
+            {{ partial "product-family-nav.html" $mockPage }}
+        </section>
+        
+        <section class="content-section related-section">
+            {{ partial "related-products.html" $mockPage }}
+        </section>
+        
+        <section class="content-section cross-category-section">
+            {{ partial "cross-category-links.html" $mockPage }}
+        </section>
+    {{ end }}
+    
+    {{/* Add explanatory text */}}
+    <section class="content-section" style="margin-top: 4rem; padding: 2rem; background: var(--primary-cream); border-radius: 4px;">
+        <h2 style="font-family: 'Playfair Display', serif; text-align: center; margin-bottom: 2rem;">Comment utiliser cette interface</h2>
+        <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+            <p style="text-align: center; margin-bottom: 2rem;">
+                <strong>💡 Astuce :</strong> Survolez le titre du produit dans le fil d'Ariane ci-dessus pour voir le menu de navigation avec les "Autres tailles" et "Voir aussi en" exactement comme dans votre screenshot.
+            </p>
+            <p style="text-align: center;">
+                Ce système utilise des données structurées dans <code>data/product_families.yml</code> et 
+                quatre partials Hugo pour créer une navigation sophistiquée entre les produits d'une même famille. 
+                Les relations entre produits, catégories et variantes sont définies dans les données, 
+                permettant une maintenance facile et une expérience utilisateur cohérente.
+            </p>
+        </div>
+    </section>
+</div>
+
+{{ end }}

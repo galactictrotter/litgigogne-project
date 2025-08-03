@@ -1,0 +1,65 @@
+<!-- Mobile Product Page -->
+<div class="mobile-product-page">
+    <div class="product-header">
+        <span class="back-arrow">←</span>
+        <span>Retour Collection</span>
+    </div>
+    <div class="product-gallery">
+        Image Galerie Principale<br>Défilable horizontalement
+        <div class="gallery-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+    <div class="product-info">
+        <h1 class="product-title">RANGEMENT Optimal</h1>
+        <p class="product-subtitle">{{ .Site.Params.brand.tagline }}</p>
+        <div class="product-features">
+            <div class="feature"><div class="feature-icon"></div><span>4 Tiroirs</span></div>
+            <div class="feature"><div class="feature-icon"></div><span>Haute Capacité</span></div>
+            <div class="feature"><div class="feature-icon"></div><span>Évolutif</span></div>
+            <div class="feature"><div class="feature-icon"></div><span>Artisanal</span></div>
+        </div>
+        <div class="product-description">
+            <h3>Solutions de Rangement Intelligentes</h3>
+            <p>Le RANGEMENT Optimal offre une capacité de stockage exceptionnelle grâce à ses 4 tiroirs spacieux, parfaitement intégrés dans un design élégant...</p>
+        </div>
+        <div class="expandable-section">
+            <div class="expandable-header" onclick="toggleExpand(this)">
+                <h3>Spécifications Techniques</h3>
+                <span>›</span>
+            </div>
+            <div class="expandable-content">
+                <p>Dimensions, matériaux, capacité de rangement...</p>
+            </div>
+        </div>
+    </div>
+    <div class="product-pricing">
+        <div class="price">À partir de 1150€</div>
+        <div class="price-note">Configuration de base<br>Devis personnalisé disponible</div>
+    </div>
+    <div class="product-actions">
+        <a href="#" class="btn" style="width: 100%;">{{ .Site.Params.contact.modal_title }}</a>
+        <div class="action-row">
+            <a href="#" class="btn btn-secondary">Voir Options</a>
+            <a href="#" class="btn btn-secondary">Documentation</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Mobile-only functions
+function toggleMobileMenu() {
+    const nav = document.getElementById('mobileNav');
+    nav.classList.toggle('active');
+}
+
+function toggleExpand(element) {
+    const content = element.nextElementSibling;
+    content.classList.toggle('active');
+    const arrow = element.querySelector('span');
+    arrow.textContent = content.classList.contains('active') ? '‹' : '›';
+}
+</script>

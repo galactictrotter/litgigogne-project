@@ -1,0 +1,27 @@
+<!-- Finitions Tab Content -->
+<div class="color-content-wrapper">
+  <h2>Protection et philosophie pour votre lit gigogne</h2>  
+  <div class="intro-text">
+    <p>Trois philosophies de finition, perfectionnées dans notre atelier depuis 1984, révèlent différentes expressions de la noblesse du bois pour votre lit gigogne personnalisé. Chaque approche – du silence contemplatif du bois brut à la transparence lumineuse du vernis, jusqu'à la symbiose temporelle de l'huile de lin – crée une relation unique entre vous et votre mobilier. Un choix qui transcende la protection pour influencer subtilement l'énergie de votre espace quotidien.</p>
+  </div>
+
+  <div class="color-grid">
+    {{ range .Site.Data.colors.finishes }}
+    <div class="color-item" onclick="selectColor('{{ .code }}', '{{ .name }}', 'finish')" title="{{ .hover_text }}">
+      <div class="color-preview">
+        <img src="{{ .image }}" alt="{{ .alt_text }}" loading="lazy">
+        {{ if .premium }}
+        <span class="premium-badge">Premium</span>
+        {{ end }}
+      </div>
+      <div class="color-info">
+        <h4>{{ .name }}</h4>
+        <p class="color-description">{{ .description }}</p>
+        <div class="color-details">{{ .details | markdownify }}</div>
+        <p class="color-philosophy"><em>{{ .philosophy }}</em></p>
+        <span class="color-code">{{ .code }}</span>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</div>

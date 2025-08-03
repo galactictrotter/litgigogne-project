@@ -1,0 +1,65 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        'use strict';
+
+        const modalOverlay = document.getElementById('contactModalOverlay');
+        const contactFormStep = document.getElementById('contact-form-step');
+        const successStep = document.getElementById('success-step');
+        const contactForm = document.getElementById('contactForm');
+
+        // --- Core Functions ---
+        window.openContactModal = function() {
+            if (!modalOverlay) return;
+            // Reset to the form view each time it opens
+            contactFormStep.style.display = 'block';
+            successStep.style.display = 'none';
+            modalOverlay.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        window.closeContactModal = function() {
+            if (!modalOverlay) return;
+            modalOverlay.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        // --- Event Listeners ---
+
+        // 1. Listen for clicks on trigger buttons anywhere on the page
+        document.body.addEventListener('click', function(event) {
+            // The .closest() method checks the clicked element and its parents
+            const trigger = event.target.closest('.cta-button, [data-modal="contact"]');
+            if (trigger) {
+                event.preventDefault();
+                openContactModal();
+            }
+        });
+
+        // 2. Listen for clicks on the close button or the dark overlay
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', function(event) {
+                // Close if the click is on the close button OR directly on the overlay background
+                if (event.target.classList.contains('modal-close-btn') || event.target === modalOverlay) {
+                    closeContactModal();
+                }
+            });
+        }
+
+        // 3. Listen for form submission
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent actual form submission for this demo
+                // Switch to the success message
+                contactFormStep.style.display = 'none';
+                successStep.style.display = 'block';
+            });
+        }
+
+        // 4. Listen for the 'Escape' key to close the modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeContactModal();
+            }
+        });
+    });
+</script>

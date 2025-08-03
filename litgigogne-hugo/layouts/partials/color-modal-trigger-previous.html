@@ -1,0 +1,15 @@
+<!-- Color Modal Trigger - DEBUG MODE -->
+<button class="color-modal-trigger" data-color-modal-trigger onclick="openColorModal()">
+  <span class="icon">🎨</span>
+  <span class="text">Personnaliser les Couleurs</span>
+</button>
+<script>
+function openColorModal() {
+  document.getElementById('colorModalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeColorModal() {
+  document.getElementById('colorModalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+</script>

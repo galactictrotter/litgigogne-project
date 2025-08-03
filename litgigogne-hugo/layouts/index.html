@@ -1,0 +1,295 @@
+{{ define "main" }}
+
+<!-- ====================================================== -->
+<!--                  HERO SECTION BEGINS                   -->
+<!-- ====================================================== -->
+{{ if .Params.hero }}
+<section class="hero">
+    {{ if .Params.hero.image }}
+    <img 
+        src="{{ .Params.hero.image | relURL }}" 
+        alt="{{ .Params.hero.image_alt | default .Params.hero.headline }}" 
+        class="hero-image" 
+        loading="lazy"
+    >
+    {{ end }}
+
+    {{/* 2. The overlay for the gradient and content */}}
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">{{ .Params.hero.headline | default "Artisant Ébéniste Depuis 1984" }}</h1>
+                
+                {{ if .Params.hero.subheadline }}
+                <p class="hero-subtitle fade-in">{{ .Params.hero.subheadline }}</p>
+                {{ end }}
+                
+                {{ if .Params.hero.description }}
+                <div class="hero-intro fade-in">
+                    <p>{{ .Params.hero.description }}</p>
+                </div>
+                {{ end }}
+                
+                {{ if .Params.hero.cta }}
+                <div class="hero-cta fade-in">
+                    {{/* Smart handling of anchor vs regular links */}}
+                    {{ if hasPrefix .Params.hero.cta.link "#" }}
+                        <a href="{{ .Params.hero.cta.link }}" class="cta-button">
+                            {{ .Params.hero.cta.text }}
+                        </a>
+                    {{ else }}
+                        <a href="{{ .Params.hero.cta.link | relURL }}" class="cta-button">
+                            {{ .Params.hero.cta.text }}
+                        </a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    
+</section>
+{{ end }}
+
+<!-- CTA Dual Button Section -->
+<section class="content-section">
+    <div class="container">
+        <div class="fade-in">
+            <!-- <h2 style="text-align: center; margin-bottom: 1rem;">Deux Façons de Réaliser Votre Lit Gigone</h2>
+            <p style="text-align: center; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">Discover our offerings, tailored to your unique needs. Whether you are looking for our classic services or a fully customized experience, we are here to guide you.</p> -->
+            
+            <div class="cta-dual-button-container">
+                <h3 class="cta-heading">Artisan Ébéniste Depuis 1984</h3>
+                <div class="button-wrapper">
+                    <a href="http://localhost:1313/collections/" class="btn btn-secondary">Nos Collections Standards</a>
+                    <a href="/contact/consultation/" data-modal="contact" class="btn btn-primary">Votre Projet Sur Mesure</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Homepage Triptych Section -->
+{{ if .Params.triptych.enabled }}
+{{ partial "homepage-triptych.html" . }}
+{{ end }}
+
+<!-- Featured Collections Section -->
+{{ if .Params.featured_collections.enabled }}
+<section id="collections" class="content-section collections-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="fade-in">{{ .Params.featured_collections.headline | default "Nos Collections" }}</h2>
+            {{ if .Params.featured_collections.description }}
+            <p class="section-subtitle fade-in">{{ .Params.featured_collections.description }}</p>
+            {{ end }}
+        </div>
+        
+        <div class="collections-grid">
+            {{ range sort .Params.featured_collections.collections "order" }}
+            <div class="collection-card fade-in">
+                {{ if .image }}
+                <div class="collection-image">
+                    <img src="{{ .image | relURL }}" alt="{{ .name }} - Collection Le Lit Gigogne" loading="lazy">
+                    <div class="image-overlay">
+                        <span class="view-collection">Découvrir</span>
+                    </div>
+                </div>
+                {{ end }}
+                
+                <div class="collection-content">
+                    <h3>{{ .name }}</h3>
+                    <p>{{ .description }}</p>
+                    
+                    <div class="collection-meta">
+                        {{ if .starting_price }}
+                        <span class="price">{{ .starting_price }}</span>
+                        {{ end }}
+                        <a href="{{ .link | relURL }}" class="collection-link">
+                            Explorer la Collection →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+
+<!-- Savoir-Faire Section -->
+{{ if .Params.savoir_faire.enabled }}
+{{ partial "savoir-faire-section.html" . }}
+{{ end }}
+
+<!-- Inspirations/Guides Section - CORRECTED ID -->
+{{ if .Params.inspirations.enabled }}
+<section id="guides" class="content-section inspirations-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="fade-in">{{ .Params.inspirations.headline | default "Sources d'Inspiration" }}</h2>
+            {{ if .Params.inspirations.description }}
+            <p class="section-subtitle fade-in">{{ .Params.inspirations.description }}</p>
+            {{ end }}
+        </div>
+        
+        <div class="inspirations-grid">
+            {{ range .Params.inspirations.featured_guides }}
+                {{ $guide := site.GetPage . }}
+                {{ if $guide }}
+                <article class="inspiration-card fade-in">
+                    <div class="inspiration-content">
+                        {{ if $guide.Params.primary_category }}
+                        <span class="inspiration-category">
+                            {{ $guide.Params.primary_category | title }}
+                        </span>
+                        {{ end }}
+                        
+                        <h3>{{ $guide.Title }}</h3>
+                        
+                        <p class="inspiration-excerpt">
+                            {{ if $guide.Params.description }}
+                                {{ $guide.Params.description }}
+                            {{ else }}
+                                {{ truncate 160 $guide.Summary "..." }}
+                            {{ end }}
+                        </p>
+                        
+                        <div class="inspiration-meta">
+                            {{ if $guide.Params.reading_time }}
+                            <span class="reading-time">{{ $guide.Params.reading_time }} min</span>
+                            {{ end }}
+                            
+                            <a href="{{ $guide.RelPermalink | relURL }}" class="read-more">
+                                Lire le Guide →
+                            </a>
+                        </div>
+                    </div>
+                    
+                    {{ if $guide.Params.featured_image }}
+                    <div class="inspiration-image">
+                        <img src="{{ $guide.Params.featured_image | relURL }}" alt="{{ $guide.Title }}" loading="lazy">
+                    </div>
+                    {{ end }}
+                </article>
+                {{ end }}
+            {{ end }}
+        </div>
+        
+        {{ if .Params.inspirations.show_more_link }}
+        <div class="inspirations-cta text-center fade-in">
+            {{/* Smart handling of anchor vs regular links */}}
+            {{ if hasPrefix .Params.inspirations.show_more_link "#" }}
+                <a href="{{ .Params.inspirations.show_more_link }}" class="cta-link">
+                    {{ .Params.inspirations.show_more_text | default "Tous Nos Guides" }} →
+                </a>
+            {{ else }}
+                <a href="{{ .Params.inspirations.show_more_link | relURL }}" class="cta-link">
+                    {{ .Params.inspirations.show_more_text | default "Tous Nos Guides" }} →
+                </a>
+            {{ end }}
+        </div>
+        {{ end }}
+    </div>
+</section>
+{{ end }}
+
+<!-- Contact CTA Section -->
+{{ if .Params.contact_cta.enabled }}
+<section id="projet" class="content-section contact-cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <div class="cta-text">
+                <h2 class="fade-in">{{ .Params.contact_cta.headline | default "Votre Projet Sur Mesure" }}</h2>
+                
+                {{ if .Params.contact_cta.description }}
+                <p class="cta-description fade-in">{{ .Params.contact_cta.description }}</p>
+                {{ end }}
+                
+                {{ if .Params.contact_cta.features }}
+                <ul class="cta-features fade-in">
+                    {{ range .Params.contact_cta.features }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+                {{ end }}
+                
+                <div class="cta-buttons fade-in">
+                    {{ if .Params.contact_cta.primary_cta }}
+                        {{/* Smart handling of anchor vs regular links */}}
+                        {{ if hasPrefix .Params.contact_cta.primary_cta.link "#" }}
+                            <a href="{{ .Params.contact_cta.primary_cta.link }}" class="cta-button primary">
+                                {{ .Params.contact_cta.primary_cta.text }}
+                            </a>
+                        {{ else }}
+                            <a href="{{ .Params.contact_cta.primary_cta.link | relURL }}" class="cta-button primary">
+                                {{ .Params.contact_cta.primary_cta.text }}
+                            </a>
+                        {{ end }}
+                    {{ end }}
+                    
+                    {{ if .Params.contact_cta.secondary_cta }}
+                        {{/* Smart handling of anchor vs regular links */}}
+                        {{ if hasPrefix .Params.contact_cta.secondary_cta.link "#" }}
+                            <a href="{{ .Params.contact_cta.secondary_cta.link }}" class="cta-button secondary">
+                                {{ .Params.contact_cta.secondary_cta.text }}
+                            </a>
+                        {{ else }}
+                            <a href="{{ .Params.contact_cta.secondary_cta.link | relURL }}" class="cta-button secondary">
+                                {{ .Params.contact_cta.secondary_cta.text }}
+                            </a>
+                        {{ end }}
+                    {{ end }}
+                </div>
+            </div>
+            
+            {{ if .Params.contact_cta.image }}
+            <div class="cta-image fade-in">
+                <img src="{{ .Params.contact_cta.image | relURL }}" alt="{{ .Params.contact_cta.headline }}" loading="lazy">
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+
+<!-- Structured Data -->
+{{ if .Params.structured_data }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ .Params.structured_data.organization.name }}",
+  "description": "{{ .Params.structured_data.organization.description }}",
+  "foundingDate": "{{ .Params.structured_data.organization.founded }}",
+  "url": "{{ .Site.BaseURL }}",
+  {{ if .Params.structured_data.organization.logo }}
+  "logo": "{{ .Params.structured_data.organization.logo | relURL }}",
+  {{ else }}
+  "logo": "{{ .Site.BaseURL }}",
+  {{ end }}
+  "sameAs": [
+    {{ range $index, $social := .Site.Params.social }}
+    {{ if $index }},{{ end }}"{{ . }}"
+    {{ end }}
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "FR",
+    "addressRegion": "France"
+  },
+  "specialty": {{ .Params.structured_data.organization.specialties | jsonify }},
+  "makesOffer": {
+    "@type": "Offer",
+    "itemOffered": {
+      "@type": "Product",
+      "name": "Mobilier artisanal français",
+      "category": "Furniture",
+      "material": {{ .Params.structured_data.organization.materials | jsonify }}
+    }
+  }
+}
+</script>
+{{ end }}
+
+{{ end }}

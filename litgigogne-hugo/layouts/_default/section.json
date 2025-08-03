@@ -1,0 +1,37 @@
+{{- $sectionPages := .Pages -}}
+{{- $categoryPages := where site.RegularPages "Params.primary_category" .Section -}}
+{{- $combinedPages := union $sectionPages $categoryPages -}}
+{
+  "title": {{ .Title | jsonify }},
+  "section": {{ .Section | jsonify }},
+  "url": {{ .Permalink | jsonify }},
+  "description": {{ .Params.description | default "" | jsonify }},
+  "section_content": {{ .Content | plainify | jsonify }},
+  "total_pages": {{ len $combinedPages }},
+  "last_updated": "{{ now.Format "2006-01-02T15:04:05Z07:00" }}",
+  "pages": [
+    {{- range $index, $page := $combinedPages -}}
+    {{- if $index }},{{ end }}
+    {
+      "id": {{ $page.Params.id | default "" | jsonify }},
+      "title": {{ $page.Title | jsonify }},
+      "slug": {{ $page.Params.slug | default "" | jsonify }},
+      "url": {{ $page.Permalink | jsonify }},
+      "content_type": {{ $page.Params.content_type | default "" | jsonify }},
+      "description": {{ $page.Params.description | default "" | jsonify }},
+      "key_points": {{ $page.Params.key_points | default slice | jsonify }},
+      "categories": {{ $page.Params.categories | default slice | jsonify }},
+      "tags": {{ $page.Params.tags | default slice | jsonify }},
+      "specifications": {{ $page.Params.specs | default slice | jsonify }},
+      "pricing": {{ $page.Params.pricing | default dict | jsonify }},
+      "gallery": {{ $page.Params.gallery | default slice | jsonify }},
+      "content_preview": {{ $page.Summary | plainify | jsonify }},
+      "content_full": {{ $page.Content | plainify | jsonify }},
+      "word_count": {{ $page.WordCount }},
+      "reading_time": {{ $page.ReadingTime }},
+      "date": "{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}",
+      "last_modified": "{{ $page.Lastmod.Format "2006-01-02T15:04:05Z07:00" }}"
+    }
+    {{- end }}
+  ]
+}

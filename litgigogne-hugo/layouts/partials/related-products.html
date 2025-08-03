@@ -1,0 +1,530 @@
+{{/*
+Related Products Partial
+Displays family-based product recommendations and cross-category suggestions
+*/}}
+
+{{ $families := .Site.Data.product_families.families }}
+{{ $currentFamily := .Params.product_family }}
+{{ $currentCategory := .Section }}
+{{ $currentSlug := .Params.slug | default "" }}
+{{ $relatedCount := .Site.Data.product_families.hugo_integration.related_products_count | default 4 }}
+{{ $crossCategoryCount := .Site.Data.product_families.hugo_integration.cross_category_suggestions | default 3 }}
+
+{{ if $currentFamily }}
+  {{ $family := index $families $currentFamily }}
+  {{ if $family }}
+    <div class="related-products-section">
+      
+      {{/* Same Family, Same Category */}}
+      {{ $sameFamilyProducts := slice }}
+      {{ if index $family.available_in $currentCategory }}
+        {{ $categoryData := index $family.available_in $currentCategory }}
+        {{ range $categoryData.products }}
+          {{ if ne . $currentSlug }}
+            {{ $page := $.Site.GetPage (printf "/%s/%s" $currentCategory .) }}
+            {{ if $page }}
+              {{ $sameFamilyProducts = $sameFamilyProducts | append $page }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+
+      {{ if gt (len $sameFamilyProducts) 0 }}
+        <div class="same-family-products">
+          <h3>Autres produits {{ $family.name }}</h3>
+          <p class="section-description">Découvrez les autres variantes de la gamme {{ $family.name }}</p>
+          
+          <div class="products-grid">
+            {{ range first $relatedCount $sameFamilyProducts }}
+              <div class="product-card" data-family="{{ $currentFamily }}">
+                <div class="product-image">
+                  {{ if .Params.images }}
+                    {{ $image := index .Params.images 0 }}
+                    <img src="{{ $image.url }}" alt="{{ .Title }}" loading="lazy">
+                  {{ else }}
+                    <div class="placeholder-image">
+                      <span>{{ $family.name }}</span>
+                    </div>
+                  {{ end }}
+                </div>
+                
+                <div class="product-info">
+                  <h4 class="product-title">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                  </h4>
+                  
+                  {{ if .Params.subtitle }}
+                    <p class="product-subtitle">{{ .Params.subtitle }}</p>
+                  {{ end }}
+                  
+                  <div class="product-meta">
+                    {{ if .Params.price_range }}
+                      <span class="price">
+                        {{ if (reflect.IsMap .Params.price_range) }}
+                          {{ .Params.price_range.min }}€ - {{ .Params.price_range.max }}€
+                        {{ else }}
+                          {{ .Params.price_range }}
+                        {{ end }}
+                      </span>
+                    {{ end }}
+                    
+                    {{ if .Params.dimensions }}
+                      <span class="dimensions">{{ .Params.dimensions }}</span>
+                    {{ end }}
+                  </div>
+                  
+                  {{ if .Params.key_features }}
+                    <ul class="key-features">
+                      {{ range first 2 .Params.key_features }}
+                        <li>{{ . }}</li>
+                      {{ end }}
+                    </ul>
+                  {{ end }}
+                  
+                  <a href="{{ .RelPermalink }}" class="product-link">Découvrir</a>
+                </div>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Cross-Category Products (Same Family) */}}
+      {{ $crossCategoryProducts := slice }}
+      {{ range $category, $categoryData := $family.available_in }}
+        {{ if ne $category $currentCategory }}
+          {{ range first $crossCategoryCount $categoryData.products }}
+            {{ $page := $.Site.GetPage (printf "/%s/%s" $category .) }}
+            {{ if $page }}
+              {{ $crossCategoryProducts = $crossCategoryProducts | append $page }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+
+      {{ if gt (len $crossCategoryProducts) 0 }}
+        <div class="cross-category-products">
+          <h3>{{ $family.name }} dans les autres catégories</h3>
+          <p class="section-description">La gamme {{ $family.name }} est également disponible en configuration différente</p>
+          
+          <div class="products-grid cross-category">
+            {{ range $crossCategoryProducts }}
+              <div class="product-card cross-category" data-family="{{ $currentFamily }}" data-category="{{ .Section }}">
+                <div class="category-badge">{{ .Section | title | replaceRE "-" " " }}</div>
+                
+                <div class="product-image">
+                  {{ if .Params.images }}
+                    {{ $image := index .Params.images 0 }}
+                    <img src="{{ $image.url }}" alt="{{ .Title }}" loading="lazy">
+                  {{ else }}
+                    <div class="placeholder-image">
+                      <span>{{ $family.name }}</span>
+                    </div>
+                  {{ end }}
+                </div>
+                
+                <div class="product-info">
+                  <h4 class="product-title">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                  </h4>
+                  
+                  <div class="transformation-note">
+                    {{ if index $family.available_in .Section }}
+                      {{ $catData := index $family.available_in .Section }}
+                      <p>{{ $catData.description }}</p>
+                    {{ end }}
+                  </div>
+                  
+                  <a href="{{ .RelPermalink }}" class="product-link secondary">Voir en {{ .Section | title | replaceRE "-" " " }}</a>
+                </div>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Complementary Families */}}
+      {{ if $family.cross_selling.complementary_families }}
+        <div class="complementary-families">
+          <h3>Familles complémentaires</h3>
+          <p class="section-description">Ces gammes peuvent parfaitement s'associer avec {{ $family.name }}</p>
+          
+          <div class="families-grid">
+            {{ range $family.cross_selling.complementary_families }}
+              {{ $compFamily := index $families . }}
+              {{ if $compFamily }}
+                <div class="family-card" data-family="{{ . }}">
+                  <div class="family-header">
+                    <h4 class="family-name">{{ $compFamily.name }}</h4>
+                    <span class="family-positioning">{{ $compFamily.positioning | title }}</span>
+                  </div>
+                  
+                  <p class="family-description">{{ $compFamily.description }}</p>
+                  
+                  <div class="family-meta">
+                    <span class="price-range">À partir de {{ $compFamily.price_range.min }}€</span>
+                    {{ if $compFamily.variants }}
+                      <span class="variants-count">{{ len $compFamily.variants }} variantes</span>
+                    {{ end }}
+                  </div>
+                  
+                  <div class="family-categories">
+                    {{ range $category, $categoryData := $compFamily.available_in }}
+                      <a href="/{{ $category }}" class="category-link">{{ $category | title | replaceRE "-" " " }}</a>
+                    {{ end }}
+                  </div>
+                </div>
+              {{ end }}
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Universal Accessories */}}
+      {{ $universalAccessories := .Site.Data.product_families.global_metadata.universal_accessories }}
+      {{ if $universalAccessories }}
+        <div class="universal-accessories">
+          <h3>Accessoires recommandés</h3>
+          <p class="section-description">Complétez votre {{ $family.name }} avec nos accessoires spécialisés</p>
+          
+          <div class="accessories-grid">
+            {{ range $universalAccessories }}
+              {{ $accessoryPages := $.Site.Taxonomies.categories.accessoires }}
+              {{ $accessoryPage := $.Site.GetPage (printf "/%s" .) }}
+              {{ if $accessoryPage }}
+                <div class="accessory-card">
+                  <h4>{{ . | title | replaceRE "-" " " }}</h4>
+                  <a href="{{ $accessoryPage.RelPermalink }}" class="accessory-link">Découvrir</a>
+                </div>
+              {{ else }}
+                <div class="accessory-card">
+                  <h4>{{ . | title | replaceRE "-" " " }}</h4>
+                  <a href="/accessoires" class="accessory-link">Voir tous les accessoires</a>
+                </div>
+              {{ end }}
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+
+    {{/* Related Products Styles */}}
+    <style>
+      .related-products-section {
+        margin: 3rem 0;
+      }
+      
+      .related-products-section > div {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      
+      .related-products-section > div:last-child {
+        border-bottom: none;
+      }
+      
+      .related-products-section h3 {
+        color: #2c5282;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+      }
+      
+      .section-description {
+        color: #4a5568;
+        margin: 0 0 1.5rem 0;
+        line-height: 1.5;
+      }
+      
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .products-grid.cross-category {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+      
+      .product-card {
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+      }
+      
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      }
+      
+      .category-badge {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: #2c5282;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        z-index: 2;
+      }
+      
+      .product-image {
+        height: 200px;
+        overflow: hidden;
+        background: #f7fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+      
+      .product-card:hover .product-image img {
+        transform: scale(1.05);
+      }
+      
+      .placeholder-image {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+      }
+      
+      .product-info {
+        padding: 1.25rem;
+      }
+      
+      .product-title a {
+        color: #2c5282;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        line-height: 1.3;
+      }
+      
+      .product-title a:hover {
+        text-decoration: underline;
+      }
+      
+      .product-subtitle {
+        color: #4a5568;
+        font-size: 0.9rem;
+        margin: 0.25rem 0 0.75rem 0;
+      }
+      
+      .product-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin: 0.75rem 0;
+        font-size: 0.875rem;
+      }
+      
+      .price {
+        color: #38a169;
+        font-weight: 600;
+      }
+      
+      .dimensions {
+        color: #4a5568;
+      }
+      
+      .key-features {
+        list-style: none;
+        padding: 0;
+        margin: 0.75rem 0;
+      }
+      
+      .key-features li {
+        color: #4a5568;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+        position: relative;
+        padding-left: 1rem;
+      }
+      
+      .key-features li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #38a169;
+        font-weight: 700;
+      }
+      
+      .product-link {
+        display: inline-block;
+        background: #2c5282;
+        color: white;
+        padding: 0.5rem 1.25rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: background-color 0.2s;
+        margin-top: 0.75rem;
+      }
+      
+      .product-link:hover {
+        background: #2a4d82;
+      }
+      
+      .product-link.secondary {
+        background: transparent;
+        color: #2c5282;
+        border: 1px solid #2c5282;
+      }
+      
+      .product-link.secondary:hover {
+        background: #2c5282;
+        color: white;
+      }
+      
+      .transformation-note {
+        margin: 0.75rem 0;
+        padding: 0.75rem;
+        background: #edf2f7;
+        border-radius: 6px;
+        border-left: 3px solid #2c5282;
+      }
+      
+      .transformation-note p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: #4a5568;
+        font-style: italic;
+      }
+      
+      .families-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .family-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      
+      .family-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+      
+      .family-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+      }
+      
+      .family-name {
+        color: #2c5282;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+      }
+      
+      .family-positioning {
+        background: #e2e8f0;
+        color: #4a5568;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      
+      .family-categories {
+        margin-top: 1rem;
+      }
+      
+      .category-link {
+        display: inline-block;
+        margin: 0.25rem 0.5rem 0.25rem 0;
+        padding: 0.375rem 0.75rem;
+        background: #f7fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 15px;
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.75rem;
+        transition: all 0.2s;
+      }
+      
+      .category-link:hover {
+        border-color: #2c5282;
+        color: #2c5282;
+      }
+      
+      .accessories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+      
+      .accessory-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 1rem;
+        text-align: center;
+        transition: transform 0.2s;
+      }
+      
+      .accessory-card:hover {
+        transform: translateY(-2px);
+      }
+      
+      .accessory-card h4 {
+        margin: 0 0 0.75rem 0;
+        color: #2c5282;
+        font-size: 1rem;
+      }
+      
+      .accessory-link {
+        color: #2c5282;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+      
+      .accessory-link:hover {
+        text-decoration: underline;
+      }
+      
+      @media (max-width: 768px) {
+        .products-grid, .families-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .family-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+        
+        .product-meta {
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+      }
+    </style>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,91 @@
+baseURL: 'https://www.litatiroirs.fr'
+languageCode: 'fr-FR'
+title: 'Lit à Tiroirs - Solutions de rangement depuis 1984'
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  brand:
+    name: 'Lit à Tiroirs'
+    tagline: 'Mieux vivre, Mieux dormir, Mieux respirer, Mieux ranger'
+    since: 1984
+    
+  colors:
+    primary_purple: '#711271'
+    primary_purple_hover: '#6a076a' 
+    primary_purple_light: '#7a237a'
+    warm_wood: '#8B7355'
+    warm_wood_hover: '#73614a'
+    cream_white: '#FAFAF9'
+    warm_gray: '#f5f5f4'
+    storage_blue: '#4A6B8A'
+    capacity_green: '#6B8E5A'
+    capacity_orange: '#B8956B'
+    
+  seo:
+    description: 'Lits à tiroirs français avec rangement optimal. Depuis 1984, l''excellence artisanale au service de votre espace.'
+    keywords: 
+      - 'lit à tiroirs'
+      - 'lit avec rangement'
+      - 'artisan français'
+      - 'bois massif'
+      - 'rangement optimal'
+      - 'mobilier sur mesure'
+      - 'haute capacité'
+
+  layout:
+    nav_pane_width: '280px'
+    product_pane_width: '320px'
+    desktop_breakpoint: '1024px'
+    
+  default_view:
+    nav_item: 'lits-tiroirs'
+    product_category: 'drawer-beds'
+
+  contact:
+    modal_title: "Discuter Votre Projet"
+    modal_intro: "Partagez votre vision avec nos maîtres ébénistes. Spécialistes des solutions de rangement depuis 1984, nous créons des lits à tiroirs sur mesure qui optimisent votre espace tout en conservant l'élégance du savoir-faire français."
+    form_action: "/contact"
+    
+    project_types:
+      - label: "Lit à Tiroirs Sur Mesure"
+        value: "lit-tiroirs"
+      - label: "Optimisation d'Espace"
+        value: "optimisation-espace"
+      - label: "Rangement Haute Capacité" 
+        value: "haute-capacite"
+      - label: "Mobilier Évolutif"
+        value: "evolutif"
+      - label: "Conseil Aménagement"
+        value: "conseil"
+        
+    budget_ranges:
+      - label: "950€ - 1 200€"
+        value: "950-1200"
+      - label: "1 200€ - 1 500€"
+        value: "1200-1500"
+      - label: "1 500€ - 2 000€"
+        value: "1500-2000"
+      - label: "2 000€ et plus"
+        value: "2000-plus"
+
+  shared_content:
+    base_url: "https://d32pb2gafsfl8j.cloudfront.net"
+    modal_teintes_finitions: true
+    contact_forms: true
+    a_propos_shared: true
+
+build:
+  noJSConfigInAssets: false
+  useResourceCacheWhen: always
+
+minify:
+  minifyOutput: true
+  
+outputs:
+  home: ["HTML", "JSON"]
+  section: ["HTML", "JSON"] 
+  page: ["HTML"]

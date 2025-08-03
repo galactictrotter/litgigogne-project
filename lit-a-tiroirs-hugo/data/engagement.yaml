@@ -1,0 +1,25 @@
+title: "Engagement et Garanties Lit à Tiroirs"
+
+guarantees:
+  structure:
+    duration: "10 ans"
+    coverage: "Défauts de fabrication de la structure principale"
+  mechanisms:
+    duration: "5 ans"
+    coverage: "Systèmes de tiroirs, rails, guides et mécanismes de fonctionnement"
+  finishes:
+    duration: "3 ans"
+    coverage: "Revêtements, peintures, vernis et aspects esthétiques"
+
+services:
+  parts_guarantee:
+    duration: "15 ans"
+    service: "Disponibilité des pièces de rechange garantie"
+    objective: "Maintenir la fonctionnalité de vos solutions de rangement"
+  home_service:
+    type: "Réparation à domicile"
+    coverage: "Intervention directe chez le client"
+    expertise: "Techniciens spécialisés en solutions de rangement"
+
+contact:
+  message: "Pour toute question concernant nos garanties ou pour planifier une intervention, contactez notre service client spécialisé en solutions de rangement intelligentes."

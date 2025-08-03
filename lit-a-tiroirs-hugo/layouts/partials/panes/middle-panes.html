@@ -1,0 +1,164 @@
+<!-- Middle Pane: Lits à Tiroirs (Main Focus) -->
+<div id="middle-lits-tiroirs" class="middle-pane">
+    <div class="pane-header">
+        <h2>LITS À TIROIRS</h2>
+    </div>
+    {{ $products := .Site.GetPage "/shared/products/lits-tiroirs" }}
+    {{ $first := true }}
+    {{ if $products }}
+        {{ range $products.RegularPages }}
+            {{ partial "product-content-mapper" . }}
+            {{ if .Scratch.Get "title" }}
+                <div class="content-card{{ if $first }} active{{ end }}" data-target-detail="detail-{{ .File.BaseFileName }}">
+                    <div class="card-image"></div>
+                    <div class="card-info">
+                        <h3 class="card-title">{{ .Scratch.Get "title" }}</h3>
+                        <p class="card-desc">{{ .Scratch.Get "description" | truncate 60 }}</p>
+                        <div class="capacity-indicator {{ .Scratch.Get "capacityClass" }}">{{ .Scratch.Get "capacityLabel" }}</div>
+                        <p class="card-price">{{ .Scratch.Get "basePrice" }}</p>
+                    </div>
+                </div>
+                {{ $first = false }}
+            {{ end }}
+        {{ end }}
+    {{ else }}
+        {{/* Fallback to existing YAML data if inherited content not available */}}
+        {{ range $key, $product := .Site.Data.products.drawer_beds.lits_tiroirs }}
+        <div class="content-card{{ if eq $key "massako_460" }} active{{ end }}" data-target-detail="{{ $product.target_detail }}">
+            <div class="card-image"></div>
+            <div class="card-info">
+                <h3 class="card-title">{{ $product.name }}</h3>
+                <p class="card-desc">{{ $product.short_desc }}</p>
+                <div class="capacity-indicator {{ $product.capacity.type }}">{{ $product.capacity.indicator }}</div>
+                <p class="card-price">À partir de {{ $product.price }}</p>
+            </div>
+        </div>
+        {{ end }}
+    {{ end }}
+</div>
+
+<!-- Middle Pane: Canapés à Tiroirs (New Category) -->
+<div id="middle-canapes-tiroirs" class="middle-pane hidden">
+    <div class="pane-header">
+        <h2>CANAPÉS À TIROIRS</h2>
+    </div>
+    {{ $canapes := .Site.GetPage "/shared/products/canapes" }}
+    {{ $first := true }}
+    {{ if $canapes }}
+        {{ range $canapes.RegularPages }}
+            {{/* Hybrid filtering: prefer clean taxonomy, fall back to messy */}}
+            {{ $isDrawerSofa := false }}
+            {{ if eq .Params.lit_tiroirs_category "canapes-tiroirs" }}
+                {{ $isDrawerSofa = true }}
+            {{ else if or (in .Params.tags "tiroir") (in .Params.categories "lits-tiroir") }}
+                {{ $isDrawerSofa = true }}
+            {{ end }}
+            
+            {{ if $isDrawerSofa }}
+                {{ partial "product-content-mapper" . }}
+                {{ if .Scratch.Get "title" }}
+                    <div class="content-card{{ if $first }} active{{ end }}" data-target-detail="detail-{{ .File.BaseFileName }}">
+                        <div class="card-image"></div>
+                        <div class="card-info">
+                            <h3 class="card-title">{{ .Scratch.Get "title" }}</h3>
+                            <p class="card-desc">{{ .Scratch.Get "description" | truncate 60 }}</p>
+                            <div class="capacity-indicator {{ .Scratch.Get "capacityClass" }}">{{ .Scratch.Get "capacityLabel" }}</div>
+                            <p class="card-price">{{ .Scratch.Get "basePrice" }}</p>
+                        </div>
+                    </div>
+                    {{ $first = false }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    {{ else }}
+        {{/* Fallback to existing YAML data if inherited content not available */}}
+        {{ range $key, $product := .Site.Data.products.drawer_beds.canapes_tiroirs }}
+        <div class="content-card{{ if eq $key "massako_tiroir" }} active{{ end }}" data-target-detail="{{ $product.target_detail }}">
+            <div class="card-image"></div>
+            <div class="card-info">
+                <h3 class="card-title">{{ $product.name }}</h3>
+                <p class="card-desc">{{ $product.short_desc }}</p>
+                <div class="capacity-indicator {{ $product.capacity.type }}">{{ $product.capacity.indicator }}</div>
+                <p class="card-price">À partir de {{ $product.price }}</p>
+            </div>
+        </div>
+        {{ end }}
+    {{ end }}
+</div>
+
+<!-- Middle Pane: Espace & Rangement -->
+<div id="middle-espace" class="middle-pane hidden">
+    <div class="pane-header">
+        <h2>ESPACE & RANGEMENT</h2>
+    </div>
+    <div class="content-card" data-target-detail="detail-espace-optimisation">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Optimisation d'Espace</h3>
+            <p class="card-desc">Maximisez votre habitat</p>
+        </div>
+    </div>
+    <div class="content-card" data-target-detail="detail-espace-solutions">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Solutions Sur Mesure</h3>
+            <p class="card-desc">Créées pour votre espace</p>
+        </div>
+    </div>
+</div>
+
+<!-- Middle Pane: Teintes & Finitions -->
+<div id="middle-teintes-finitions" class="middle-pane hidden">
+    <div class="pane-header">
+        <h2>TEINTES & FINITIONS</h2>
+    </div>
+    <div class="content-card" data-target-detail="detail-teintes-bois">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Finitions Bois</h3>
+            <p class="card-desc">Chêne, hêtre, merisier naturel</p>
+        </div>
+    </div>
+    <div class="content-card" data-target-detail="detail-teintes-laquees">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Teintes Laquées</h3>
+            <p class="card-desc">Blanc, gris, personnalisées</p>
+        </div>
+    </div>
+    <div class="content-card" data-target-detail="detail-teintes-tissus">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Tissus & Revêtements</h3>
+            <p class="card-desc">Collection premium disponible</p>
+        </div>
+    </div>
+</div>
+
+<!-- Middle Pane: À Propos -->
+<div id="middle-a-propos" class="middle-pane hidden">
+    <div class="pane-header">
+        <h2>NOTRE MAISON</h2>
+    </div>
+    <div class="content-card active" data-target-detail="detail-propos-philosophie">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Notre Philosophie</h3>
+            <p class="card-desc">Héritage, artisanat et mieux-être</p>
+        </div>
+    </div>
+    <div class="content-card" data-target-detail="detail-propos-charte">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Notre Charte Environnementale</h3>
+            <p class="card-desc">Engagement pour la planète et le bien-être</p>
+        </div>
+    </div>
+    <div class="content-card" data-target-detail="detail-propos-histoire">
+        <div class="card-image"></div>
+        <div class="card-info">
+            <h3 class="card-title">Notre Histoire</h3>
+            <p class="card-desc">Depuis {{ .Site.Params.brand.since }}, l'art du rangement français</p>
+        </div>
+    </div>
+</div>
